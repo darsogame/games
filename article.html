@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
+<meta name="description" content="مقاله — بازی زبان">
+<title>📖 مقاله — بازی زبان</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌍</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg-1: #0f172a;
+    --bg-2: #1e293b;
+    --bg-3: #334155;
+    --surface: rgba(15, 23, 42, 0.85);
+    --surface-2: rgba(30, 41, 59, 0.6);
+    --border: rgba(56, 189, 248, 0.3);
+    --border-soft: rgba(148, 163, 184, 0.25);
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --text-dim: #64748b;
+    --accent-1: #38bdf8;
+    --accent-2: #a78bfa;
+    --accent-3: #fbbf24;
+    --radius-sm: 12px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 28px;
+    --shadow-lg: 0 25px 60px rgba(0, 0, 0, 0.6);
+    --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+  body {
+    font-family: 'Vazirmatn', sans-serif;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background:
+      radial-gradient(ellipse at top, rgba(56, 189, 248, 0.08), transparent 50%),
+      radial-gradient(ellipse at bottom, rgba(167, 139, 250, 0.08), transparent 50%),
+      linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 50%, var(--bg-3) 100%);
+    background-attachment: fixed;
+    color: var(--text);
+    padding: 20px;
+    padding-top: max(20px, env(safe-area-inset-top));
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+    overflow-x: hidden;
+    line-height: 1.8;
+  }
+
+  /* ═══ نوار بالا ═══ */
+  .top-bar {
+    max-width: 900px;
+    margin: 0 auto 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 16px 20px;
+    background: var(--surface);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: var(--radius-lg);
+    border: 1.5px solid var(--border);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-decoration: none;
+  }
+
+  .brand .brand-ico { -webkit-text-fill-color: initial; font-size: 26px; }
+
+  .nav-links { display: flex; flex-wrap: wrap; gap: 16px; }
+
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all var(--transition);
+  }
+
+  .nav-links a:hover { color: var(--accent-1); background: rgba(56, 189, 248, 0.1); }
+
+  /* ═══ مقاله ═══ */
+  .article-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--surface-2);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: var(--radius-xl);
+    border: 1.5px solid rgba(148, 163, 184, 0.18);
+    overflow: hidden;
+    animation: fadeUp 0.5s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .article-hero {
+    height: 220px;
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(167, 139, 250, 0.2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 100px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .article-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 25% 30%, rgba(56, 189, 248, 0.25), transparent 55%),
+      radial-gradient(circle at 75% 70%, rgba(167, 139, 250, 0.25), transparent 55%);
+  }
+
+  .article-hero .hero-ico {
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 8px 24px rgba(56, 189, 248, 0.4));
+  }
+
+  .article-content {
+    padding: 40px 44px 48px;
+  }
+
+  .article-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+    font-size: 13px;
+    flex-wrap: wrap;
+  }
+
+  .article-tag {
+    padding: 5px 14px;
+    background: rgba(56, 189, 248, 0.15);
+    color: var(--accent-1);
+    border-radius: 8px;
+    font-weight: 700;
+  }
+
+  .article-meta .dot { color: var(--text-dim); }
+  .article-meta .meta-text { color: var(--text-muted); }
+
+  .article-title {
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 1.4;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-2), var(--accent-3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .article-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 0 20px;
+    border-bottom: 1.5px solid rgba(148, 163, 184, 0.15);
+    margin-bottom: 28px;
+  }
+
+  .author-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 900;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .author-info { display: flex; flex-direction: column; }
+
+  .author-name { font-weight: 900; font-size: 14px; color: #e2e8f0; }
+
+  .author-sub { font-size: 12px; color: var(--text-dim); }
+
+  /* ═══ محتوای مقاله ═══ */
+  .article-prose {
+    font-size: 16px;
+    line-height: 2.1;
+    color: #cbd5e1;
+  }
+
+  .article-prose h2 {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--accent-1);
+    margin: 32px 0 14px;
+    line-height: 1.4;
+  }
+
+  .article-prose h3 {
+    font-size: 18px;
+    font-weight: 900;
+    color: #e2e8f0;
+    margin: 26px 0 12px;
+  }
+
+  .article-prose p {
+    margin-bottom: 18px;
+  }
+
+  .article-prose strong {
+    color: #fff;
+    font-weight: 900;
+  }
+
+  .article-prose a {
+    color: var(--accent-1);
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(56, 189, 248, 0.5);
+    transition: border-color var(--transition);
+  }
+
+  .article-prose a:hover {
+    border-bottom-style: solid;
+    border-bottom-color: var(--accent-1);
+  }
+
+  .article-prose ul,
+  .article-prose ol {
+    padding-right: 26px;
+    margin-bottom: 20px;
+  }
+
+  .article-prose li {
+    margin-bottom: 10px;
+  }
+
+  .article-prose li::marker {
+    color: var(--accent-2);
+    font-weight: 900;
+  }
+
+  .article-prose blockquote {
+    margin: 24px 0;
+    padding: 20px 24px;
+    background: rgba(56, 189, 248, 0.08);
+    border-right: 4px solid var(--accent-1);
+    border-radius: var(--radius-sm);
+    font-style: italic;
+    color: #e2e8f0;
+  }
+
+  .article-prose code {
+    background: rgba(56, 189, 248, 0.15);
+    color: var(--accent-1);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    direction: ltr;
+    display: inline-block;
+  }
+
+  .article-prose .callout {
+    margin: 24px 0;
+    padding: 18px 22px;
+    background: rgba(251, 191, 36, 0.08);
+    border: 1.5px solid rgba(251, 191, 36, 0.25);
+    border-radius: var(--radius-md);
+    display: flex;
+    gap: 12px;
+  }
+
+  .article-prose .callout .callout-ico {
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+
+  /* ═══ اشتراک‌گذاری ═══ */
+  .share-row {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1.5px solid rgba(148, 163, 184, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .share-label {
+    font-size: 13px;
+    font-weight: 900;
+    color: var(--text-muted);
+  }
+
+  .share-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1.5px solid rgba(56, 189, 248, 0.25);
+    color: var(--accent-1);
+    font-size: 16px;
+    cursor: pointer;
+    transition: all var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+  }
+
+  .share-btn:hover {
+    background: rgba(56, 189, 248, 0.2);
+    transform: translateY(-2px);
+    border-color: var(--accent-1);
+  }
+
+  /* ═══ دکمه بازگشت ═══ */
+  .back-row {
+    max-width: 900px;
+    margin: 24px auto 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    background: rgba(148, 163, 184, 0.12);
+    border: 1.5px solid rgba(148, 163, 184, 0.25);
+    border-radius: var(--radius-md);
+    color: #cbd5e1;
+    text-decoration: none;
+    font-weight: 900;
+    font-size: 14px;
+    transition: all var(--transition);
+  }
+
+  .back-btn:hover {
+    background: rgba(56, 189, 248, 0.15);
+    border-color: rgba(56, 189, 248, 0.4);
+    color: var(--accent-1);
+    transform: translateY(-2px);
+  }
+
+  /* ═══ لودینگ / خطا ═══ */
+  .loading-box, .error-box {
+    max-width: 600px;
+    margin: 80px auto;
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .error-box { display: none; }
+  .error-box.show { display: block; }
+
+  .error-ico {
+    font-size: 64px;
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .error-title {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .error-desc {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+    line-height: 1.9;
+  }
+
+  .error-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+    color: #fff;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    font-weight: 900;
+    font-size: 14px;
+    transition: all var(--transition);
+  }
+
+  .error-btn:hover { transform: translateY(-2px); }
+
+  .spinner {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(148, 163, 184, 0.2);
+    border-top-color: var(--accent-1);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 16px;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .loading-text { color: var(--text-muted); font-size: 14px; }
+
+  /* ═══ فوتر ═══ */
+  .site-footer {
+    max-width: 900px;
+    margin: 40px auto 0;
+    padding: 28px 24px;
+    border-top: 1.5px solid rgba(148, 163, 184, 0.15);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+
+  .footer-links { display: flex; flex-wrap: wrap; gap: 18px; }
+
+  .footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 700;
+    transition: color var(--transition);
+  }
+
+  .footer-links a:hover { color: var(--accent-1); }
+
+  /* ═══════════ ریسپانسیو ═══════════ */
+
+  @media (max-width: 768px) {
+    body { padding: 16px; }
+    .top-bar { padding: 14px 16px; margin-bottom: 18px; }
+    .brand { font-size: 16px; }
+    .brand .brand-ico { font-size: 22px; }
+    .nav-links a { font-size: 13px; padding: 5px 10px; }
+    .article-hero { height: 180px; font-size: 80px; }
+    .article-content { padding: 28px 24px 32px; }
+    .article-title { font-size: 24px; }
+    .article-prose { font-size: 15px; }
+    .article-prose h2 { font-size: 19px; margin: 26px 0 12px; }
+    .article-prose h3 { font-size: 16.5px; margin: 22px 0 10px; }
+    .site-footer { flex-direction: column; text-align: center; }
+    .footer-links { justify-content: center; }
+  }
+
+  @media (max-width: 480px) {
+    body { padding: 12px; }
+    .top-bar { padding: 12px 14px; border-radius: var(--radius-md); }
+    .brand { font-size: 15px; }
+    .brand .brand-ico { font-size: 20px; }
+    .nav-links { gap: 6px; width: 100%; justify-content: center; }
+    .nav-links a { font-size: 12.5px; padding: 5px 9px; }
+    .article-hero { height: 140px; font-size: 60px; }
+    .article-content { padding: 22px 18px 26px; }
+    .article-title { font-size: 20px; }
+    .article-meta { font-size: 12px; gap: 8px; }
+    .article-prose { font-size: 14.5px; line-height: 2; }
+    .article-prose h2 { font-size: 18px; margin: 24px 0 10px; }
+    .article-prose h3 { font-size: 16px; margin: 20px 0 10px; }
+    .article-prose blockquote { padding: 16px 18px; }
+    .article-prose .callout { padding: 14px 16px; }
+    .share-btn { width: 36px; height: 36px; font-size: 14px; }
+    .back-btn { padding: 10px 18px; font-size: 13px; }
+    .site-footer { padding: 22px 16px; font-size: 12px; }
+    .footer-links { gap: 14px; font-size: 12px; }
+  }
+
+  @media (max-width: 360px) {
+    body { padding: 8px; }
+    .article-hero { height: 120px; font-size: 48px; }
+    .article-content { padding: 18px 14px 22px; }
+    .article-title { font-size: 18px; }
+    .article-prose { font-size: 14px; }
+    .article-prose h2 { font-size: 17px; }
+    .article-prose h3 { font-size: 15px; }
+    .author-avatar { width: 38px; height: 38px; font-size: 17px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ نوار بالا ═══ -->
+<header class="top-bar">
+  <a href="hub.html" class="brand">
+    <span class="brand-ico">🌍</span>
+    بازی زبان
+  </a>
+  <nav class="nav-links" aria-label="منوی اصلی">
+    <a href="hub.html">خانه</a>
+    <a href="articles.html">مقالات</a>
+    <a href="login.html">ورود</a>
+  </nav>
+</header>
+
+<!-- ═══ لودینگ ═══ -->
+<div class="loading-box" id="loadingBox">
+  <span class="spinner"></span>
+  <div class="loading-text">در حال بارگذاری مقاله...</div>
+</div>
+
+<!-- ═══ خطا ═══ -->
+<div class="error-box" id="errorBox">
+  <span class="error-ico">📄</span>
+  <h2 class="error-title">مقاله پیدا نشد</h2>
+  <p class="error-desc">مقاله‌ای که به دنبال آن هستید وجود ندارد یا حذف شده است.</p>
+  <a href="articles.html" class="error-btn">← بازگشت به لیست مقالات</a>
+</div>
+
+<!-- ═══ مقاله ═══ -->
+<article class="article-wrap" id="articleWrap" style="display:none">
+  <div class="article-hero">
+    <span class="hero-ico" id="articleIcon" aria-hidden="true">📖</span>
+  </div>
+  <div class="article-content">
+    <div class="article-meta">
+      <span class="article-tag" id="articleTag">—</span>
+      <span class="dot">•</span>
+      <span class="meta-text" id="articleReadTime">—</span>
+      <span class="dot">•</span>
+      <span class="meta-text" id="articleDate">—</span>
+    </div>
+
+    <h1 class="article-title" id="articleTitle">—</h1>
+
+    <div class="article-author">
+      <div class="author-avatar" id="authorAvatar">؟</div>
+      <div class="author-info">
+        <span class="author-name" id="authorName">—</span>
+        <span class="author-sub">نویسنده در بازی زبان</span>
+      </div>
+    </div>
+
+    <div class="article-prose" id="articleBody"></div>
+
+    <div class="share-row">
+      <span class="share-label">اشتراک‌گذاری:</span>
+      <a class="share-btn" id="shareTwitter" href="#" target="_blank" rel="noopener" title="توییتر">𝕏</a>
+      <a class="share-btn" id="shareTelegram" href="#" target="_blank" rel="noopener" title="تلگرام">✈️</a>
+      <a class="share-btn" id="shareWhatsapp" href="#" target="_blank" rel="noopener" title="واتساپ">💬</a>
+      <button class="share-btn" id="shareCopy" title="کپی لینک" aria-label="کپی لینک">🔗</button>
+    </div>
+  </div>
+</article>
+
+<!-- ═══ دکمه بازگشت ═══ -->
+<div class="back-row" id="backRow" style="display:none">
+  <a href="articles.html" class="back-btn">→ همه مقالات</a>
+</div>
+
+<!-- ═══ فوتر ═══ -->
+<footer class="site-footer">
+  <div>© ۲۰۲۵ بازی زبان — تمام حقوق محفوظ است.</div>
+  <nav class="footer-links" aria-label="لینک‌های فوتر">
+    <a href="articles.html">مقالات</a>
+    <a href="login.html#about">درباره ما</a>
+    <a href="login.html#faq">سوالات متداول</a>
+    <a href="login.html#contact">تماس با ما</a>
+  </nav>
+</footer>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   📚 داده‌های مقالات — باید با articles.html یکسان باشد
+   ══════════════════════════════════════════════════════════════ */
+const ARTICLES = {
+  'why-game-based-learning': {
+    title: 'چرا یادگیری بازی‌محور مؤثرتر از روش‌های سنتی است؟',
+    category: 'روش یادگیری',
+    icon: '🎮',
+    date: '۱۴۰۴/۰۲/۱۵',
+    readTime: '۸ دقیقه',
+    author: 'تیم محتوا',
+    body: `
+      <p>سال‌هاست که تصور می‌کنیم یادگیری زبان باید سخت و جدی باشد — نشستن پشت کتاب، حفظ کردن لیست لغات و تکرار خسته‌کننده. اما تحقیقات جدید در زمینه علوم اعصاب و روان‌شناسی آموزشی چیز دیگری می‌گویند.</p>
+
+      <h2>مغز ما چطور یاد می‌گیرد؟</h2>
+      <p>مغز انسان برای <strong>بقا</strong> طراحی شده است، نه برای حفظ کردن. وقتی چیزی را از طریق بازی، هیجان یا چالش یاد می‌گیریم، آمیگدال (مرکز احساسات مغز) فعال می‌شود و این باعث می‌شود اطلاعات عمیق‌تر در حافظه ثبت شوند.</p>
+
+      <blockquote>
+        «یادگیری از طریق بازی، ماندگاری مطالب را تا ۳ برابر افزایش می‌دهد — این عدد تصادفی نیست، بلکه حاصل دهه‌ها تحقیق است.»
+      </blockquote>
+
+      <h2>سه مکانیزم کلیدی بازی‌سازی</h2>
+      <ul>
+        <li><strong>پاداش فوری:</strong> وقتی یک چالش را حل می‌کنیم، دوپامین ترشح می‌شود که انگیزه تکرار را افزایش می‌دهد.</li>
+        <li><strong>تجربه شکست امن:</strong> در بازی، اشتباه کردن بخشی از فرآیند است و ترس از قضاوت وجود ندارد.</li>
+        <li><strong>پیشرفت قابل مشاهده:</strong> نوار پیشرفت، نشان‌ها و رتبه‌ها حس موفقیت مستمر می‌سازند.</li>
+      </ul>
+
+      <h2>مقایسه با روش‌های سنتی</h2>
+      <p>در روش‌های سنتی، انگیزه معمولاً از بیرون می‌آید (نمره، فشار خانواده). اما در یادگیری بازی‌محور، انگیزه <strong>درونی</strong> است — شما برای لذت بردن از فرآیند یاد می‌گیرید، نه به خاطر اجبار.</p>
+
+      <div class="callout">
+        <span class="callout-ico">💡</span>
+        <div>در بازی زبان، هر درس یک چالش است. هر چالش، یک فرصت برای رشد. و هر رشد، یک پاداش واقعی.</div>
+      </div>
+
+      <h2>چطور از این علم استفاده کنیم؟</h2>
+      <p>مهم نیست از کدام اپلیکیشن استفاده می‌کنید. مهم این است که فرآیند یادگیری شما <strong>تعاملی</strong>، <strong>کوتاه</strong> و <strong>لذت‌بخش</strong> باشد. اگر یادگیری‌تان شبیه بازی باشد، به‌طور طبیعی هر روز به آن برمی‌گردید.</p>
+    `
+  },
+
+  'spaced-repetition': {
+    title: 'تکرار فاصله‌دار: کلید یادگیری مادام‌العمر زبان',
+    category: 'روش یادگیری',
+    icon: '🔄',
+    date: '۱۴۰۴/۰۲/۱۰',
+    readTime: '۶ دقیقه',
+    author: 'دکتر سارا احمدی',
+    body: `
+      <p>آیا تا به حال شده کلمه‌ای را حفظ کنید و فردا فراموشش کنید؟ این مشکل ریشه در نحوه کار حافظه دارد. راه‌حل، <strong>تکرار فاصله‌دار</strong> یا Spaced Repetition است.</p>
+
+      <h2>منحنی فراموشی ابینگهاوس</h2>
+      <p>هرمان ابینگهاوس در قرن نوزدهم کشف کرد که ما بدون مرور، ۷۰٪ مطالب را در ۲۴ ساعت فراموش می‌کنیم. اما اگر در فواصل بهینه مرور کنیم، این منحنی صاف می‌شود.</p>
+
+      <h3>فواصل بهینه مرور:</h3>
+      <ul>
+        <li>مرور اول: بعد از ۱ روز</li>
+        <li>مرور دوم: بعد از ۳ روز</li>
+        <li>مرور سوم: بعد از ۷ روز</li>
+        <li>مرور چهارم: بعد از ۲۱ روز</li>
+        <li>مرور پنجم: بعد از ۶۰ روز</li>
+      </ul>
+
+      <h2>چرا این روش کار می‌کند؟</h2>
+      <p>وقتی چیزی را در آستانه فراموشی مرور می‌کنیم، مغز آن را «مهم» تشخیص می‌دهد و مسیرهای عصبی قوی‌تری می‌سازد. این همان چیزی است که به یادگیری طولانی‌مدت منجر می‌شود.</p>
+
+      <div class="callout">
+        <span class="callout-ico">🧠</span>
+        <div>نرم‌افزارهای مدرن مثل Anki و بازی زبان از الگوریتم‌های هوشمند برای تعیین دقیق زمان مرور استفاده می‌کنند.</div>
+      </div>
+
+      <h2>چطور در عمل پیاده کنیم؟</h2>
+      <p>روزی ۱۵ دقیقه برای مرور کافی است. فقط کافی است که در فواصل درست تکرار کنید. اگر این کار را به یک عادت روزانه تبدیل کنید، در ۶ ماه می‌توانید هزاران لغت را در حافظه بلندمدت خود تثبیت کنید.</p>
+    `
+  },
+
+  'listening-skills': {
+    title: '۷ تمرین عملی برای تقویت مهارت شنیداری',
+    category: 'مهارت شنیداری',
+    icon: '🎧',
+    date: '۱۴۰۴/۰۲/۰۵',
+    readTime: '۵ دقیقه',
+    author: 'تیم محتوا',
+    body: `
+      <p>مهارت شنیداری اغلب سخت‌ترین بخش یادگیری زبان است. اما با تمرین درست، می‌توانید در عرض چند هفته تفاوت را حس کنید.</p>
+
+      <h2>۱. گوش دادن فعال با زیرنویس</h2>
+      <p>ویدیو یا پادکستی را با زیرنویس ببینید و همزمان با گفتار، کلمات را بخوانید. بعد از چند بار، بدون زیرنویس امتحان کنید.</p>
+
+      <h2>۲. تکنیک Shadowing</h2>
+      <p>همزمان با گوینده صحبت کنید. حتی اگر معنی را نفهمید، لحن و تلفظ را تقلید کنید. این تمرین ارتباط بین گوش و دهان را تقویت می‌کند.</p>
+
+      <h2>۳. Dictation (دیکته)</h2>
+      <p>یک جمله کوتاه را گوش کنید، متوقف کنید و بنویسید. بعد با متن اصلی مقایسه کنید.</p>
+
+      <h2>۴. پادکست‌های سطح‌بندی‌شده</h2>
+      <p>از پادکست‌های مخصوص زبان‌آموزان شروع کنید (مثل ESL Pod یا BBC Learning English) که سرعت گفتار کندتر است.</p>
+
+      <h2>۵. گوش دادن غیرفعال در پس‌زمینه</h2>
+      <p>وقتی در حال رانندگی یا آشپزی هستید، پادکست پخش کنید. حتی اگر کامل توجه نکنید، گوش شما با ریتم زبان آشنا می‌شود.</p>
+
+      <h2>۶. ترنسکریپت (رونویسی)</h2>
+      <p>یک ویدیوی کوتاه را انتخاب کنید و کامل رونویسی کنید. بعد با زیرنویس مقایسه کنید. این تمرین قدرتمندترین ابزار است.</p>
+
+      <h2>۷. گوش دادن به گویش‌های مختلف</h2>
+      <p>فقط به یک لهجه عادت نکنید. گاهی به گویش بریتانیایی، گاهی آمریکایی و گاهی استرالیایی گوش دهید.</p>
+
+      <div class="callout">
+        <span class="callout-ico">🎯</span>
+        <div>مهم‌ترین اصل: <strong>هر روز</strong> گوش کنید، حتی اگر فقط ۱۰ دقیقه باشد. استمرار مهم‌تر از مدت است.</div>
+      </div>
+    `
+  },
+
+  'vocabulary-tricks': {
+    title: '۱۰ ترفند برای یادگیری سریع‌تر لغات جدید',
+    category: 'لغات',
+    icon: '📝',
+    date: '۱۴۰۴/۰۱/۲۸',
+    readTime: '۷ دقیقه',
+    author: 'دکتر سارا احمدی',
+    body: `
+      <p>حفظ کردن لیست لغات کارآمد نیست. این ده ترفند مبتنی بر علم اعصاب به شما کمک می‌کند لغات را در بستر طبیعی یاد بگیرید.</p>
+
+      <h2>۱. یادگیری در جمله، نه تنها</h2>
+      <p>لغت «book» را به تنهایی حفظ نکنید. جمله «I read a book yesterday» را یاد بگیرید. مغز کلمات را در بستر بهتر به خاطر می‌سپارد.</p>
+
+      <h2>۲. تکنیک Mnemonic (یادیار)</h2>
+      <p>برای هر کلمه یک تصویر ذهنی عجیب بسازید. هرچه عجیب‌تر، ماندگارتر.</p>
+
+      <h2>۳. گروه‌بندی موضوعی</h2>
+      <p>لغات را در دسته‌هایی مثل «غذا»، «سفر»، «احساسات» گروه‌بندی کنید. ذهن ما اطلاعات شبکه‌ای را بهتر به یاد می‌آورد.</p>
+
+      <h2>۴. استفاده فوری</h2>
+      <p>هر لغت جدید را در ۲۴ ساعت اول در یک جمله (نوشتاری یا گفتاری) استفاده کنید.</p>
+
+      <h2>۵. فلش‌کارت هوشمند</h2>
+      <p>از Anki یا اپ‌های مشابه استفاده کنید که از تکرار فاصله‌دار پشتیبانی می‌کنند.</p>
+
+      <h2>۶. کلمات هم‌خانواده</h2>
+      <p>وقتی «teach» را یاد گرفتید، «teacher»، «teaching»، «taught» را هم یاد بگیرید. این شبکه‌سازی یادگیری را تسریع می‌کند.</p>
+
+      <h2>۷. ریشه‌شناسی</h2>
+      <p>با پیشوندها و پسوندها آشنا شوید. مثلاً «un-» منفی، «-able» قابل انجام. این کار به شما قدرت حدس زدن هزاران کلمه را می‌دهد.</p>
+
+      <h2>۸. گوش دادن به اندازه کافی</h2>
+      <p>بخشی از یادگیری لغت از طریق شنیدن مکرر در بستر طبیعی اتفاق می‌افتد.</p>
+
+      <h2>۹. تمرین بازیابی فعال</h2>
+      <p>به‌جای مرور منفعل، سعی کنید کلمه را از حافظه بازیابی کنید. این تلاش، خودش یادگیری را تقویت می‌کند.</p>
+
+      <h2>۱۰. تمرین روزانه، حتی ۵ دقیقه</h2>
+      <p>مغز با تکرار منظم بهتر یاد می‌گیرد. ۵ دقیقه هر روز بهتر از ۲ ساعت در هفته است.</p>
+    `
+  },
+
+  'speaking-confidence': {
+    title: 'چگونه بر ترس از صحبت کردن غلبه کنیم؟',
+    category: 'مکالمه',
+    icon: '🗣️',
+    date: '۱۴۰۴/۰۱/۲۰',
+    readTime: '۶ دقیقه',
+    author: 'تیم محتوا',
+    body: `
+      <p>ترس از اشتباه بزرگ‌ترین مانع در یادگیری مکالمه است. بسیاری از زبان‌آموزان سال‌ها درس می‌خوانند اما جرأت صحبت کردن ندارند.</p>
+
+      <h2>ریشه ترس کجاست؟</h2>
+      <p>ترس از قضاوت. ما فکر می‌کنیم اگر اشتباه کنیم، احمق به نظر می‌رسیم. اما واقعیت این است که <strong>هیچ‌کس</strong> به اندازه شما به اشتباهاتتان توجه نمی‌کند.</p>
+
+      <h2>راهکارهای عملی</h2>
+
+      <h3>۱. با خودتان صحبت کنید</h3>
+      <p>در ماشین، در دوش، هنگام پیاده‌روی. با خودتان به زبان هدف حرف بزنید. هیچ‌کس قضاوت نمی‌کند.</p>
+
+      <h3>۲. از تک‌گویی شروع کنید</h3>
+      <p>یک موضوع انتخاب کنید و ۱ دقیقه درباره‌اش حرف بزنید. ضبط کنید و بعد گوش دهید. این تمرین اعتماد به نفس می‌سازد.</p>
+
+      <h3>۳. شریک تمرین پیدا کنید</h3>
+      <p>با کسی که هم‌سطح شماست تمرین کنید. هر دو در یک قایق هستید.</p>
+
+      <h3>۴. از هوش مصنوعی کمک بگیرید</h3>
+      <p>با ChatGPT یا دستیارهای صوتی تمرین مکالمه کنید. هیچ فشار اجتماعی وجود ندارد.</p>
+
+      <h3>۵. قانون ۷۰٪</h3>
+      <p>لازم نیست کامل صحبت کنید. اگر ۷۰٪ منظورتان منتقل شد، موفق بوده‌اید. بقیه را با اشاره و کلمات ساده جبران کنید.</p>
+
+      <div class="callout">
+        <span class="callout-ico">💬</span>
+        <div>به یاد داشته باشید: کسی که با لهجه صحبت می‌کند اما ارتباط برقرار می‌کند، موفق‌تر از کسی است که کامل گرامر می‌داند اما هرگز دهان باز نمی‌کند.</div>
+      </div>
+
+      <h2>ذهنیت درست</h2>
+      <p>اشتباهات بخشی از یادگیری هستند، نه نشانه شکست. هر اشتباه یک قدم به تسلط نزدیک‌تر است. پس بترسید، اما صحبت کنید.</p>
+    `
+  },
+
+  'daily-routine': {
+    title: 'برنامه روزانه ۱۵ دقیقه‌ای برای یادگیری زبان',
+    category: 'روش یادگیری',
+    icon: '⏰',
+    date: '۱۴۰۴/۰۱/۱۵',
+    readTime: '۵ دقیقه',
+    author: 'تیم محتوا',
+    body: `
+      <p>«وقت ندارم» شایع‌ترین بهانه است. اما تحقیقات نشان می‌دهد ۱۵ دقیقه در روز، اگر منظم باشد، در ۶ ماه شما را به سطح متوسط می‌رساند.</p>
+
+      <h2>چرا ۱۵ دقیقه کافی است؟</h2>
+      <p>مغز ما در جلسات کوتاه و مکرر بهتر یاد می‌گیرد. ۱۵ دقیقه هر روز، در یک ماه ۴۵۰ دقیقه می‌شود — بیشتر از یک کلاس دو ساعته در هفته.</p>
+
+      <h2>برنامه پیشنهادی</h2>
+
+      <h3>صبح (۵ دقیقه)</h3>
+      <ul>
+        <li>مرور فلش‌کارت‌ها</li>
+        <li>گوش دادن به یک پادکست کوتاه</li>
+      </ul>
+
+      <h3>ظهر (۵ دقیقه)</h3>
+      <ul>
+        <li>یادگیری ۵ لغت جدید در جمله</li>
+        <li>تمرین تلفظ با Shadowing</li>
+      </ul>
+
+      <h3>شب (۵ دقیقه)</h3>
+      <ul>
+        <li>نوشتن ۳ جمله با لغات جدید</li>
+        <li>مرور سریع مطالب روز</li>
+      </ul>
+
+      <div class="callout">
+        <span class="callout-ico">📅</span>
+        <div>مهم‌ترین اصل: <strong>استمرار</strong>. اگر یک روز نشد، نگران نباشید. فردا ادامه دهید. زنجیره را نشکنید.</div>
+      </div>
+
+      <h2>چطور عادت بسازیم؟</h2>
+      <p>یادگیری را به یک عادت موجود متصل کنید. مثلاً «بعد از صبحانه، ۵ دقیقه لغت». این تکنیک Habit Stacking نامیده می‌شود و بسیار مؤثر است.</p>
+
+      <h2>نتیجه</h2>
+      <p>با ۱۵ دقیقه در روز، در ۳ ماه تفاوت واضحی حس می‌کنید. در ۶ ماه می‌توانید مکالمات روزمره را انجام دهید. در یک سال، سطح متوسط را رد می‌کنید.</p>
+    `
+  },
+
+  'grammar-not-boring': {
+    title: 'گرامر خسته‌کننده نیست — اگر درست یاد بگیرید',
+    category: 'گرامر',
+    icon: '📐',
+    date: '۱۴۰۴/۰۱/۰۸',
+    readTime: '۷ دقیقه',
+    author: 'دکتر سارا احمدی',
+    body: `
+      <p>بسیاری از ما گرامر را با حفظ کردن قواعد و استثنائات به یاد می‌آوریم. اما گرامر می‌تواند جذاب باشد — اگر به شکل درست آموزش داده شود.</p>
+
+      <h2>چرا روش سنتی جواب نمی‌دهد؟</h2>
+      <p>حفظ کردن قواعد بدون بستر، مثل حفظ کردن نقشه بدون دیدن شهر است. مغز ما برای <strong>الگویابی</strong> طراحی شده، نه حفظ کردن قوانین.</p>
+
+      <h2>رویکرد درست: گرامر در بستر</h2>
+      <p>به‌جای یادگیری قاعده، مثال‌های زیادی ببینید و خودتان الگو را کشف کنید. این همان روشی است که کودکان زبان مادری را یاد می‌گیرند.</p>
+
+      <h3>مثال:</h3>
+      <p>به‌جای حفظ کردن «Present Perfect برای اتفاقی که در گذشته شروع شده و تا حالا ادامه دارد»، این جملات را ببینید:</p>
+      <ul>
+        <li>I have lived here for 5 years.</li>
+        <li>She has worked here since 2020.</li>
+        <li>They have known each other for a long time.</li>
+      </ul>
+      <p>مغز شما خودش الگو را پیدا می‌کند: <code>have/has + past participle</code> برای چیزی که از گذشته شروع شده.</p>
+
+      <h2>تمرین‌های کاربردی</h2>
+      <ul>
+        <li>بعد از خواندن یک متن، ساختارهای گرامری را پیدا کنید.</li>
+        <li>یک جمله از کتاب درسی را بردارید و با کلمات خودتان بازنویسی کنید.</li>
+        <li>گرامر را از طریق بازی‌های زبانی یاد بگیرید (مثل تطبیق یا تکمیل جمله).</li>
+      </ul>
+
+      <div class="callout">
+        <span class="callout-ico">🎯</span>
+        <div>هدف گرامر، <strong>ارتباط</strong> است، نه کمال. اگر بتوانید منظورتان را منتقل کنید، گرامرتان «کافی» است.</div>
+      </div>
+    `
+  },
+
+  'reading-strategies': {
+    title: 'استراتژی‌های خواندن متون زبان خارجی',
+    category: 'خواندن',
+    icon: '📖',
+    date: '۱۴۰۳/۱۲/۲۵',
+    readTime: '۶ دقیقه',
+    author: 'تیم محتوا',
+    body: `
+      <p>خواندن یکی از بهترین راه‌ها برای تقویت واژگان و درک ساختارهای زبانی است. اما خیلی‌ها در همان صفحه اول خسته می‌شوند.</p>
+
+      <h2>سه استراتژی کلیدی</h2>
+
+      <h3>۱. Skimming (سریع خواندن)</h3>
+      <p>قبل از خواندن دقیق، یک نگاه سریع به متن بیندازید. عنوان‌ها، پاراگراف اول و آخر. هدف: فهمیدن موضوع کلی.</p>
+
+      <h3>۲. Scanning (جستجو)</h3>
+      <p>وقتی به دنبال اطلاعات خاصی هستید (مثل یک اسم یا تاریخ)، متن را سریع اسکن کنید. چشم‌هایتان را روی کلمات کلیدی متمرکز کنید.</p>
+
+      <h3>۳. Intensive Reading (خواندن دقیق)</h3>
+      <p>بعد از فهم کلی، متن را با دقت بخوانید. هر کلمه ناشناس را علامت بزنید اما فوراً سراغ دیکشنری نروید.</p>
+
+      <h2>چطور از دیکشنری استفاده کنیم؟</h2>
+      <p>قانون طلایی: <strong>اول حدس بزنید، بعد جستجو کنید</strong>. وقتی کلمه‌ای را در بستر حدس می‌زنید، مغز آن را بهتر به خاطر می‌سپارد.</p>
+
+      <h2>انتخاب متن مناسب</h2>
+      <ul>
+        <li>متن باید حدود ۸۰٪ قابل فهم باشد.</li>
+        <li>موضوع باید جذاب باشد تا انگیزه ادامه پیدا کند.</li>
+        <li>از کوتاه شروع کنید: مقاله‌های ۲-۳ پاراگرافی.</li>
+      </ul>
+
+      <h2>تمرین روزانه</h2>
+      <p>روزی ۱۰ دقیقه بخوانید. یک پاراگراف کوتاه کافی است. مهم استمرار است، نه حجم.</p>
+
+      <div class="callout">
+        <span class="callout-ico">📚</span>
+        <div>خواندن، بهترین راه برای یادگیری لغت در بستر طبیعی است. هر متنی که می‌خوانید، هزاران درس کوچک در خود دارد.</div>
+      </div>
+    `
+  }
+};
+
+/* ═══ راه‌اندازی ═══ */
+document.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('slug');
+
+  const loadingBox = document.getElementById('loadingBox');
+  const errorBox = document.getElementById('errorBox');
+  const articleWrap = document.getElementById('articleWrap');
+  const backRow = document.getElementById('backRow');
+
+  // شبیه‌سازی بارگذاری کوتاه
+  setTimeout(() => {
+    loadingBox.style.display = 'none';
+
+    if (!slug || !ARTICLES[slug]) {
+      errorBox.classList.add('show');
+      return;
+    }
+
+    const article = ARTICLES[slug];
+
+    // تنظیم عنوان صفحه
+    document.title = `📖 ${article.title} — بازی زبان`;
+    document.querySelector('meta[name="description"]').setAttribute('content', article.title);
+
+    // پر کردن محتوا
+    document.getElementById('articleIcon').textContent = article.icon;
+    document.getElementById('articleTag').textContent = article.category;
+    document.getElementById('articleReadTime').textContent = article.readTime;
+    document.getElementById('articleDate').textContent = article.date;
+    document.getElementById('articleTitle').textContent = article.title;
+    document.getElementById('authorName').textContent = article.author;
+    document.getElementById('authorAvatar').textContent = article.author.charAt(0);
+    document.getElementById('articleBody').innerHTML = article.body;
+
+    // اشتراک‌گذاری
+    const shareUrl = encodeURIComponent(window.location.href);
+    const shareText = encodeURIComponent(article.title);
+
+    document.getElementById('shareTwitter').href = `https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`;
+    document.getElementById('shareTelegram').href = `https://t.me/share/url?url=${shareUrl}&text=${shareText}`;
+    document.getElementById('shareWhatsapp').href = `https://wa.me/?text=${shareText}%20${shareUrl}`;
+
+    document.getElementById('shareCopy').addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        const btn = document.getElementById('shareCopy');
+        const original = btn.textContent;
+        btn.textContent = '✅';
+        setTimeout(() => { btn.textContent = original; }, 1500);
+      } catch (err) {
+        alert('لینک کپی نشد. لطفاً دستی کپی کنید.');
+      }
+    });
+
+    articleWrap.style.display = 'block';
+    backRow.style.display = 'flex';
+  }, 400);
+});
+</script>
+
+</body>
+</html>

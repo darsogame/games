@@ -2,45 +2,106 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
+<meta name="description" content="بازی یادگیری زبان — ورود با کد کاربری یا مهمان، آموزش زبان با روش‌های تدریجی">
 <title>🔐 ورود — بازی زبان</title>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">
-=======
-<title>بازی یادگیری زبان - مراحل تدریجی</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌍</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&family=Noto+Sans+JP:wght@700;900&family=Noto+Sans+SC:wght@700;900&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&family=Noto+Sans+JP:wght@700;900&family=Noto+Sans+SC:wght@700;900&display=swap" rel="stylesheet">
->>>>>>> 88e044f7e982636027a15bebc416d6ebec0e5dbe
+
 <style>
+  /* ═══════════════════════════════════════════════
+     🎨 متغیرهای CSS — مرکزی برای تم‌دهی آسان
+     ═══════════════════════════════════════════════ */
+  :root {
+    --bg-1: #0f172a;
+    --bg-2: #1e293b;
+    --bg-3: #334155;
+    --surface: rgba(15, 23, 42, 0.85);
+    --surface-2: rgba(30, 41, 59, 0.6);
+    --border: rgba(56, 189, 248, 0.3);
+    --border-soft: rgba(148, 163, 184, 0.25);
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --text-dim: #64748b;
+    --accent-1: #38bdf8;
+    --accent-2: #a78bfa;
+    --accent-3: #fbbf24;
+    --success: #22c55e;
+    --error: #ef4444;
+    --warning: #fbbf24;
+    --radius-sm: 12px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 28px;
+    --shadow-lg: 0 25px 60px rgba(0, 0, 0, 0.6);
+    --shadow-accent: 0 10px 25px rgba(56, 189, 248, 0.4);
+    --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
   body {
     font-family: 'Vazirmatn', sans-serif;
     min-height: 100vh;
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
-    color: #e2e8f0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    min-height: 100dvh; /* برای موبایل با نوار آدرس */
+    background:
+      radial-gradient(ellipse at top, rgba(56, 189, 248, 0.08), transparent 50%),
+      radial-gradient(ellipse at bottom, rgba(167, 139, 250, 0.08), transparent 50%),
+      linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 50%, var(--bg-3) 100%);
+    background-attachment: fixed;
+    color: var(--text);
     padding: 20px;
+    padding-top: max(20px, env(safe-area-inset-top));
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
     overflow-x: hidden;
+    line-height: 1.7;
   }
 
+  /* ═══ Layout اصلی: دو ستونه در دسکتاپ ═══ */
+  .page-wrap {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 460px) minmax(0, 1fr);
+    gap: 40px;
+    align-items: start;
+    padding-top: 20px;
+  }
+
+  /* ═══ کارت ورود (ستون کنار) ═══ */
   .login-box {
+    position: sticky;
+    top: 20px;
     width: 100%;
-    max-width: 460px;
-    background: rgba(15, 23, 42, 0.85);
+    background: var(--surface);
     backdrop-filter: blur(20px);
-    border-radius: 28px;
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: var(--radius-xl);
     padding: 40px 32px;
-    border: 2px solid rgba(56, 189, 248, 0.3);
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+    border: 2px solid var(--border);
+    box-shadow: var(--shadow-lg);
     animation: slideUp 0.5s ease;
   }
 
   @keyframes slideUp {
     from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
@@ -52,28 +113,24 @@
     animation: bounce 2s ease infinite;
   }
 
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-
   .login-title {
     font-size: 26px;
     font-weight: 900;
     text-align: center;
-    background: linear-gradient(135deg, #38bdf8, #a78bfa, #fbbf24);
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-2), var(--accent-3));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     margin-bottom: 10px;
+    line-height: 1.4;
   }
 
   .login-subtitle {
     text-align: center;
-    color: #94a3b8;
+    color: var(--text-muted);
     font-size: 14px;
     margin-bottom: 30px;
-    line-height: 1.7;
+    line-height: 1.8;
   }
 
   .field-label {
@@ -93,31 +150,32 @@
     width: 100%;
     padding: 16px 50px 16px 16px;
     background: rgba(15, 23, 42, 0.8);
-    border: 2px solid rgba(148, 163, 184, 0.25);
-    border-radius: 14px;
+    border: 2px solid var(--border-soft);
+    border-radius: var(--radius-md);
     color: #fff;
     font-family: 'Courier New', monospace;
     font-size: 16px;
     font-weight: 700;
-    transition: all 0.25s;
+    transition: all var(--transition);
     direction: ltr;
     text-align: left;
   }
 
   .key-input:focus {
     outline: none;
-    border-color: #38bdf8;
+    border-color: var(--accent-1);
     box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.15);
   }
 
   .key-input::placeholder {
-    color: #64748b;
+    color: var(--text-dim);
     font-family: 'Vazirmatn', sans-serif;
+    font-weight: 400;
   }
 
   .key-toggle {
     position: absolute;
-    left: 12px;
+    left: 10px;
     top: 50%;
     transform: translateY(-50%);
     background: rgba(148, 163, 184, 0.15);
@@ -131,26 +189,29 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s;
+    transition: background var(--transition);
   }
 
-  .key-toggle:hover {
+  .key-toggle:hover,
+  .key-toggle:focus-visible {
     background: rgba(148, 163, 184, 0.3);
+    outline: 2px solid var(--accent-1);
+    outline-offset: 2px;
   }
 
   .login-btn {
     width: 100%;
     padding: 18px;
-    background: linear-gradient(135deg, #38bdf8, #a78bfa);
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
     color: #fff;
     border: none;
-    border-radius: 16px;
+    border-radius: var(--radius-md);
     font-family: inherit;
     font-size: 17px;
     font-weight: 900;
     cursor: pointer;
-    transition: all 0.25s;
-    box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4);
+    transition: all var(--transition);
+    box-shadow: var(--shadow-accent);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -163,8 +224,13 @@
     box-shadow: 0 15px 35px rgba(56, 189, 248, 0.6);
   }
 
+  .login-btn:focus-visible {
+    outline: 3px solid var(--accent-3);
+    outline-offset: 3px;
+  }
+
   .login-btn:disabled {
-    opacity: 0.5;
+    opacity: 0.6;
     cursor: not-allowed;
   }
 
@@ -173,7 +239,7 @@
     align-items: center;
     gap: 15px;
     margin: 20px 0;
-    color: #64748b;
+    color: var(--text-dim);
     font-size: 13px;
     font-weight: 700;
   }
@@ -192,12 +258,12 @@
     background: rgba(148, 163, 184, 0.15);
     color: #cbd5e1;
     border: 2px solid rgba(148, 163, 184, 0.3);
-    border-radius: 16px;
+    border-radius: var(--radius-md);
     font-family: inherit;
     font-size: 16px;
     font-weight: 900;
     cursor: pointer;
-    transition: all 0.25s;
+    transition: all var(--transition);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -209,9 +275,14 @@
     transform: translateY(-2px);
   }
 
+  .guest-btn:focus-visible {
+    outline: 3px solid var(--accent-3);
+    outline-offset: 3px;
+  }
+
   .status-box {
     padding: 16px 20px;
-    border-radius: 14px;
+    border-radius: var(--radius-sm);
     font-size: 14px;
     font-weight: 700;
     line-height: 1.7;
@@ -243,7 +314,7 @@
   .status-box.warning {
     background: rgba(251, 191, 36, 0.1);
     border: 2px solid rgba(251, 191, 36, 0.3);
-    color: #fbbf24;
+    color: var(--warning);
   }
 
   .loader {
@@ -256,77 +327,737 @@
     animation: spin 1s ease-in-out infinite;
   }
 
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
   .ip-info {
     text-align: center;
-    color: #64748b;
+    color: var(--text-dim);
     font-size: 12px;
     margin-top: 20px;
     font-family: 'Courier New', monospace;
     direction: ltr;
   }
 
-  .ip-info strong {
-    color: #38bdf8;
+  .ip-info strong { color: var(--accent-1); }
+
+  /* ═══════════════════════════════════════════════
+     📚 ستون محتوا (مقاله + تماس + درباره + FAQ)
+     ═══════════════════════════════════════════════ */
+  .content-col {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;                /* ⬅️ جلوگیری از سرریز در grid */
   }
 
-  /* ═══ رسیپانسیو ═══ */
+  .card {
+    background: var(--surface-2);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    border: 1.5px solid rgba(148, 163, 184, 0.18);
+    transition: border-color var(--transition), transform var(--transition);
+    min-width: 0;                /* ⬅️ جلوگیری از سرریز محتوای طولانی */
+  }
+
+  .card:hover {
+    border-color: rgba(56, 189, 248, 0.35);
+  }
+
+  .card-title {
+    font-size: 22px;
+    font-weight: 900;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .card-title .ico {
+    -webkit-text-fill-color: initial;
+    font-size: 24px;
+  }
+
+  .card p {
+    color: #cbd5e1;
+    font-size: 15px;
+    line-height: 2;
+    margin-bottom: 14px;
+  }
+
+  .card p:last-child { margin-bottom: 0; }
+
+  /* ─── مقاله / کارت‌های ویژگی ─── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 8px;
+  }
+
+  .feature-item {
+    background: rgba(56, 189, 248, 0.06);
+    border: 1.5px solid rgba(56, 189, 248, 0.18);
+    border-radius: var(--radius-md);
+    padding: 20px 18px;
+    transition: all var(--transition);
+  }
+
+  .feature-item:hover {
+    background: rgba(56, 189, 248, 0.12);
+    transform: translateY(-4px);
+    border-color: rgba(56, 189, 248, 0.4);
+  }
+
+  .feature-ico {
+    font-size: 32px;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .feature-title {
+    font-size: 15px;
+    font-weight: 900;
+    color: #e2e8f0;
+    margin-bottom: 6px;
+  }
+
+  .feature-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  /* ─── مقاله متنی ─── */
+  .article-body h3 {
+    font-size: 17px;
+    font-weight: 900;
+    color: var(--accent-1);
+    margin: 18px 0 10px;
+  }
+
+  .article-body p {
+    font-size: 14.5px;
+    line-height: 2;
+    color: #cbd5e1;
+    margin-bottom: 12px;
+  }
+
+  .article-body ul {
+    padding-right: 24px;
+    margin-bottom: 14px;
+  }
+
+  .article-body li {
+    font-size: 14.5px;
+    line-height: 2;
+    color: #cbd5e1;
+    margin-bottom: 8px;
+    position: relative;
+  }
+
+  .article-body li::marker {
+    color: var(--accent-2);
+  }
+
+  /* ─── آمار ─── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 14px;
+    margin-top: 18px;
+  }
+
+  .stat-item {
+    text-align: center;
+    padding: 16px 10px;
+    background: rgba(167, 139, 250, 0.08);
+    border-radius: var(--radius-md);
+    border: 1.5px solid rgba(167, 139, 250, 0.18);
+  }
+
+  .stat-num {
+    font-size: 26px;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--accent-2), var(--accent-3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+    line-height: 1.2;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* ─── فرم تماس ─── */
+  .contact-form {
+    display: grid;
+    gap: 14px;
+    margin-top: 8px;
+  }
+
+  .contact-form .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    padding: 14px 16px;
+    background: rgba(15, 23, 42, 0.7);
+    border: 1.5px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    color: #fff;
+    font-family: inherit;
+    font-size: 14px;
+    transition: all var(--transition);
+    resize: vertical;
+  }
+
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    outline: none;
+    border-color: var(--accent-1);
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
+  }
+
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder {
+    color: var(--text-dim);
+  }
+
+  .contact-form textarea {
+    min-height: 110px;
+    line-height: 1.8;
+  }
+
+  .submit-btn {
+    padding: 14px 24px;
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all var(--transition);
+    box-shadow: 0 8px 20px rgba(56, 189, 248, 0.3);
+    justify-self: start;
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(56, 189, 248, 0.5);
+  }
+
+  .submit-btn:focus-visible {
+    outline: 3px solid var(--accent-3);
+    outline-offset: 3px;
+  }
+
+  /* ─── اطلاعات تماس ─── */
+  .contact-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: rgba(34, 197, 94, 0.06);
+    border: 1.5px solid rgba(34, 197, 94, 0.18);
+    border-radius: var(--radius-sm);
+    font-size: 13.5px;
+    color: #cbd5e1;
+    min-width: 0;                /* ⬅️ جلوگیری از سرریز flex */
+  }
+
+  .contact-item .ci-ico {
+    font-size: 20px;
+    flex-shrink: 0;              /* ⬅️ آیکون کوچک نشود */
+  }
+
+  .contact-item > div {
+    min-width: 0;                /* ⬅️ مهم برای جلوگیری از سرریز */
+    flex: 1;
+  }
+
+  .contact-item strong {
+    display: block;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .contact-item span {
+    display: block;
+    direction: ltr;
+    text-align: right;
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    color: var(--accent-1);
+    font-size: 13px;
+    line-height: 1.5;
+    word-break: break-word;      /* ⬅️ شکستن در مرزهای منطقی */
+    overflow-wrap: anywhere;     /* ⬅️ جایگزین break-all */
+    unicode-bidi: plaintext;     /* ⬅️ نمایش صحیح LTR در RTL */
+    max-width: 100%;
+  }
+
+  /* ─── FAQ / آکاردئون ─── */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .faq-item {
+    background: rgba(15, 23, 42, 0.5);
+    border: 1.5px solid rgba(148, 163, 184, 0.18);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    transition: border-color var(--transition);
+  }
+
+  .faq-item[open] {
+    border-color: rgba(56, 189, 248, 0.4);
+  }
+
+  .faq-item summary {
+    padding: 16px 18px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14.5px;
+    color: #e2e8f0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    user-select: none;
+    transition: background var(--transition);
+  }
+
+  .faq-item summary::-webkit-details-marker { display: none; }
+
+  .faq-item summary::after {
+    content: '＋';
+    font-size: 18px;
+    color: var(--accent-1);
+    transition: transform var(--transition);
+    flex-shrink: 0;
+  }
+
+  .faq-item[open] summary::after {
+    content: '−';
+    transform: rotate(180deg);
+  }
+
+  .faq-item summary:hover {
+    background: rgba(56, 189, 248, 0.06);
+  }
+
+  .faq-item summary:focus-visible {
+    outline: 2px solid var(--accent-1);
+    outline-offset: -2px;
+  }
+
+  .faq-answer {
+    padding: 0 18px 16px;
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.9;
+    animation: fadeIn 0.3s ease;
+  }
+
+  /* ─── فوتر ─── */
+  .site-footer {
+    max-width: 1400px;
+    margin: 40px auto 0;
+    padding: 28px 24px;
+    border-top: 1.5px solid rgba(148, 163, 184, 0.15);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+
+  .footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 700;
+    transition: color var(--transition);
+  }
+
+  .footer-links a:hover {
+    color: var(--accent-1);
+  }
+
+  /* ═══════════════════════════════════════════════
+     📱 ریسپانسیو دقیق — Breakpoint به Breakpoint
+     ═══════════════════════════════════════════════ */
+
+  /* ─── دسکتاپ بزرگ / 4K ─── */
+  @media (min-width: 1600px) {
+    .page-wrap { grid-template-columns: minmax(0, 500px) minmax(0, 1fr); gap: 56px; }
+    .login-box { padding: 48px 40px; }
+    .card { padding: 40px; }
+    .card-title { font-size: 24px; }
+  }
+
+  /* ─── لپ‌تاپ ─── */
+  @media (max-width: 1200px) {
+    .page-wrap { grid-template-columns: minmax(0, 420px) minmax(0, 1fr); gap: 28px; }
+    .login-box { padding: 32px 26px; }
+    .card { padding: 26px; }
+  }
+
+  /* ─── تبلت افقی / کوچک ─── */
+  @media (max-width: 960px) {
+    .page-wrap {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding-top: 0;
+    }
+    .login-box {
+      position: static;
+      max-width: 520px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .content-col { max-width: 720px; margin: 0 auto; width: 100%; }
+    .contact-form .form-row { grid-template-columns: 1fr; }
+  }
+
+  /* ─── تبلت عمودی ─── */
+  @media (max-width: 768px) {
+    body { padding: 16px; }
+    .login-box { padding: 30px 24px; border-radius: var(--radius-lg); }
+    .login-icon { font-size: 60px; }
+    .login-title { font-size: 23px; }
+    .card { padding: 22px 20px; border-radius: var(--radius-md); }
+    .card-title { font-size: 19px; }
+    .card p { font-size: 14px; }
+    .feature-item { padding: 16px 14px; }
+    .feature-ico { font-size: 28px; }
+    .site-footer { flex-direction: column; text-align: center; }
+    .footer-links { justify-content: center; }
+  }
+
+  /* ─── موبایل ─── */
   @media (max-width: 480px) {
-    .login-box { padding: 30px 22px; border-radius: 22px; }
-    .login-icon { font-size: 55px; }
-    .login-title { font-size: 22px; }
+    body { padding: 12px; }
+    .page-wrap { gap: 18px; }
+    .login-box { padding: 26px 20px; border-radius: var(--radius-lg); }
+    .login-icon { font-size: 52px; margin-bottom: 14px; }
+    .login-title { font-size: 20px; }
+    .login-subtitle { font-size: 13px; margin-bottom: 22px; }
     .key-input { font-size: 15px; padding: 14px 46px 14px 14px; }
     .login-btn { padding: 15px; font-size: 15px; }
+    .guest-btn { padding: 14px; font-size: 14.5px; }
+    .card { padding: 20px 16px; }
+    .card-title { font-size: 17px; }
+    .card-title .ico { font-size: 20px; }
+    .card p { font-size: 13.5px; line-height: 1.9; }
+    .features-grid { grid-template-columns: 1fr; gap: 12px; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .stat-num { font-size: 22px; }
+    .contact-info { grid-template-columns: 1fr; }
+
+    /* ⬇️ اصلاح نمایش اطلاعات تماس در موبایل */
+    .contact-item {
+      padding: 12px 14px;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .contact-item .ci-ico {
+      margin-top: 2px;
+    }
+    .contact-item span {
+      font-size: 12px;
+      letter-spacing: -0.2px;
+    }
+
+    .faq-item summary { padding: 14px 14px; font-size: 13.5px; }
+    .faq-answer { padding: 0 14px 14px; font-size: 13px; }
+    .submit-btn { width: 100%; justify-self: stretch; }
+    .site-footer { padding: 22px 16px; font-size: 12px; }
+    .footer-links { gap: 14px; font-size: 12px; }
+  }
+
+  /* ─── موبایل خیلی کوچک (iPhone SE, Galaxy Fold) ─── */
+  @media (max-width: 360px) {
+    body { padding: 8px; }
+    .login-box { padding: 22px 14px; border-radius: 18px; }
+    .login-icon { font-size: 44px; }
+    .login-title { font-size: 18px; }
+    .login-subtitle { font-size: 12px; }
+    .key-input { padding: 12px 42px 12px 12px; font-size: 14px; }
+    .key-toggle { width: 30px; height: 30px; font-size: 13px; left: 8px; }
+    .login-btn { padding: 13px; font-size: 14px; }
+    .guest-btn { padding: 12px; font-size: 13.5px; }
+    .card { padding: 16px 12px; }
+    .card-title { font-size: 16px; }
+    .stat-num { font-size: 20px; }
+    .stat-label { font-size: 11px; }
+
+    /* ⬇️ اصلاح نمایش اطلاعات تماس در موبایل خیلی کوچک */
+    .contact-item {
+      padding: 10px 12px;
+      gap: 8px;
+    }
+    .contact-item .ci-ico { font-size: 18px; }
+    .contact-item strong { font-size: 11px; }
+    .contact-item span {
+      font-size: 11px;
+      letter-spacing: -0.3px;
+      overflow-wrap: anywhere;
+    }
+  }
+
+  /* ─── حالت افقی موبایل (Landscape) ─── */
+  @media (max-height: 500px) and (orientation: landscape) {
+    .login-icon { font-size: 40px; margin-bottom: 8px; animation: none; }
+    .login-box { padding: 20px; }
+    .login-subtitle { margin-bottom: 16px; }
+  }
+
+  /* ─── کاهش انیمیشن برای کاربران با تنظیمات خاص ─── */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* ─── حالت چاپ ─── */
+  @media print {
+    body { background: #fff; color: #000; }
+    .login-box, .card { background: #fff; border-color: #ccc; box-shadow: none; }
+    .login-btn, .guest-btn, .submit-btn { display: none; }
   }
 </style>
 </head>
 <body>
 
-<div class="login-box">
-  <span class="login-icon">🔐</span>
-  <h1 class="login-title">ورود به بازی زبان</h1>
-  <p class="login-subtitle">
-    برای دسترسی به همه امکانات، کد کاربری خود را وارد کنید<br>
-    یا به‌عنوان مهمان وارد شوید
-  </p>
+<div class="page-wrap">
 
-  <div class="status-box" id="statusBox"></div>
+  <!-- ═══════════ ستون ورود ═══════════ -->
+  <div class="login-box">
+    <span class="login-icon" aria-hidden="true">🔐</span>
+    <h1 class="login-title">ورود به بازی زبان</h1>
+    <p class="login-subtitle">
+      برای دسترسی به همه امکانات، کد کاربری خود را وارد کنید<br>
+      یا به‌عنوان مهمان وارد شوید
+    </p>
 
-  <label class="field-label">🔑 کد کاربری:</label>
-  <div class="key-input-wrap">
-    <input 
-      type="password" 
-      id="keyInput" 
-      class="key-input" 
-      placeholder="کد کاربری خود را وارد کنید..."
-      autocomplete="off"
-      spellcheck="false"
-    />
-    <button class="key-toggle" onclick="toggleKeyVisibility()" title="نمایش/مخفی">👁️</button>
+    <div class="status-box" id="statusBox" role="status" aria-live="polite"></div>
+
+    <label class="field-label" for="keyInput">🔑 کد کاربری:</label>
+    <div class="key-input-wrap">
+      <input
+        type="password"
+        id="keyInput"
+        class="key-input"
+        placeholder="کد کاربری خود را وارد کنید..."
+        autocomplete="off"
+        spellcheck="false"
+        aria-label="کد کاربری"
+      />
+      <button class="key-toggle" type="button" onclick="toggleKeyVisibility(event)" title="نمایش/مخفی" aria-label="نمایش یا مخفی کردن کد">👁️</button>
+    </div>
+
+    <button class="login-btn" id="loginBtn" type="button" onclick="loginWithKey()">
+      🔓 ورود با کد
+    </button>
+
+    <div class="divider">یا</div>
+
+    <button class="guest-btn" type="button" onclick="loginAsGuest()">
+      👤 ورود به‌عنوان مهمان
+    </button>
+
+    <div class="ip-info">
+      IP شما: <strong id="userIp">در حال دریافت...</strong>
+    </div>
   </div>
 
-  <button class="login-btn" id="loginBtn" onclick="loginWithKey()">
-    🔓 ورود با کد
-  </button>
+  <!-- ═══════════ ستون محتوا ═══════════ -->
+  <div class="content-col">
 
-  <div class="divider">یا</div>
+    <!-- ─── درباره ما ─── -->
+    <section class="card" id="about">
+      <h2 class="card-title"><span class="ico">🌍</span> درباره بازی زبان</h2>
+      <p>
+        «بازی زبان» یک پلتفرم آموزشی تعاملی است که یادگیری زبان‌های خارجی را به یک تجربهٔ سرگرم‌کننده و مؤثر تبدیل می‌کند. با ترکیب روش‌های علمی آموزش زبان و مکانیک‌های بازی‌سازی، شما می‌توانید در هر سطحی که هستید، پیشرفت واقعی را تجربه کنید.
+      </p>
+      <p>
+        هدف ما این است که یادگیری زبان را از یک وظیفهٔ خسته‌کننده به یک عادت روزانهٔ لذت‌بخش تبدیل کنیم — بدون نیاز به کلاس‌های گران‌قیمت و کتاب‌های حجیم.
+      </p>
 
-  <button class="guest-btn" onclick="loginAsGuest()">
-    👤 ورود به‌عنوان مهمان
-  </button>
+      <div class="stats-row">
+        <div class="stat-item">
+          <span class="stat-num">+7</span>
+          <span class="stat-label">زبان فعال</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">+8</span>
+          <span class="stat-label">درس تعاملی</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">98%</span>
+          <span class="stat-label">رضایت</span>
+        </div>
+      </div>
+    </section>
 
-  <div class="ip-info">
-    IP شما: <strong id="userIp">در حال دریافت...</strong>
+    <!-- ─── مقاله / ویژگی‌ها ─── -->
+    <section class="card article-body" id="article">
+      <h2 class="card-title"><span class="ico">📖</span> چرا بازی زبان؟</h2>
+      <p>
+        تحقیقات نشان می‌دهد که یادگیری مبتنی بر بازی، میزان ماندگاری مطالب در حافظه را تا <strong>۳ برابر</strong> افزایش می‌دهد. در «بازی زبان» از این اصل علمی استفاده می‌کنیم تا هر درس، یک قدم واقعی به جلو باشد.
+      </p>
+
+      <h3>ویژگی‌های کلیدی:</h3>
+      <div class="features-grid">
+        <div class="feature-item">
+          <span class="feature-ico">🎮</span>
+          <div class="feature-title">یادگیری بازی‌محور</div>
+          <div class="feature-desc">درس‌ها به شکل چالش و بازی ارائه می‌شوند تا انگیزه‌ات حفظ شود.</div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-ico">📈</span>
+          <div class="feature-title">پیشرفت تدریجی</div>
+          <div class="feature-desc">مسیر یادگیری مرحله‌به‌مرحله از مبتدی تا پیشرفته طراحی شده است.</div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-ico">🎧</span>
+          <div class="feature-title">مهارت شنیداری</div>
+          <div class="feature-desc">تمرین‌های صوتی تعاملی برای تقویت گوش دادن و تلفظ صحیح.</div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-ico">✍️</span>
+          <div class="feature-title">نوشتار و خوانش</div>
+          <div class="feature-desc">تمرین‌های خواندن و نوشتن با بازخورد فوری و هوشمند.</div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-ico">🗣️</span>
+          <div class="feature-title">مکالمه</div>
+          <div class="feature-desc">سناریوهای واقعی مکالمه برای تمرین گفتاری بدون استرس.</div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-ico">🏆</span>
+          <div class="feature-title">دستاورد و رتبه</div>
+          <div class="feature-desc">نشان‌ها، امتیاز و جدول رتبه‌بندی برای انگیزهٔ بیشتر.</div>
+        </div>
+      </div>
+
+      <h3>روش یادگیری ما:</h3>
+      <ul>
+        <li><strong>تکرار فاصله‌دار (Spaced Repetition):</strong> مرور هوشمند مطالب در فواصل زمانی بهینه.</li>
+        <li><strong>یادگیری فعال:</strong> به‌جای حفظ کردن، در موقعیت‌های واقعی تمرین می‌کنی.</li>
+        <li><strong>بازخورد فوری:</strong> هر اشتباه، یک فرصت یادگیری با توضیح دقیق است.</li>
+        <li><strong>مسیر شخصی‌سازی‌شده:</strong> سرعت و محتوا بر اساس سطح تو تنظیم می‌شود.</li>
+      </ul>
+    </section>
+
+    <!-- ─── سوالات متداول ─── -->
+    <section class="card" id="faq">
+      <h2 class="card-title"><span class="ico">❓</span> سوالات متداول</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>چطور کد کاربری دریافت کنم؟</summary>
+          <div class="faq-answer">کد کاربری از طریق پشتیبانی یا صفحهٔ ثبت‌نام در اختیار شما قرار می‌گیرد. در صورت نداشتن کد، می‌توانید به‌عنوان مهمان وارد شوید.</div>
+        </details>
+        <details class="faq-item">
+          <summary>حالت مهمان چه محدودیتی دارد؟</summary>
+          <div class="faq-answer">در حالت مهمان فقط به بخش بازی دسترسی دارید. برای استفاده از درس‌ها، تمرین شنیداری، خواندن، نوشتن و مکالمه نیاز به کد کاربری است.</div>
+        </details>
+        <details class="faq-item">
+          <summary>چرا IP من ثبت می‌شود؟</summary>
+          <div class="faq-answer">برای امنیت حساب و جلوگیری از استفادهٔ هم‌زمان از یک کد روی چند دستگاه، IP شما در اولین ورود ثبت می‌شود. این کار کاملاً خودکار انجام می‌شود.</div>
+        </details>
+        <details class="faq-item">
+          <summary>اگر IP من تغییر کند چه می‌شود؟</summary>
+          <div class="faq-answer">در صورت تغییر IP، دسترسی شما موقتاً محدود می‌شود و باید از طریق پشتیبانی درخواست بازنشانی دهید.</div>
+        </details>
+        <details class="faq-item">
+          <summary>آیا یادگیری در موبایل هم پشتیبانی می‌شود؟</summary>
+          <div class="faq-answer">بله! تمام بخش‌های بازی زبان به‌طور کامل برای موبایل، تبلت و دسکتاپ بهینه‌سازی شده‌اند و تجربه‌ای یکسان ارائه می‌دهند.</div>
+        </details>
+      </div>
+    </section>
+
+    <!-- ─── تماس با ما ─── -->
+    <section class="card" id="contact">
+      <h2 class="card-title"><span class="ico">✉️</span> تماس با ما</h2>
+      <p>سوال، پیشنهاد یا مشکلی دارید؟ از راه‌های ارتباطی مستقیم استفاده کنید. تیم ما در اسرع وقت پاسخگو خواهد بود.</p>
+
+      <div class="contact-info">
+        <div class="contact-item">
+          <span class="ci-ico">📧</span>
+          <div>
+            <strong>ایمیل</strong>
+            <span>krymynwabb1313@gmail.com</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="ci-ico">💬</span>
+          <div>
+            <strong>پشتیبانی تلگرام</strong>
+            <span>@darsogame</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="ci-ico">🕐</span>
+          <div>
+            <strong>ساعات پاسخ</strong>
+            <span>۹:۰۰ — ۱۸:۰۰</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </div>
+
+<!-- ═══════════ فوتر ═══════════ -->
+<footer class="site-footer">
+  <div>© ۲۰۲۵ بازی زبان — تمام حقوق محفوظ است.</div>
+  <nav class="footer-links" aria-label="لینک‌های فوتر">
+    <a href="darsogame.github.io/portfolio">درباره ما</a>
+    <a href="article.html">مقاله</a>
+    <a href="#faq">سوالات متداول</a>
+    <a href="#contact">تماس با ما</a>
+  </nav>
+</footer>
 
 <script>
 /* ══════════════════════════════════════════════════════════════
@@ -378,15 +1109,17 @@ function showStatus(type, message) {
 }
 
 /* ═══ ۴. مخفی/نمایش کد ═══ */
-function toggleKeyVisibility() {
+function toggleKeyVisibility(e) {
   const input = document.getElementById('keyInput');
-  const btn = event.target;
+  const btn = e.currentTarget;
   if (input.type === 'password') {
     input.type = 'text';
     btn.textContent = '🙈';
+    btn.setAttribute('aria-label', 'مخفی کردن کد');
   } else {
     input.type = 'password';
     btn.textContent = '👁️';
+    btn.setAttribute('aria-label', 'نمایش کد');
   }
 }
 
@@ -404,10 +1137,7 @@ async function loginWithKey() {
   btn.disabled = true;
   btn.innerHTML = '<span class="loader"></span> در حال بررسی...';
 
-  // اطمینان از بارگذاری کاربران
-  if (!usersData) {
-    await loadUsers();
-  }
+  if (!usersData) await loadUsers();
 
   if (!usersData || !usersData.users) {
     showStatus('error', '❌ فایل کاربران در دسترس نیست');
@@ -416,12 +1146,8 @@ async function loginWithKey() {
     return;
   }
 
-  // اطمینان از دریافت IP
-  if (!currentIP) {
-    await fetchUserIP();
-  }
+  if (!currentIP) await fetchUserIP();
 
-  // پیدا کردن کاربر با این کلید
   const user = usersData.users.find(u => u.key === key);
 
   if (!user) {
@@ -431,9 +1157,8 @@ async function loginWithKey() {
     return;
   }
 
-  // بررسی محدودیت IP
   if (user.ip && user.ip !== 'null' && user.ip !== '' && user.ip !== currentIP) {
-    showStatus('error', 
+    showStatus('error',
       `🚫 این کد قبلاً از IP دیگری استفاده شده است!<br>
        <span style="font-size:12px; opacity:0.8;">IP ثبت‌شده: ${user.ip}<br>IP فعلی: ${currentIP}</span>`
     );
@@ -442,12 +1167,10 @@ async function loginWithKey() {
     return;
   }
 
-  // ثبت IP در صورت اولین ورود
   if (!user.ip || user.ip === 'null' || user.ip === '') {
     user.ip = currentIP;
-    // ذخیره در localStorage (چون نمی‌توانیم فایل JSON را تغییر دهیم)
     saveUserIP(user.key, currentIP);
-    showStatus('success', 
+    showStatus('success',
       `✅ خوش آمدید ${user.name || 'کاربر'}!<br>
        <span style="font-size:12px; opacity:0.8;">IP شما ثبت شد: ${currentIP}</span>`
     );
@@ -455,7 +1178,6 @@ async function loginWithKey() {
     showStatus('success', `✅ خوش آمدید ${user.name || 'کاربر'}!`);
   }
 
-  // ذخیره وضعیت ورود
   const session = {
     type: 'user',
     key: user.key,
@@ -465,31 +1187,22 @@ async function loginWithKey() {
     permissions: user.permissions || ['game', 'lesson', 'listening', 'reading', 'writing', 'speaking']
   };
 
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(session));
-  } catch (err) {
-    console.warn('خطا در ذخیره session:', err);
-  }
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(session)); }
+  catch (err) { console.warn('خطا در ذخیره session:', err); }
 
-  // انتقال به صفحه اصلی
-  setTimeout(() => {
-    window.location.href = 'hub.html';
-  }, 1200);
+  setTimeout(() => { window.location.href = 'hub.html'; }, 1200);
 }
 
-/* ═══ ۶. ذخیره IP کاربر در localStorage ═══ */
+/* ═══ ۶. ذخیره IP کاربر ═══ */
 function saveUserIP(key, ip) {
   try {
     const ipStore = JSON.parse(localStorage.getItem('lingo_user_ips') || '{}');
     ipStore[key] = ip;
     localStorage.setItem('lingo_user_ips', JSON.stringify(ipStore));
-    console.log(`✅ IP کاربر ${key} ثبت شد: ${ip}`);
-  } catch (err) {
-    console.warn('خطا در ذخیره IP:', err);
-  }
+  } catch (err) { console.warn('خطا در ذخیره IP:', err); }
 }
 
-/* ═══ ۷. بازیابی IP کاربران از localStorage ═══ */
+/* ═══ ۷. بازیابی IP کاربران ═══ */
 function restoreUserIPs() {
   if (!usersData || !usersData.users) return;
   try {
@@ -499,9 +1212,7 @@ function restoreUserIPs() {
         user.ip = ipStore[user.key];
       }
     });
-  } catch (err) {
-    console.warn('خطا در بازیابی IP:', err);
-  }
+  } catch (err) { console.warn('خطا در بازیابی IP:', err); }
 }
 
 /* ═══ ۸. ورود به‌عنوان مهمان ═══ */
@@ -511,20 +1222,14 @@ function loginAsGuest() {
     name: 'مهمان',
     ip: currentIP,
     loginTime: Date.now(),
-    permissions: ['game']  // فقط بازی
+    permissions: ['game']
   };
 
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(session));
-  } catch (err) {
-    console.warn('خطا در ذخیره session:', err);
-  }
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(session)); }
+  catch (err) { console.warn('خطا در ذخیره session:', err); }
 
   showStatus('info', '👤 ورود به‌عنوان مهمان...');
-
-  setTimeout(() => {
-    window.location.href = 'index2.html';
-  }, 800);
+  setTimeout(() => { window.location.href = 'index2.html'; }, 800);
 }
 
 /* ═══ ۹. بررسی session موجود ═══ */
@@ -532,18 +1237,16 @@ async function checkExistingSession() {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (!stored) return false;
-    
+
     const session = JSON.parse(stored);
-    
-    // اگر خیلی قدیمی است (بیش از ۷ روز)، حذف کن
+
     if (Date.now() - session.loginTime > 7 * 24 * 60 * 60 * 1000) {
       localStorage.removeItem(STORAGE_KEY);
       return false;
     }
 
-    // بررسی IP
     if (session.type === 'user' && session.ip && session.ip !== currentIP) {
-      showStatus('error', 
+      showStatus('error',
         `🚫 IP شما تغییر کرده!<br>
          <span style="font-size:12px;">IP اصلی: ${session.ip}<br>IP فعلی: ${currentIP}</span>`
       );
@@ -552,39 +1255,45 @@ async function checkExistingSession() {
     }
 
     return session;
-  } catch (err) {
-    return false;
-  }
+  } catch (err) { return false; }
 }
 
-/* ═══ ۱۰. راه‌اندازی ═══ */
+/* ═══ ۱۰. ارسال فرم تماس ═══ */
+function submitContact(e) {
+  e.preventDefault();
+  const form = e.target;
+  const btn = form.querySelector('.submit-btn');
+  const originalText = btn.textContent;
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loader"></span> در حال ارسال...';
+
+  // شبیه‌سازی ارسال (اینجا می‌توانید به API واقعی وصل کنید)
+  setTimeout(() => {
+    btn.disabled = false;
+    btn.textContent = '✅ پیام ارسال شد';
+    form.reset();
+    setTimeout(() => { btn.textContent = originalText; }, 2500);
+  }, 1500);
+}
+
+/* ═══ ۱۱. راه‌اندازی ═══ */
 window.addEventListener('load', async () => {
-  // دریافت IP
   await fetchUserIP();
-  
-  // بارگذاری کاربران
   await loadUsers();
-  
-  // بازیابی IP کاربران
   restoreUserIPs();
 
-  // بررسی session موجود
   const existingSession = await checkExistingSession();
   if (existingSession) {
-    showStatus('info', 
+    showStatus('info',
       `✅ شما قبلاً وارد شده‌اید (${existingSession.name})<br>
        <span style="font-size:12px;">در حال انتقال...</span>`
     );
     setTimeout(() => {
-      if (existingSession.type === 'user') {
-        window.location.href = 'hub.html';
-      } else {
-        window.location.href = 'index2.html';
-      }
+      window.location.href = existingSession.type === 'user' ? 'hub.html' : 'index2.html';
     }, 1500);
   }
 
-  // Enter برای ورود
   document.getElementById('keyInput').addEventListener('keydown', (e) => {
     if (e.key === 'Enter') loginWithKey();
   });
