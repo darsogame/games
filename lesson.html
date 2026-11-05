@@ -1072,7 +1072,29 @@
       <button class="nav-btn next" id="nextBtn">کلمه بعدی ▶</button>
     </div>
   </div>
+  <!-- بارگذاری استایل ویجت -->
+<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 
+<script type="module">
+  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+  createChat({
+    webhookUrl: 'https://newelev.app.n8n.cloud/webhook/7fb67c51-b6fd-4460-b693-c83bbbea4e86/chat',
+    // تنظیمات اختیاری برای فارسی‌سازی ظاهر
+    initialMessages: [
+      'سلام! 👋',
+      'من دستیار آموزشی شما هستم. چطور می‌توانم کمک کنم؟'
+    ],
+    i18n: {
+      en: {
+        title: 'دستیار زبان',
+        subtitle: 'برای شروع گفتگو کلیک کنید',
+        inputPlaceholder: 'سوال خود را بنویسید...',
+        getStarted: 'شروع گفتگوی جدید'
+      }
+    }
+  });
+</script>
 </div>
 
 <script>
