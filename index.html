@@ -941,9 +941,7 @@
       👤 ورود به‌عنوان مهمان
     </button>
 
-    <div class="ip-info">
-      IP شما: <strong id="userIp">در حال دریافت...</strong>
-    </div>
+    
   </div>
 
   <!-- ═══════════ ستون محتوا ═══════════ -->
@@ -1038,10 +1036,6 @@
           <div class="faq-answer">در حالت مهمان فقط به بخش بازی دسترسی دارید. برای استفاده از درس‌ها، تمرین شنیداری، خواندن، نوشتن و مکالمه نیاز به کد کاربری است.</div>
         </details>
         <details class="faq-item">
-          <summary>چرا IP من ثبت می‌شود؟</summary>
-          <div class="faq-answer">برای امنیت حساب و جلوگیری از استفادهٔ هم‌زمان از یک کد روی چند دستگاه، IP شما در اولین ورود ثبت می‌شود. این کار کاملاً خودکار انجام می‌شود.</div>
-        </details>
-        <details class="faq-item">
           <summary>اگر IP من تغییر کند چه می‌شود؟</summary>
           <div class="faq-answer">در صورت تغییر IP، دسترسی شما موقتاً محدود می‌شود و باید از طریق پشتیبانی درخواست بازنشانی دهید.</div>
         </details>
@@ -1098,32 +1092,15 @@
 
 <script>
 /* ══════════════════════════════════════════════════════════════
-   🔐 سیستم ورود با User Key + محدودیت IP
+   🔐 سیستم ورود با User Key (بدون محدودیت IP)
    ══════════════════════════════════════════════════════════════ */
 
 const USERS_FILE = 'users.json';
 const STORAGE_KEY = 'lingo_auth';
-const IP_API = 'https://api.ipify.org?format=json';
 
-let currentIP = null;
 let usersData = null;
 
-/* ═══ ۱. دریافت IP کاربر ═══ */
-async function fetchUserIP() {
-  try {
-    const response = await fetch(IP_API, { cache: 'no-store' });
-    const data = await response.json();
-    currentIP = data.ip;
-    document.getElementById('userIp').textContent = currentIP;
-    return currentIP;
-  } catch (err) {
-    console.warn('خطا در دریافت IP:', err);
-    document.getElementById('userIp').textContent = 'نامشخص';
-    return null;
-  }
-}
-
-/* ═══ ۲. بارگذاری فایل users.json ═══ */
+/* ═══ ۱. بارگذاری فایل users.json ═══ */
 async function loadUsers() {
   try {
     const response = await fetch(USERS_FILE, { cache: 'no-store' });
@@ -1138,14 +1115,14 @@ async function loadUsers() {
   }
 }
 
-/* ═══ ۳. نمایش وضعیت ═══ */
+/* ═══ ۲. نمایش وضعیت ═══ */
 function showStatus(type, message) {
   const box = document.getElementById('statusBox');
   box.className = 'status-box show ' + type;
   box.innerHTML = message;
 }
 
-/* ═══ ۴. مخفی/نمایش کد ═══ */
+/* ═══ ۳. مخفی/نمایش کد ═══ */
 function toggleKeyVisibility(e) {
   const input = document.getElementById('keyInput');
   const btn = e.currentTarget;
@@ -1160,7 +1137,7 @@ function toggleKeyVisibility(e) {
   }
 }
 
-/* ═══ ۵. ورود با کد کاربری ═══ */
+/* ═══ ۴. ورود با کد کاربری ═══ */
 async function loginWithKey() {
   const keyInput = document.getElementById('keyInput');
   const key = keyInput.value.trim();
@@ -1183,8 +1160,6 @@ async function loginWithKey() {
     return;
   }
 
-  if (!currentIP) await fetchUserIP();
-
   const user = usersData.users.find(u => u.key === key);
 
   if (!user) {
@@ -1194,32 +1169,12 @@ async function loginWithKey() {
     return;
   }
 
-  if (user.ip && user.ip !== 'null' && user.ip !== '' && user.ip !== currentIP) {
-    showStatus('error',
-      `🚫 این کد قبلاً از IP دیگری استفاده شده است!<br>
-       <span style="font-size:12px; opacity:0.8;">IP ثبت‌شده: ${user.ip}<br>IP فعلی: ${currentIP}</span>`
-    );
-    btn.disabled = false;
-    btn.innerHTML = '🔓 ورود با کد';
-    return;
-  }
-
-  if (!user.ip || user.ip === 'null' || user.ip === '') {
-    user.ip = currentIP;
-    saveUserIP(user.key, currentIP);
-    showStatus('success',
-      `✅ خوش آمدید ${user.name || 'کاربر'}!<br>
-       <span style="font-size:12px; opacity:0.8;">IP شما ثبت شد: ${currentIP}</span>`
-    );
-  } else {
-    showStatus('success', `✅ خوش آمدید ${user.name || 'کاربر'}!`);
-  }
+  showStatus('success', `✅ خوش آمدید ${user.name || 'کاربر'}!`);
 
   const session = {
     type: 'user',
     key: user.key,
     name: user.name,
-    ip: currentIP,
     loginTime: Date.now(),
     permissions: user.permissions || ['game', 'lesson', 'listening', 'reading', 'writing', 'speaking']
   };
@@ -1230,34 +1185,11 @@ async function loginWithKey() {
   setTimeout(() => { window.location.href = 'hub.html'; }, 1200);
 }
 
-/* ═══ ۶. ذخیره IP کاربر ═══ */
-function saveUserIP(key, ip) {
-  try {
-    const ipStore = JSON.parse(localStorage.getItem('lingo_user_ips') || '{}');
-    ipStore[key] = ip;
-    localStorage.setItem('lingo_user_ips', JSON.stringify(ipStore));
-  } catch (err) { console.warn('خطا در ذخیره IP:', err); }
-}
-
-/* ═══ ۷. بازیابی IP کاربران ═══ */
-function restoreUserIPs() {
-  if (!usersData || !usersData.users) return;
-  try {
-    const ipStore = JSON.parse(localStorage.getItem('lingo_user_ips') || '{}');
-    usersData.users.forEach(user => {
-      if (ipStore[user.key] && (!user.ip || user.ip === 'null')) {
-        user.ip = ipStore[user.key];
-      }
-    });
-  } catch (err) { console.warn('خطا در بازیابی IP:', err); }
-}
-
-/* ═══ ۸. ورود به‌عنوان مهمان ═══ */
+/* ═══ ۵. ورود به‌عنوان مهمان ═══ */
 function loginAsGuest() {
   const session = {
     type: 'guest',
     name: 'مهمان',
-    ip: currentIP,
     loginTime: Date.now(),
     permissions: ['game']
   };
@@ -1269,7 +1201,7 @@ function loginAsGuest() {
   setTimeout(() => { window.location.href = 'index2.html'; }, 800);
 }
 
-/* ═══ ۹. بررسی session موجود ═══ */
+/* ═══ ۶. بررسی session موجود ═══ */
 async function checkExistingSession() {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -1282,20 +1214,11 @@ async function checkExistingSession() {
       return false;
     }
 
-    if (session.type === 'user' && session.ip && session.ip !== currentIP) {
-      showStatus('error',
-        `🚫 IP شما تغییر کرده!<br>
-         <span style="font-size:12px;">IP اصلی: ${session.ip}<br>IP فعلی: ${currentIP}</span>`
-      );
-      localStorage.removeItem(STORAGE_KEY);
-      return false;
-    }
-
     return session;
   } catch (err) { return false; }
 }
 
-/* ═══ ۱۰. ارسال فرم تماس ═══ */
+/* ═══ ۷. ارسال فرم تماس ═══ */
 function submitContact(e) {
   e.preventDefault();
   const form = e.target;
@@ -1314,11 +1237,9 @@ function submitContact(e) {
   }, 1500);
 }
 
-/* ═══ ۱۱. راه‌اندازی ═══ */
+/* ═══ ۸. راه‌اندازی ═══ */
 window.addEventListener('load', async () => {
-  await fetchUserIP();
   await loadUsers();
-  restoreUserIPs();
 
   const existingSession = await checkExistingSession();
   if (existingSession) {
