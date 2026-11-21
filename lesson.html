@@ -996,6 +996,164 @@
     text-align: center;
     border-radius: 8px;
   }
+    /* ═══════════════════════════════════════════════════════ */
+  /* 📚 درسنامه‌های سطح‌بندی‌شده                              */
+  /* ═══════════════════════════════════════════════════════ */
+
+  .level-selector-section {
+    margin-bottom: 25px;
+    padding: 20px;
+    background: rgba(15, 23, 42, 0.6);
+    border-radius: 20px;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+  }
+
+  .level-section-title {
+    font-size: 18px;
+    font-weight: 900;
+    color: #f1f5f9;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .level-section-title .icon {
+    font-size: 24px;
+  }
+
+  .level-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+  }
+
+  .level-tab {
+    padding: 10px 16px;
+    background: rgba(148, 163, 184, 0.1);
+    border: 2px solid rgba(148, 163, 184, 0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    color: #cbd5e1;
+    transition: all 0.25s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .level-tab:hover {
+    background: rgba(56, 189, 248, 0.15);
+    border-color: #38bdf8;
+    transform: translateY(-2px);
+  }
+
+  .level-tab.active {
+    background: linear-gradient(135deg, #38bdf8, #a78bfa);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(56, 189, 248, 0.35);
+  }
+
+  .level-tab .flag {
+    font-size: 18px;
+  }
+
+  .levels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+    margin-top: 15px;
+  }
+
+  .level-card {
+    background: linear-gradient(135deg, #1e293b, #334155);
+    border: 2px solid rgba(148, 163, 184, 0.2);
+    border-radius: 16px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .level-card:hover {
+    transform: translateY(-5px);
+    border-color: #22c55e;
+    box-shadow: 0 15px 35px rgba(34, 197, 94, 0.25);
+  }
+
+  .level-card .level-code {
+    font-size: 24px;
+    font-weight: 900;
+    font-family: 'Courier New', monospace;
+    color: #22c55e;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .level-card[data-lang="en"] .level-code { color: #38bdf8; }
+  .level-card[data-lang="en"]:hover { border-color: #38bdf8; box-shadow: 0 15px 35px rgba(56, 189, 248, 0.25); }
+
+  .level-card[data-lang="zh"] .level-code { color: #ef4444; }
+  .level-card[data-lang="zh"]:hover { border-color: #ef4444; box-shadow: 0 15px 35px rgba(239, 68, 68, 0.25); }
+
+  .level-card[data-lang="ko"] .level-code { color: #fbbf24; }
+  .level-card[data-lang="ko"]:hover { border-color: #fbbf24; box-shadow: 0 15px 35px rgba(251, 191, 36, 0.25); }
+
+  .level-card .level-name {
+    font-size: 13px;
+    color: #cbd5e1;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .level-card .level-desc {
+    font-size: 11px;
+    color: #94a3b8;
+    line-height: 1.5;
+  }
+
+  .level-card .level-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 3px 8px;
+    border-radius: 8px;
+    font-size: 9px;
+    font-weight: 900;
+  }
+
+  .level-card[data-lang="en"] .level-badge { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
+  .level-card[data-lang="zh"] .level-badge { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+  .level-card[data-lang="ko"] .level-badge { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
+
+  .level-card .start-btn {
+    margin-top: 10px;
+    padding: 6px 14px;
+    background: rgba(34, 197, 94, 0.15);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: 10px;
+    color: #86efac;
+    font-size: 11px;
+    font-weight: 900;
+    display: inline-block;
+  }
+
+  .level-card:hover .start-btn {
+    background: rgba(34, 197, 94, 0.3);
+  }
+
+  .level-empty {
+    text-align: center;
+    padding: 30px;
+    color: #94a3b8;
+    font-size: 13px;
+  }
 </style>
 <link rel="canonical" href="https://darsogame.github.io/games/lesson.html"></head>
 <body>
@@ -1047,7 +1205,25 @@
       <span class="sel-role">مقصد</span>
     </div>
   </div>
-
+    <!-- ═══ بخش درسنامه‌های سطح‌بندی‌شده ═══ -->
+    <div class="level-selector-section" id="levelSelectorSection">
+      <div class="level-section-title">
+        <span class="icon">🎓</span>
+        <span>درسنامه‌های سطح‌بندی‌شده</span>
+      </div>
+      <div class="level-tabs" id="levelTabs">
+        <button class="level-tab active" data-lang="en">
+          <span class="flag">🇬🇧</span> انگلیسی
+        </button>
+        <button class="level-tab" data-lang="zh">
+          <span class="flag">🇨🇳</span> چینی
+        </button>
+        <button class="level-tab" data-lang="ko">
+          <span class="flag">🇰🇷</span> کره‌ای
+        </button>
+      </div>
+      <div class="levels-grid" id="levelsGrid"></div>
+    </div>
   <!-- ═══ فهرست درس‌ها ═══ -->
   <div class="categories-view" id="categoriesView">
     <h2 class="categories-title">📚 درس‌ها را انتخاب کن</h2>
@@ -1160,7 +1336,89 @@ const categories = [
   { id: 'nature',    name: 'طبیعت و حیوانات',   icon: '🌳', description: 'خورشید، ماه، گل، درخت و حیوانات',          wordIndices: [16, 19, 20, 21, 22, 23, 24] },
   { id: 'things',    name: 'اشیا و مفاهیم',     icon: '🚗', description: 'ماشین، پول، رنگ و صفت‌های پایه',          wordIndices: [17, 18, 25, 26, 27, 29] }
 ];
+/* ══════════════════════════════════════════════════════════════
+   🎓 درسنامه‌های سطح‌بندی‌شده (انگلیسی، چینی، کره‌ای)
+   ══════════════════════════════════════════════════════════════ */
 
+const leveledLessons = {
+  en: {
+    flag: '🇬🇧',
+    name: 'انگلیسی',
+    levels: [
+      { code: 'A1', name: 'مبتدی', desc: 'شروع از صفر — کلمات پایه', url: 'en/a1-lesson.html', badge: 'Beginner' },
+      { code: 'A2', name: 'پایه', desc: 'مکالمات روزمره', url: 'en/a2-lesson.html', badge: 'Elementary' },
+      { code: 'B1', name: 'متوسط', desc: 'درک متون متوسط', url: 'en/b1-lesson.html', badge: 'Intermediate' },
+      { code: 'B2', name: 'متوسط بالا', desc: 'مکالمات پیشرفته', url: 'en/b2-lesson.html', badge: 'Upper-Int' },
+      { code: 'C1', name: 'پیشرفته', desc: 'متون آکادمیک', url: 'en/c1-lesson.html', badge: 'Advanced' },
+      { code: 'C2', name: 'تسلط کامل', desc: 'سطح Native', url: 'en/c2-lesson.html', badge: 'Proficiency' }
+    ]
+  },
+  zh: {
+    flag: '🇨🇳',
+    name: 'چینی',
+    levels: [
+      { code: 'HSK1', name: 'مقدماتی', desc: 'کلمات پایه چینی', url: 'zh/hsk1-lesson.html', badge: 'Beginner' },
+      { code: 'HSK2', name: 'پایه', desc: 'مکالمات ساده', url: 'zh/hsk2-lesson.html', badge: 'Elementary' },
+      { code: 'HSK3', name: 'متوسط', desc: 'درک متون کوتاه', url: 'zh/hsk3-lesson.html', badge: 'Intermediate' },
+      { code: 'HSK4', name: 'متوسط بالا', desc: 'مکالمات پیچیده', url: 'zh/hsk4-lesson.html', badge: 'Upper-Int' },
+      { code: 'HSK5', name: 'پیشرفته', desc: 'متون تخصصی', url: 'zh/hsk5-lesson.html', badge: 'Advanced' },
+      { code: 'HSK6', name: 'تسلط', desc: 'سطح Native', url: 'zh/hsk6-lesson.html', badge: 'Proficiency' }
+    ]
+  },
+  ko: {
+    flag: '🇰🇷',
+    name: 'کره‌ای',
+    levels: [
+      { code: 'TOPIK I-1', name: 'مقدماتی', desc: 'هانگول و کلمات پایه', url: 'ko/topik1-lesson.html', badge: 'Beginner' },
+      { code: 'TOPIK I-2', name: 'پایه', desc: 'مکالمات روزمره', url: 'ko/topik2-lesson.html', badge: 'Elementary' },
+      { code: 'TOPIK II-3', name: 'متوسط', desc: 'درک متون متوسط', url: 'ko/topik3-lesson.html', badge: 'Intermediate' },
+      { code: 'TOPIK II-4', name: 'متوسط بالا', desc: 'مکالمات پیشرفته', url: 'ko/topik4-lesson.html', badge: 'Upper-Int' },
+      { code: 'TOPIK II-5', name: 'پیشرفته', desc: 'متون تخصصی', url: 'ko/topik5-lesson.html', badge: 'Advanced' },
+      { code: 'TOPIK II-6', name: 'تسلط', desc: 'سطح Native', url: 'ko/topik6-lesson.html', badge: 'Proficiency' }
+    ]
+  }
+};
+
+let currentLevelLang = 'en';
+
+function renderLevels() {
+  const grid = document.getElementById('levelsGrid');
+  if (!grid) return;
+
+  const langData = leveledLessons[currentLevelLang];
+  if (!langData) return;
+
+  grid.innerHTML = langData.levels.map(lvl => `
+    <div class="level-card" data-lang="${currentLevelLang}" onclick="openLeveledLesson('${lvl.url}')">
+      <span class="level-badge">${lvl.badge}</span>
+      <span class="level-code">${lvl.code}</span>
+      <div class="level-name">${lvl.name}</div>
+      <div class="level-desc">${lvl.desc}</div>
+      <span class="start-btn">شروع ←</span>
+    </div>
+  `).join('');
+}
+
+function openLeveledLesson(url) {
+  if (confirm('🎓 به درسنامه سطح انتخابی بروی؟')) {
+    window.location.href = url;
+  }
+}
+
+// رویداد تب‌های سطح
+document.addEventListener('DOMContentLoaded', () => {
+  const tabs = document.querySelectorAll('.level-tab');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentLevelLang = tab.dataset.lang;
+      renderLevels();
+    });
+  });
+
+  renderLevels();
+});
 /* ═══ مثال‌های جمله‌ای ═══ */
 const examples = {
   'سلام': {
@@ -2059,7 +2317,7 @@ if (speedReset) {
 window.addEventListener('load', () => {
   renderCategories();
   updateSelectedLangsBar();
-
+  renderLevels(); 
   if ('speechSynthesis' in window) {
     window.speechSynthesis.getVoices();
     window.speechSynthesis.onvoiceschanged = () => {
