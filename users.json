@@ -3,7 +3,7 @@
       {
         "key": "ADMIN-2024-XYZ",
         "name": "مدیر سیستم",
-        "permissions": ["game", "lesson", "listening", "reading", "writing", "speaking", "admin"]
+        "permissions": ["game", "lesson", "listening", "reading", "writing", "speaking", "admin","book","podcast","magazine","daily"]
       },
       {
         "key": "USER-AHMAD-001",
@@ -28,7 +28,7 @@
       {
         "key": "TEST-GUEST-999",
         "name": "کاربر آزمایشی",
-        "permissions": ["game", "lesson"]
+        "permissions": ["game","podcast","daily"]
       }
     ]
   }
