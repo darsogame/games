@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8"><meta name="description" content="ورود به بخش‌های اصلی Darsogame و تمرین مهارت‌های مختلف زبان."><meta name="robots" content="index, follow">
+<meta charset="UTF-8">
+<meta name="description" content="ورود به بخش‌های اصلی Darsogame و تمرین مهارت‌های مختلف زبان.">
+<meta name="robots" content="index, follow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>منوی اصلی بازی زبان | Darsogame</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌍</text></svg>">
@@ -22,16 +24,19 @@
 
   /* ═══ هدر ═══ */
   .hub-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-bottom: 35px;
-    flex-wrap: wrap;
-    gap: 15px;
-    padding: 25px;
+    padding: 22px 25px;
     background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(167, 139, 250, 0.1));
     border-radius: 25px;
     border: 2px solid rgba(56, 189, 248, 0.2);
+  }
+
+  .hub-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
   }
 
   .hub-user-info {
@@ -87,6 +92,98 @@
     transform: translateY(-2px);
   }
 
+  /* ═══ نوار امکانات هدر (پادکست، کتاب، مجله، تمرین روزانه) ═══ */
+  .header-features {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(56, 189, 248, 0.2);
+  }
+
+  .header-feature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    background: rgba(15, 23, 42, 0.5);
+    border: 2px solid transparent;
+    border-radius: 14px;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+  }
+
+  .header-feature:hover,
+  .header-feature:focus,
+  .header-feature.active {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  }
+
+  .header-feature .hf-icon {
+    font-size: 26px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.3));
+  }
+
+  .header-feature .hf-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .header-feature .hf-name {
+    font-size: 14px;
+    font-weight: 900;
+    color: #fff;
+    white-space: nowrap;
+  }
+
+  .header-feature .hf-tag {
+    font-size: 10px;
+    color: #94a3b8;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  /* رنگ‌های هدر */
+  .header-feature[data-color="orange"]:hover,
+  .header-feature[data-color="orange"]:focus,
+  .header-feature[data-color="orange"].active {
+    border-color: #f97316;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.3), 0 10px 25px rgba(0, 0, 0, 0.4);
+  }
+  .header-feature[data-color="orange"] .hf-icon { color: #f97316; }
+
+  .header-feature[data-color="pink"]:hover,
+  .header-feature[data-color="pink"]:focus,
+  .header-feature[data-color="pink"].active {
+    border-color: #ec4899;
+    box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.3), 0 10px 25px rgba(0, 0, 0, 0.4);
+  }
+  .header-feature[data-color="pink"] .hf-icon { color: #ec4899; }
+
+  .header-feature[data-color="teal"]:hover,
+  .header-feature[data-color="teal"]:focus,
+  .header-feature[data-color="teal"].active {
+    border-color: #14b8a6;
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.3), 0 10px 25px rgba(0, 0, 0, 0.4);
+  }
+  .header-feature[data-color="teal"] .hf-icon { color: #14b8a6; }
+
+  .header-feature[data-color="indigo"]:hover,
+  .header-feature[data-color="indigo"]:focus,
+  .header-feature[data-color="indigo"].active {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3), 0 10px 25px rgba(0, 0, 0, 0.4);
+  }
+  .header-feature[data-color="indigo"] .hf-icon { color: #6366f1; }
+
   /* ═══ عنوان ═══ */
   .hub-title {
     text-align: center;
@@ -133,7 +230,7 @@
     color: #fbbf24;
   }
 
-  /* ═══ گرید امکانات ═══ */
+  /* ═══ گرید امکانات اصلی ═══ */
   .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -184,48 +281,29 @@
     box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.3), 0 25px 55px rgba(0, 0, 0, 0.5);
   }
 
-  /* رنگ‌های مختلف هر کارت */
   .feature-card[data-color="blue"]:hover,
   .feature-card[data-color="blue"]:focus,
-  .feature-card[data-color="blue"].active {
-    border-color: #38bdf8;
-    box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.3), 0 25px 55px rgba(0, 0, 0, 0.5);
-  }
+  .feature-card[data-color="blue"].active { border-color: #38bdf8; box-shadow: 0 0 0 4px rgba(56,189,248,.3), 0 25px 55px rgba(0,0,0,.5); }
 
   .feature-card[data-color="green"]:hover,
   .feature-card[data-color="green"]:focus,
-  .feature-card[data-color="green"].active {
-    border-color: #22c55e;
-    box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.3), 0 25px 55px rgba(0, 0, 0, 0.5);
-  }
+  .feature-card[data-color="green"].active { border-color: #22c55e; box-shadow: 0 0 0 4px rgba(34,197,94,.3), 0 25px 55px rgba(0,0,0,.5); }
 
   .feature-card[data-color="purple"]:hover,
   .feature-card[data-color="purple"]:focus,
-  .feature-card[data-color="purple"].active {
-    border-color: #a78bfa;
-    box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.3), 0 25px 55px rgba(0, 0, 0, 0.5);
-  }
+  .feature-card[data-color="purple"].active { border-color: #a78bfa; box-shadow: 0 0 0 4px rgba(167,139,250,.3), 0 25px 55px rgba(0,0,0,.5); }
 
   .feature-card[data-color="red"]:hover,
   .feature-card[data-color="red"]:focus,
-  .feature-card[data-color="red"].active {
-    border-color: #ef4444;
-    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.3), 0 25px 55px rgba(0, 0, 0, 0.5);
-  }
+  .feature-card[data-color="red"].active { border-color: #ef4444; box-shadow: 0 0 0 4px rgba(239,68,68,.3), 0 25px 55px rgba(0,0,0,.5); }
 
   .feature-card[data-color="yellow"]:hover,
   .feature-card[data-color="yellow"]:focus,
-  .feature-card[data-color="yellow"].active {
-    border-color: #fbbf24;
-    box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.3), 0 25px 55px rgba(0, 0, 0, 0.5);
-  }
+  .feature-card[data-color="yellow"].active { border-color: #fbbf24; box-shadow: 0 0 0 4px rgba(251,191,36,.3), 0 25px 55px rgba(0,0,0,.5); }
 
   .feature-card[data-color="cyan"]:hover,
   .feature-card[data-color="cyan"]:focus,
-  .feature-card[data-color="cyan"].active {
-    border-color: #06b6d4;
-    box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.3), 0 25px 55px rgba(0, 0, 0, 0.5);
-  }
+  .feature-card[data-color="cyan"].active { border-color: #06b6d4; box-shadow: 0 0 0 4px rgba(6,182,212,.3), 0 25px 55px rgba(0,0,0,.5); }
 
   .feature-icon {
     font-size: 54px;
@@ -257,6 +335,128 @@
     background: rgba(148, 163, 184, 0.2);
     color: #cbd5e1;
   }
+
+  /* ═══ بخش زیرمجموعه (زبان‌ها و سطوح) ═══ */
+  .subsections {
+    margin-top: 45px;
+  }
+
+  .subsections-title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 900;
+    color: #e2e8f0;
+    margin-bottom: 8px;
+  }
+
+  .subsections-subtitle {
+    text-align: center;
+    font-size: 13px;
+    color: #94a3b8;
+    margin-bottom: 25px;
+  }
+
+  .subsection-group {
+    margin-bottom: 30px;
+  }
+
+  .subsection-group-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+    padding: 12px 18px;
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.08), rgba(167, 139, 250, 0.08));
+    border-radius: 15px;
+    border: 1px solid rgba(56, 189, 248, 0.15);
+  }
+
+  .subsection-group-header .flag {
+    font-size: 28px;
+  }
+
+  .subsection-group-header h3 {
+    font-size: 17px;
+    font-weight: 900;
+    color: #fff;
+  }
+
+  .subsection-group-header .lang-label {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-right: auto;
+    font-family: 'Courier New', monospace;
+    direction: ltr;
+  }
+
+  .mini-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
+    gap: 12px;
+  }
+
+  .mini-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 16px 8px;
+    background: linear-gradient(135deg, #1e293b, #334155);
+    border: 2px solid transparent;
+    border-radius: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mini-card:hover,
+  .mini-card:focus,
+  .mini-card.active {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  }
+
+  .mini-card:focus,
+  .mini-card.active {
+    border-color: #fbbf24;
+    box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.3), 0 12px 30px rgba(0, 0, 0, 0.4);
+  }
+
+  .mini-card .mini-code {
+    font-size: 18px;
+    font-weight: 900;
+    font-family: 'Courier New', monospace;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+
+  .mini-card .mini-sub {
+    font-size: 10px;
+    color: #94a3b8;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .mini-card[data-lang="en"]:hover,
+  .mini-card[data-lang="en"]:focus,
+  .mini-card[data-lang="en"].active { border-color: #38bdf8; box-shadow: 0 0 0 3px rgba(56,189,248,.3), 0 12px 30px rgba(0,0,0,.4); }
+  .mini-card[data-lang="en"] .mini-code { color: #38bdf8; }
+
+  .mini-card[data-lang="zh"]:hover,
+  .mini-card[data-lang="zh"]:focus,
+  .mini-card[data-lang="zh"].active { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,.3), 0 12px 30px rgba(0,0,0,.4); }
+  .mini-card[data-lang="zh"] .mini-code { color: #ef4444; }
+
+  .mini-card[data-lang="ko"]:hover,
+  .mini-card[data-lang="ko"]:focus,
+  .mini-card[data-lang="ko"].active { border-color: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,.3), 0 12px 30px rgba(0,0,0,.4); }
+  .mini-card[data-lang="ko"] .mini-code { color: #22c55e; }
 
   /* ═══ پاورقی ═══ */
   .hub-footer {
@@ -295,6 +495,10 @@
   .access-warning.show { display: block; }
 
   /* ═══ رسیپانسیو ═══ */
+  @media (max-width: 720px) {
+    .header-features { grid-template-columns: repeat(2, 1fr); }
+  }
+
   @media (max-width: 640px) {
     body { padding: 15px 12px; }
     .hub-title h1 { font-size: 26px; }
@@ -307,6 +511,10 @@
     .user-avatar { width: 50px; height: 50px; font-size: 24px; }
     .user-details h2 { font-size: 16px; }
     .logout-btn { padding: 10px 16px; font-size: 13px; }
+    .mini-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
+    .subsections-title { font-size: 18px; }
+    .header-feature .hf-icon { font-size: 22px; }
+    .header-feature .hf-name { font-size: 12px; }
   }
 </style>
 <link rel="canonical" href="https://darsogame.github.io/games/hub.html"></head>
@@ -316,16 +524,21 @@
 
   <!-- ═══ هدر ═══ -->
   <div class="hub-header">
-    <div class="hub-user-info">
-      <div class="user-avatar" id="userAvatar">👤</div>
-      <div class="user-details">
-        <h2 id="userName">در حال بارگذاری...</h2>
-        <p id="userIP">IP: —</p>
+    <div class="hub-header-top">
+      <div class="hub-user-info">
+        <div class="user-avatar" id="userAvatar">👤</div>
+        <div class="user-details">
+          <h2 id="userName">در حال بارگذاری...</h2>
+          <p id="userIP">IP: —</p>
+        </div>
       </div>
+      <button class="logout-btn" onclick="logout()">
+        🚪 خروج
+      </button>
     </div>
-    <button class="logout-btn" onclick="logout()">
-      🚪 خروج
-    </button>
+
+    <!-- ═══ نوار امکانات هدر ═══ -->
+    <div class="header-features" id="headerFeatures"></div>
   </div>
 
   <!-- ═══ عنوان ═══ -->
@@ -339,8 +552,41 @@
 
   <div class="access-warning" id="accessWarning"></div>
 
-  <!-- ═══ گرید امکانات ═══ -->
+  <!-- ═══ گرید امکانات اصلی ═══ -->
   <div class="features-grid" id="featuresGrid"></div>
+
+  <!-- ═══ زیربخش‌ها (سطوح زبان) ═══ -->
+  <div class="subsections" id="subsections">
+    <h2 class="subsections-title">🌐 بخش‌های تخصصی زبان</h2>
+    <p class="subsections-subtitle">سطح مورد نظر خود را انتخاب کنید و تمرین کنید</p>
+
+    <div class="subsection-group">
+      <div class="subsection-group-header">
+        <span class="flag">🇬🇧</span>
+        <h3>انگلیسی</h3>
+        <span class="lang-label">CEFR A1–C2</span>
+      </div>
+      <div class="mini-grid" id="englishGrid"></div>
+    </div>
+
+    <div class="subsection-group">
+      <div class="subsection-group-header">
+        <span class="flag">🇨🇳</span>
+        <h3>چینی</h3>
+        <span class="lang-label">HSK 1–6</span>
+      </div>
+      <div class="mini-grid" id="chineseGrid"></div>
+    </div>
+
+    <div class="subsection-group">
+      <div class="subsection-group-header">
+        <span class="flag">🇰🇷</span>
+        <h3>کره‌ای</h3>
+        <span class="lang-label">TOPIK I–II</span>
+      </div>
+      <div class="mini-grid" id="koreanGrid"></div>
+    </div>
+  </div>
 
   <!-- ═══ پاورقی ═══ -->
   <div class="hub-footer">
@@ -359,7 +605,43 @@
 
 const STORAGE_KEY = 'lingo_auth';
 
-/* ═══ تعریف امکانات ═══ */
+/* ═══ امکانات هدر (پادکست، کتاب، مجله، تمرین روزانه) ═══ */
+const headerFeatures = [
+  {
+    id: 'podcast',
+    name: 'پادکست',
+    tag: 'شنیداری',
+    icon: '🎙️',
+    url: 'podcast.html',
+    color: 'orange'
+  },
+  {
+    id: 'book',
+    name: 'کتاب',
+    tag: 'خواندنی',
+    icon: '📕',
+    url: 'book.html',
+    color: 'pink'
+  },
+  {
+    id: 'magazine',
+    name: 'مجله',
+    tag: 'خواندنی',
+    icon: '📰',
+    url: 'magazine.html',
+    color: 'teal'
+  },
+  {
+    id: 'daily',
+    name: 'تمرین روزانه',
+    tag: 'روزانه',
+    icon: '📅',
+    url: 'daily_language_practice.html',
+    color: 'indigo'
+  }
+];
+
+/* ═══ امکانات اصلی گرید ═══ */
 const features = [
   {
     id: 'game',
@@ -417,6 +699,34 @@ const features = [
   }
 ];
 
+/* ═══ سطوح زبان‌ها ═══ */
+const englishLevels = [
+  { code: 'A1', name: 'مبتدی', url: 'en/a1.html' },
+  { code: 'A2', name: 'پایه', url: 'en/a2.html' },
+  { code: 'B1', name: 'متوسط پایین', url: 'en/b1.html' },
+  { code: 'B2', name: 'متوسط بالا', url: 'en/b2.html' },
+  { code: 'C1', name: 'پیشرفته', url: 'en/c1.html' },
+  { code: 'C2', name: 'تسلط کامل', url: 'en/c2.html' }
+];
+
+const chineseLevels = [
+  { code: 'HSK1', name: 'مقدماتی', url: 'zh/hsk1.html' },
+  { code: 'HSK2', name: 'پایه', url: 'zh/hsk2.html' },
+  { code: 'HSK3', name: 'متوسط', url: 'zh/hsk3.html' },
+  { code: 'HSK4', name: 'متوسط بالا', url: 'zh/hsk4.html' },
+  { code: 'HSK5', name: 'پیشرفته', url: 'zh/hsk5.html' },
+  { code: 'HSK6', name: 'تسلط', url: 'zh/hsk6.html' }
+];
+
+const koreanLevels = [
+  { code: 'TOPIK I-1', name: 'مقدماتی', url: 'ko/topik1.html' },
+  { code: 'TOPIK I-2', name: 'پایه', url: 'ko/topik2.html' },
+  { code: 'TOPIK II-3', name: 'متوسط', url: 'ko/topik3.html' },
+  { code: 'TOPIK II-4', name: 'متوسط بالا', url: 'ko/topik4.html' },
+  { code: 'TOPIK II-5', name: 'پیشرفته', url: 'ko/topik5.html' },
+  { code: 'TOPIK II-6', name: 'تسلط', url: 'ko/topik6.html' }
+];
+
 let currentFocusIndex = 0;
 let session = null;
 
@@ -438,7 +748,77 @@ function hasAccess(featureId) {
   return session.permissions.includes(featureId);
 }
 
-/* ═══ رندر گرید ═══ */
+/* ═══ رندر امکانات هدر ═══ */
+function renderHeaderFeatures() {
+  const wrap = document.getElementById('headerFeatures');
+  wrap.innerHTML = '';
+
+  headerFeatures.forEach((feature) => {
+    const accessible = hasAccess(feature.id);
+
+    const card = document.createElement('a');
+    card.className = 'header-feature';
+    card.href = accessible ? feature.url : '#';
+    card.dataset.color = feature.color;
+    card.dataset.featureId = feature.id;
+
+    if (!accessible) {
+      card.style.opacity = '0.4';
+      card.style.cursor = 'not-allowed';
+      card.style.filter = 'grayscale(0.7)';
+    }
+
+    card.innerHTML = `
+      <span class="hf-icon">${accessible ? feature.icon : '🔒'}</span>
+      <span class="hf-text">
+        <span class="hf-name">${feature.name}</span>
+        <span class="hf-tag">${accessible ? feature.tag : 'قفل'}</span>
+      </span>
+    `;
+
+    card.addEventListener('click', (e) => {
+      if (!accessible) {
+        e.preventDefault();
+        showAccessDenied(feature.name);
+      }
+    });
+
+    wrap.appendChild(card);
+  });
+}
+
+/* ═══ ساخت کارت کوچک سطح زبان ═══ */
+function createMiniCard(level, langCode) {
+  const card = document.createElement('a');
+  card.className = 'mini-card';
+  card.href = level.url;
+  card.dataset.lang = langCode;
+  card.title = level.name;
+
+  card.innerHTML = `
+    <span class="mini-code">${level.code}</span>
+    <span class="mini-sub">${level.name}</span>
+  `;
+
+  return card;
+}
+
+/* ═══ رندر زیربخش‌ها ═══ */
+function renderSubsections() {
+  const enGrid = document.getElementById('englishGrid');
+  const zhGrid = document.getElementById('chineseGrid');
+  const koGrid = document.getElementById('koreanGrid');
+
+  enGrid.innerHTML = '';
+  zhGrid.innerHTML = '';
+  koGrid.innerHTML = '';
+
+  englishLevels.forEach(lvl => enGrid.appendChild(createMiniCard(lvl, 'en')));
+  chineseLevels.forEach(lvl => zhGrid.appendChild(createMiniCard(lvl, 'zh')));
+  koreanLevels.forEach(lvl => koGrid.appendChild(createMiniCard(lvl, 'ko')));
+}
+
+/* ═══ رندر گرید اصلی ═══ */
 function renderFeatures() {
   const grid = document.getElementById('featuresGrid');
   grid.innerHTML = '';
@@ -481,7 +861,6 @@ function renderFeatures() {
     grid.appendChild(card);
   });
 
-  // اگر مهمان است، هشدار نشان بده
   if (session && session.type === 'guest') {
     const warning = document.getElementById('accessWarning');
     warning.classList.add('show');
@@ -533,10 +912,23 @@ function updateUserInfo() {
 /* ═══ ناوبری با کلیدهای جهت‌دار ═══ */
 function setupKeyboardNavigation() {
   document.addEventListener('keydown', (e) => {
+    const activeEl = document.activeElement;
+
+    // ناوبری در کارت‌های هدر
+    if (activeEl && activeEl.classList.contains('header-feature')) {
+      handleHeaderNavigation(e, activeEl);
+      return;
+    }
+
+    // ناوبری در کارت‌های کوچک
+    if (activeEl && activeEl.classList.contains('mini-card')) {
+      handleMiniNavigation(e, activeEl);
+      return;
+    }
+
     const cards = Array.from(document.querySelectorAll('.feature-card'));
     if (cards.length === 0) return;
 
-    // محاسبه گرید
     const grid = document.getElementById('featuresGrid');
     const columns = window.getComputedStyle(grid).gridTemplateColumns.split(' ').length;
 
@@ -550,17 +942,35 @@ function setupKeyboardNavigation() {
       focusCard(cards[currentFocusIndex]);
     } else if (e.key === 'ArrowDown') {
       e.preventDefault();
+      if (currentFocusIndex + columns >= cards.length) {
+        const firstMini = document.querySelector('.mini-card');
+        if (firstMini) {
+          clearActive();
+          firstMini.focus();
+          firstMini.classList.add('active');
+          return;
+        }
+      }
       currentFocusIndex = (currentFocusIndex + columns) % cards.length;
       focusCard(cards[currentFocusIndex]);
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
+      if (currentFocusIndex - columns < 0) {
+        // از بالای گرید برو به هدر
+        const headerCards = document.querySelectorAll('.header-feature');
+        if (headerCards.length) {
+          clearActive();
+          const last = headerCards[headerCards.length - 1];
+          last.focus();
+          last.classList.add('active');
+          return;
+        }
+      }
       currentFocusIndex = (currentFocusIndex - columns + cards.length) % cards.length;
       focusCard(cards[currentFocusIndex]);
     } else if (e.key === 'Enter') {
       const card = cards[currentFocusIndex];
-      if (card) {
-        card.click();
-      }
+      if (card) card.click();
     } else if (e.key === 'Escape') {
       e.preventDefault();
       logout();
@@ -568,8 +978,84 @@ function setupKeyboardNavigation() {
   });
 }
 
+/* ═══ ناوبری در کارت‌های هدر ═══ */
+function handleHeaderNavigation(e, activeEl) {
+  const all = Array.from(document.querySelectorAll('.header-feature'));
+  const idx = all.indexOf(activeEl);
+
+  if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+    e.preventDefault();
+    // در RTL: راست = بعدی، چپ = قبلی (منطقی)
+    const dir = e.key === 'ArrowRight' ? -1 : 1;
+    const next = all[(idx + dir + all.length) % all.length];
+    clearActive();
+    next.focus();
+    next.classList.add('active');
+  } else if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    // برو به اولین کارت گرید اصلی
+    clearActive();
+    const firstCard = document.querySelector('.feature-card');
+    if (firstCard) focusCard(firstCard);
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    // برگرد به دکمه خروج یا بالا
+    const logoutBtn = document.querySelector('.logout-btn');
+    if (logoutBtn) logoutBtn.focus();
+  } else if (e.key === 'Enter') {
+    activeEl.click();
+  }
+}
+
+/* ═══ ناوبری در کارت‌های کوچک ═══ */
+function handleMiniNavigation(e, activeEl) {
+  const allMinis = Array.from(document.querySelectorAll('.mini-card'));
+  const idx = allMinis.indexOf(activeEl);
+
+  if (e.key === 'ArrowRight') {
+    e.preventDefault();
+    const next = allMinis[(idx + 1) % allMinis.length];
+    clearActive();
+    next.focus(); next.classList.add('active');
+  } else if (e.key === 'ArrowLeft') {
+    e.preventDefault();
+    const prev = allMinis[(idx - 1 + allMinis.length) % allMinis.length];
+    clearActive();
+    prev.focus(); prev.classList.add('active');
+  } else if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    const cols = 6;
+    if (idx + cols < allMinis.length) {
+      const next = allMinis[idx + cols];
+      clearActive();
+      next.focus(); next.classList.add('active');
+    }
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    const cols = 6;
+    if (idx - cols >= 0) {
+      const prev = allMinis[idx - cols];
+      clearActive();
+      prev.focus(); prev.classList.add('active');
+    } else {
+      const cards = document.querySelectorAll('.feature-card');
+      if (cards.length) focusCard(cards[cards.length - 1]);
+    }
+  } else if (e.key === 'Enter') {
+    activeEl.click();
+  } else if (e.key === 'Escape') {
+    const cards = document.querySelectorAll('.feature-card');
+    if (cards.length) focusCard(cards[0]);
+  }
+}
+
+function clearActive() {
+  document.querySelectorAll('.feature-card, .header-feature, .mini-card')
+    .forEach(c => c.classList.remove('active'));
+}
+
 function focusCard(card) {
-  document.querySelectorAll('.feature-card').forEach(c => c.classList.remove('active'));
+  clearActive();
   card.classList.add('active');
   card.focus();
   card.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -588,19 +1074,22 @@ window.addEventListener('load', () => {
   session = loadSession();
 
   if (!session) {
-    // اگر session نیست، به login برو
     window.location.href = 'index.html';
     return;
   }
 
   updateUserInfo();
+  renderHeaderFeatures();
   renderFeatures();
+  renderSubsections();
   setupKeyboardNavigation();
 
-  // فوکوس روی اولین کارت
   setTimeout(() => {
-    const firstCard = document.querySelector('.feature-card');
-    if (firstCard) focusCard(firstCard);
+    const firstCard = document.querySelector('.header-feature');
+    if (firstCard) {
+      firstCard.classList.add('active');
+      firstCard.focus();
+    }
   }, 100);
 });
 </script>
