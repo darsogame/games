@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>چینی HSK 3 - متوسط | Darsogame</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Vazirmatn', sans-serif; min-height: 100vh;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    color: #e2e8f0; padding: 25px 18px; }
+  .container { max-width: 900px; margin: 0 auto; }
+  .top-bar { display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px; margin-bottom: 22px; }
+  .back-btn { display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 18px; background: rgba(239,68,68,0.15);
+    border: 2px solid rgba(239,68,68,0.3); border-radius: 12px;
+    color: #ef4444; text-decoration: none; font-weight: 900; font-size: 13px; transition: all 0.25s; }
+  .back-btn:hover { background: rgba(239,68,68,0.3); transform: translateY(-2px); }
+  .level-pill { padding: 8px 20px; background: linear-gradient(135deg, #fbbf24, #f97316);
+    border-radius: 20px; color: #0f172a; font-weight: 900; font-size: 14px;
+    font-family: 'Courier New', monospace; }
+  .progress-wrap { background: rgba(15,23,42,0.7); border: 2px solid rgba(251,191,36,0.25);
+    border-radius: 18px; padding: 16px 20px; margin-bottom: 25px; }
+  .progress-info { display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 10px; font-size: 13px; font-weight: 900; }
+  .progress-info .stage-label { color: #fbbf24; }
+  .progress-info .score-label { color: #fbbf24; }
+  .progress-bar { height: 12px; background: rgba(148,163,184,0.2);
+    border-radius: 10px; overflow: hidden; }
+  .progress-fill { height: 100%; width: 0%;
+    background: linear-gradient(90deg, #fbbf24, #f97316, #ef4444);
+    border-radius: 10px; transition: width 0.5s cubic-bezier(0.4,0,0.2,1); }
+  .scene-card { background: linear-gradient(135deg, #1e293b, #334155);
+    border: 2px solid rgba(251,191,36,0.2); border-radius: 22px;
+    padding: 28px 24px; margin-bottom: 22px; min-height: 300px; }
+  .scene-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+    padding-bottom: 16px; border-bottom: 1px solid rgba(148,163,184,0.15); }
+  .scene-icon { font-size: 34px; }
+  .scene-titles h3 { font-size: 18px; font-weight: 900; color: #fff; margin-bottom: 3px; }
+  .scene-titles p { font-size: 12px; color: #94a3b8; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 12px 24px; border-radius: 14px; font-family: inherit;
+    font-size: 14px; font-weight: 900; cursor: pointer; border: none;
+    transition: all 0.25s; outline: none; }
+  .btn-primary { background: linear-gradient(135deg, #fbbf24, #f97316); color: #0f172a; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(251,191,36,0.4); }
+  .btn-secondary { background: rgba(148,163,184,0.15); color: #cbd5e1;
+    border: 2px solid rgba(148,163,184,0.3); }
+  .btn-secondary:hover { background: rgba(148,163,184,0.25); }
+  .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+  .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+  .option-btn { padding: 16px 18px; background: rgba(15,23,42,0.6);
+    border: 2px solid rgba(148,163,184,0.25); border-radius: 14px;
+    color: #e2e8f0; font-family: inherit; font-size: 15px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s; text-align: center; outline: none; }
+  .option-btn:hover:not(:disabled) { border-color: #fbbf24; background: rgba(251,191,36,0.1);
+    transform: translateY(-2px); }
+  .option-btn.correct { border-color: #22c55e; background: rgba(34,197,94,0.2); color: #86efac; }
+  .option-btn.wrong { border-color: #ef4444; background: rgba(239,68,68,0.2); color: #fca5a5; }
+  .option-btn:disabled { cursor: not-allowed; opacity: 0.8; }
+  .text-input { width: 100%; padding: 14px 18px; background: rgba(15,23,42,0.6);
+    border: 2px solid rgba(148,163,184,0.25); border-radius: 14px;
+    color: #fff; font-family: inherit; font-size: 18px; outline: none; transition: border-color 0.2s; }
+  .text-input:focus { border-color: #fbbf24; }
+  .text-input.correct { border-color: #22c55e; background: rgba(34,197,94,0.1); }
+  .text-input.wrong { border-color: #ef4444; background: rgba(239,68,68,0.1); }
+  .question-text { font-size: 17px; font-weight: 700; color: #fff; line-height: 1.7; margin-bottom: 6px; }
+  .question-hint { font-size: 12px; color: #94a3b8; margin-bottom: 18px; }
+  .chinese-word { font-size: 52px; font-weight: 900; color: #fbbf24;
+    text-align: center; padding: 20px; margin: 10px 0;
+    background: rgba(251,191,36,0.08); border-radius: 14px;
+    border: 1px dashed rgba(251,191,36,0.3); direction: ltr; }
+  .pinyin { font-size: 16px; color: #f97316; text-align: center; font-family: 'Courier New', monospace; margin-bottom: 8px; }
+  .feedback { margin-top: 16px; padding: 14px 18px; border-radius: 14px;
+    font-size: 14px; font-weight: 700; line-height: 1.6; display: none; }
+  .feedback.show { display: block; }
+  .feedback.success { background: rgba(34,197,94,0.15); border: 2px solid rgba(34,197,94,0.4); color: #86efac; }
+  .feedback.error { background: rgba(239,68,68,0.15); border: 2px solid rgba(239,68,68,0.4); color: #fca5a5; }
+  .mic-area { text-align: center; padding: 20px; }
+  .mic-btn { width: 90px; height: 90px; border-radius: 50%; border: none;
+    background: linear-gradient(135deg, #ef4444, #f97316); color: #fff; font-size: 36px;
+    cursor: pointer; transition: all 0.25s; box-shadow: 0 10px 25px rgba(239,68,68,0.4); }
+  .mic-btn:hover { transform: scale(1.08); }
+  .mic-btn.recording { animation: pulse 1s infinite; background: linear-gradient(135deg, #22c55e, #16a34a); }
+  @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.6);} 50%{box-shadow:0 0 0 20px rgba(34,197,94,0);} }
+  .mic-status { font-size: 13px; color: #94a3b8; margin-top: 12px; font-weight: 700; }
+  .result-screen { text-align: center; padding: 30px 20px; }
+  .result-emoji { font-size: 80px; margin-bottom: 20px; }
+  .result-title { font-size: 28px; font-weight: 900; color: #fff; margin-bottom: 12px; }
+  .result-score { font-size: 52px; font-weight: 900; font-family: 'Courier New', monospace;
+    background: linear-gradient(135deg, #fbbf24, #f97316);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 8px; }
+  .result-sub { font-size: 15px; color: #94a3b8; margin-bottom: 25px; }
+  @media (max-width: 600px) {
+    .options-grid { grid-template-columns: 1fr; }
+    .scene-card { padding: 22px 18px; }
+    .chinese-word { font-size: 38px; }
+    .result-score { font-size: 40px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="top-bar">
+    <a href="../hub.html" class="back-btn">🏠 بازگشت</a>
+    <div class="level-pill">HSK 3 • 中级</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-info">
+      <span class="stage-label" id="stageLabel">مرحله ۱ از ۸</span>
+      <span class="score-label" id="scoreLabel">امتیاز: ۰</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+  <div id="sceneContainer"></div>
+</div>
+
+<script>
+const TOTAL_STAGES = 8;
+let currentStage = 0;
+let score = 0;
+
+const stages = [
+  {
+    type: 'multiple-choice', icon: '🎮',
+    title: 'مرحله ۱: واژگان HSK 3',
+    subtitle: 'معنی درست را انتخاب کن',
+    questions: [
+      { prompt: '环境 (huánjìng)', options: ['محیط زیست', 'اقتصاد', 'آموزش', 'فرهنگ'], answer: 'محیط زیست' },
+      { prompt: '经历 (jīnglì)', options: ['تجربه', 'آزمایش', 'بیان', 'توضیح'], answer: 'تجربه' },
+      { prompt: '建议 (jiànyì)', options: ['پیشنهاد', 'رد کردن', 'پذیرفتن', 'انکار کردن'], answer: 'پیشنهاد' },
+      { prompt: '决定 (juédìng)', options: ['تصمیم', 'بحث', 'توضیح', 'جهت'], answer: 'تصمیم' },
+      { prompt: '影响 (yǐngxiǎng)', options: ['تأثیر', 'واکنش', 'نتیجه', 'علت'], answer: 'تأثیر' }
+    ]
+  },
+  {
+    type: 'listening', icon: '🎧',
+    title: 'مرحله ۲: شنیداری HSK 3',
+    subtitle: 'گوش کن و معنی را انتخاب کن',
+    questions: [
+      { word: '环境', lang: 'zh-CN', options: ['محیط زیست', 'اقتصاد', 'آموزش', 'فرهنگ'], answer: 'محیط زیست' },
+      { word: '经历', lang: 'zh-CN', options: ['تجربه', 'آزمایش', 'بیان', 'توضیح'], answer: 'تجربه' },
+      { word: '建议', lang: 'zh-CN', options: ['پیشنهاد', 'رد کردن', 'پذیرفتن', 'انکار کردن'], answer: 'پیشنهاد' },
+      { word: '决定', lang: 'zh-CN', options: ['تصمیم', 'بحث', 'توضیح', 'جهت'], answer: 'تصمیم' },
+      { word: '影响', lang: 'zh-CN', options: ['تأثیر', 'واکنش', 'نتیجه', 'علت'], answer: 'تأثیر' }
+    ]
+  },
+  {
+    type: 'reading', icon: '📚',
+    title: 'مرحله ۳: خواندن HSK 3',
+    subtitle: 'متن را بخوان و پاسخ بده',
+    passages: [
+      {
+        text: '现在越来越多的人开始关注环境保护。我们应该减少使用塑料袋，多乘坐公共交通工具。这些小的改变可以对环境产生积极的影响。',
+        pinyin: 'Xiànzài yuèláiyuèduō de rén kāishǐ guānzhù huánjìng bǎohù. Wǒmen yīnggāi jiǎnshǎo shǐyòng sùliàodài, duō chéngzuò gōnggòng jiāotōng gōngjù. Zhèxiē xiǎo de gǎibiàn kěyǐ duì huánjìng chǎnshēng jījí de yǐngxiǎng.',
+        question: '作者建议我们做什么？(What does the author suggest?)',
+        options: ['减少使用塑料袋 (کاهش استفاده از کیسه پلاستیکی)', '多使用塑料袋 (افزایش استفاده از کیسه پلاستیکی)', '多开车 (رانندگی بیشتر)', '少坐公交车 (کمتر سوار اتوبوس شدن)'],
+        answer: '减少使用塑料袋 (کاهش استفاده از کیسه پلاستیکی)'
+      },
+      {
+        text: '我以前没有出过国。去年我有机会去日本旅行，这是一次难忘的经历。在日本，我学到了很多关于日本文化的知识，也交了很多新朋友。',
+        pinyin: 'Wǒ yǐqián méiyǒu chū guò guó. Qùnián wǒ yǒu jīhuì qù Rìběn lǚxíng, zhè shì yī cì nánwàng de jīnglì. Zài Rìběn, wǒ xuédào le hěnduō guānyú Rìběn wénhuà de zhīshì, yě jiāo le hěnduō xīn péngyǒu.',
+        question: '作者去年去了哪里？(Where did the author go last year?)',
+        options: ['日本 (ژاپن)', '中国 (چین)', '韩国 (کره)', '美国 (آمریکا)'],
+        answer: '日本 (ژاپن)'
+      }
+    ]
+  },
+  {
+    type: 'writing', icon: '✍️',
+    title: 'مرحله ۴: نوشتن HSK 3',
+    subtitle: 'معنی فارسی را به چینی بنویس (یا پینیین)',
+    questions: [
+      { prompt: 'محیط زیست', answer: '环境', alt: 'huanjing', hint: 'huánjìng' },
+      { prompt: 'تجربه', answer: '经历', alt: 'jingli', hint: 'jīnglì' },
+      { prompt: 'پیشنهاد', answer: '建议', alt: 'jianyi', hint: 'jiànyì' },
+      { prompt: 'تصمیم', answer: '决定', alt: 'jueding', hint: 'juédìng' },
+      { prompt: 'تأثیر', answer: '影响', alt: 'yingxiang', hint: 'yǐngxiǎng' }
+    ]
+  },
+  {
+    type: 'speaking', icon: '🎤',
+    title: 'مرحله ۵: مکالمه HSK 3',
+    subtitle: 'جمله را تلفظ کن',
+    questions: [
+      { word: '我建议你多运动。', pinyin: 'wǒ jiànyì nǐ duō yùndòng', translation: 'من پیشنهاد می‌کنم بیشتر ورزش کنی' },
+      { word: '保护环境很重要。', pinyin: 'bǎohù huánjìng hěn zhòngyào', translation: 'حفاظت از محیط زیست بسیار مهم است' },
+      { word: '这次旅行让我很难忘。', pinyin: 'zhè cì lǚxíng ràng wǒ hěn nánwàng', translation: 'این سفر برای من فراموش‌نشدنی بود' },
+      { word: '我决定学习汉语。', pinyin: 'wǒ juédìng xuéxí Hànyǔ', translation: 'من تصمیم گرفتم چینی یاد بگیرم' },
+      { word: '这件事对我有很大的影响。', pinyin: 'zhè jiàn shì duì wǒ yǒu hěn dà de yǐngxiǎng', translation: 'این موضوع تأثیر زیادی روی من دارد' }
+    ]
+  },
+  {
+    type: 'sentence', icon: '🧩',
+    title: 'مرحله ۶: جمله‌سازی HSK 3',
+    subtitle: 'کلمات را به ترتیب درست بچین',
+    questions: [
+      { words: ['我', '建议', '你', '多', '运动'], answer: '我建议你多运动', translation: 'من پیشنهاد می‌کنم بیشتر ورزش کنی' },
+      { words: ['保护', '环境', '很', '重要'], answer: '保护环境很重要', translation: 'حفاظت از محیط زیست مهم است' },
+      { words: ['这次', '旅行', '让', '我', '很难忘'], answer: '这次旅行让我很难忘', translation: 'این سفر برای من فراموش‌نشدنی بود' },
+      { words: ['我', '决定', '学习', '汉语'], answer: '我决定学习汉语', translation: 'من تصمیم گرفتم چینی یاد بگیرم' },
+      { words: ['这件事', '对', '我', '有', '很大', '的', '影响'], answer: '这件事对我有很大的影响', translation: 'این موضوع تأثیر زیادی روی من دارد' }
+    ]
+  },
+  {
+    type: 'listening-sentence', icon: '🔊',
+    title: 'مرحله ۷: شنیداری جمله HSK 3',
+    subtitle: 'جمله را گوش کن و ترجمه را انتخاب کن',
+    questions: [
+      { sentence: '我建议你多运动。', lang: 'zh-CN', options: ['پیشنهاد می‌کنم بیشتر ورزش کنی', 'پیشنهاد می‌کنم کمتر ورزش کنی', 'ورزش کردن مهم نیست', 'من ورزش نمی‌کنم'], answer: 'پیشنهاد می‌کنم بیشتر ورزش کنی' },
+      { sentence: '保护环境很重要。', lang: 'zh-CN', options: ['حفاظت از محیط زیست مهم است', 'محیط زیست مهم نیست', 'حفاظت از محیط زیست آسان است', 'محیط زیست خطرناک است'], answer: 'حفاظت از محیط زیست مهم است' },
+      { sentence: '这次旅行让我很难忘。', lang: 'zh-CN', options: ['این سفر برای من فراموش‌نشدنی بود', 'این سفر خسته‌کننده بود', 'این سفر را فراموش کردم', 'این سفر کوتاه بود'], answer: 'این سفر برای من فراموش‌نشدنی بود' },
+      { sentence: '我决定学习汉语。', lang: 'zh-CN', options: ['من تصمیم گرفتم چینی یاد بگیرم', 'من تصمیم گرفتم انگلیسی یاد بگیرم', 'من چینی یاد نمی‌گیرم', 'من قبلاً چینی یاد گرفتم'], answer: 'من تصمیم گرفتم چینی یاد بگیرم' }
+    ]
+  },
+  {
+    type: 'mixed', icon: '🏆',
+    title: 'مرحله ۸: آزمون جامع HSK 3',
+    subtitle: 'ترکیبی از همه مهارت‌ها',
+    questions: [
+      { type: 'mc', prompt: '«环境» یعنی چه؟', options: ['محیط زیست', 'اقتصاد', 'آموزش', 'فرهنگ'], answer: 'محیط زیست' },
+      { type: 'mc', prompt: '«建议» یعنی چه؟', options: ['پیشنهاد', 'رد کردن', 'پذیرفتن', 'انکار کردن'], answer: 'پیشنهاد' },
+      { type: 'write', prompt: 'کلمه چینی «تجربه» را بنویس:', answer: '经历', alt: 'jingli', hint: 'jīnglì' },
+      { type: 'mc', prompt: '«我决定学习汉语» یعنی چه؟', options: ['تصمیم گرفتم چینی یاد بگیرم', 'چینی یاد نمی‌گیرم', 'انگلیسی یاد می‌گیرم', 'قبلاً چینی یاد گرفتم'], answer: 'تصمیم گرفتم چینی یاد بگیرم' },
+      { type: 'write', prompt: 'کلمه چینی «تأثیر» را بنویس:', answer: '影响', alt: 'yingxiang', hint: 'yǐngxiǎng' },
+      { type: 'mc', prompt: '«保护环境很重要» یعنی چه؟', options: ['حفاظت از محیط زیست مهم است', 'محیط زیست مهم نیست', 'محیط زیست خطرناک است', 'حفاظت آسان است'], answer: 'حفاظت از محیط زیست مهم است' }
+    ]
+  }
+];
+
+function init() { currentStage = 0; score = 0; renderStage(); }
+function updateProgress() {
+  document.getElementById('stageLabel').textContent = `مرحله ${currentStage + 1} از ${TOTAL_STAGES}`;
+  document.getElementById('scoreLabel').textContent = `امتیاز: ${score}`;
+  document.getElementById('progressFill').style.width = ((currentStage) / TOTAL_STAGES * 100) + '%';
+}
+function renderStage() {
+  updateProgress();
+  const container = document.getElementById('sceneContainer');
+  const stage = stages[currentStage];
+  if (!stage) { renderResult(); return; }
+  const header = `<div class="scene-header"><span class="scene-icon">${stage.icon}</span>
+    <div class="scene-titles"><h3>${stage.title}</h3><p>${stage.subtitle}</p></div></div>`;
+  let body = '';
+  switch (stage.type) {
+    case 'multiple-choice': body = renderMultipleChoice(stage.questions); break;
+    case 'listening': body = renderListening(stage.questions); break;
+    case 'reading': body = renderReading(stage.passages); break;
+    case 'writing': body = renderWriting(stage.questions); break;
+    case 'speaking': body = renderSpeaking(stage.questions); break;
+    case 'sentence': body = renderSentence(stage.questions); break;
+    case 'listening-sentence': body = renderListeningSentence(stage.questions); break;
+    case 'mixed': body = renderMixed(stage.questions); break;
+  }
+  container.innerHTML = `<div class="scene-card">${header}${body}</div>`;
+}
+function renderMultipleChoice(questions) {
+  let html = `<div>`;
+  questions.forEach((q, i) => {
+    html += `<div style="margin-bottom:22px;" data-q="${i}">
+      <div class="question-text">${q.prompt}</div>
+      <div class="options-grid">
+        ${[...q.options].sort(() => Math.random() - 0.5).map(opt => `<button class="option-btn" onclick="checkMC(this, '${opt.replace(/'/g, "\\'")}', '${q.answer.replace(/'/g, "\\'")}', ${i})">${opt}</button>`).join('')}
+      </div></div>`;
+  });
+  html += `<div class="btn-row"><button class="btn btn-primary" onclick="nextStage()">ادامه ➜</button></div></div>`;
+  return html;
+}
+let mcAnswered = {};
+function checkMC(btn, selected, answer, qIndex) {
+  if (mcAnswered[qIndex]) return;
+  mcAnswered[qIndex] = true;
+  const parent = btn.closest('.options-grid');
+  parent.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+  if (selected === answer) { btn.classList.add('correct'); score += 10; }
+  else { btn.classList.add('wrong'); parent.querySelectorAll('.option-btn').forEach(b => { if (b.textContent.trim() === answer) b.classList.add('correct'); }); }
+  updateProgress();
+}
+function renderListening(questions) {
+  let html = `<div>`;
+  questions.forEach((q, i) => {
+    html += `<div style="margin-bottom:22px;" data-q="${i}">
+      <button class="btn btn-secondary" style="width:100%;justify-content:center;" onclick="playWord('${q.word}', '${q.lang || 'zh-CN'}')">🔊 پخش کلمه ${i + 1}</button>
+      <div class="options-grid" style="margin-top:12px;">
+        ${[...q.options].sort(() => Math.random() - 0.5).map(opt => `<button class="option-btn" onclick="checkMC(this, '${opt}', '${q.answer}', 'L${i}')">${opt}</button>`).join('')}
+      </div></div>`;
+  });
+  html += `<div class="btn-row"><button class="btn btn-primary" onclick="nextStage()">ادامه ➜</button></div></div>`;
+  return html;
+}
+function renderReading(passages) {
+  let html = `<div>`;
+  passages.forEach((p, i) => {
+    html += `<div style="margin-bottom:26px;padding:18px;background:rgba(15,23,42,0.5);border-radius:14px;">
+      <p style="font-size:18px;line-height:1.8;color:#fff;margin-bottom:8px;direction:ltr;text-align:left;">${p.text}</p>
+      <p style="font-size:13px;line-height:1.8;color:#f97316;margin-bottom:14px;direction:ltr;text-align:left;font-family:'Courier New',monospace;">${p.pinyin}</p>
+      <div class="question-text">${p.question}</div>
+      <div class="options-grid">
+        ${[...p.options].sort(() => Math.random() - 0.5).map(opt => `<button class="option-btn" onclick="checkMC(this, '${opt.replace(/'/g, "\\'")}', '${p.answer.replace(/'/g, "\\'")}', 'R${i}')">${opt}</button>`).join('')}
+      </div></div>`;
+  });
+  html += `<div class="btn-row"><button class="btn btn-primary" onclick="nextStage()">ادامه ➜</button></div></div>`;
+  return html;
+}
+function renderWriting(questions) {
+  let html = `<div>`;
+  questions.forEach((q, i) => {
+    html += `<div style="margin-bottom:20px;" data-q="${i}">
+      <div class="question-text">«${q.prompt}» را به چینی بنویس (یا پینیین):</div>
+      <div class="question-hint">راهنما: ${q.hint}</div>
+      <input type="text" class="text-input" id="writeInput${i}" placeholder="Type here..." dir="ltr" onkeydown="if(event.key==='Enter')checkWrite(${i}, '${q.answer}', '${q.alt || ''}')">
+      <button class="btn btn-secondary" style="margin-top:10px;" onclick="checkWrite(${i}, '${q.answer}', '${q.alt || ''}')">بررسی</button>
+      <div class="feedback" id="writeFb${i}"></div></div>`;
+  });
+  html += `<div class="btn-row"><button class="btn btn-primary" onclick="nextStage()">ادامه ➜</button></div></div>`;
+  return html;
+}
+function checkWrite(i, answer, alt) {
+  const input = document.getElementById('writeInput' + i);
+  const fb = document.getElementById('writeFb' + i);
+  const val = input.value.trim().toLowerCase();
+  if (!val) return;
+  const correct = (val === answer.toLowerCase()) || (alt && val === alt.toLowerCase());
+  if (correct) { input.classList.add('correct'); fb.className = 'feedback success show'; fb.textContent = '✅ عالی!'; score += 10; }
+  else { input.classList.add('wrong'); fb.className = 'feedback error show'; fb.textContent = `❌ پاسخ درست: ${answer}`; }
+  input.disabled = true; updateProgress();
+}
+function renderSpeaking(questions) {
+  let html = `<div>`;
+  questions.forEach((q, i) => {
+    html += `<div style="margin-bottom:22px;padding:18px;background:rgba(15,23,42,0.5);border-radius:14px;">
+      <div class="chinese-word">${q.word}</div>
+      <div class="pinyin">${q.pinyin}</div>
+      <p style="text-align:center;color:#94a3b8;font-size:13px;margin-bottom:14px;">ترجمه: ${q.translation}</p>
+      <div class="mic-area">
+        <button class="mic-btn" id="micBtn${i}" onclick="toggleMic(${i})">🎤</button>
+        <div class="mic-status" id="micStatus${i}">برای ضبط کلیک کن</div>
+      </div>
+      <div style="text-align:center;margin-top:12px;">
+        <button class="btn btn-secondary" onclick="skipSpeak(${i})">رد کردن</button>
+      </div></div>`;
+  });
+  html += `<div class="btn-row"><button class="btn btn-primary" onclick="nextStage()">ادامه ➜</button></div></div>`;
+  return html;
+}
+let mediaRecorder = null; let recordingIdx = null;
+function toggleMic(i) {
+  const btn = document.getElementById('micBtn' + i);
+  const status = document.getElementById('micStatus' + i);
+  if (recordingIdx === i && mediaRecorder && mediaRecorder.state === 'recording') {
+    mediaRecorder.stop(); btn.classList.remove('recording');
+    status.textContent = '✅ ضبط شد'; score += 5; updateProgress(); recordingIdx = null; return;
+  }
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { status.textContent = '⚠️ پشتیبانی نمی‌شود'; return; }
+  navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+    mediaRecorder = new MediaRecorder(stream); mediaRecorder.start();
+    recordingIdx = i; btn.classList.add('recording');
+    status.textContent = '🔴 در حال ضبط...';
+  }).catch(() => { status.textContent = '⚠️ دسترسی داده نشد'; });
+}
+function skipSpeak(i) {
+  document.getElementById('micStatus' + i).textContent = '⏭ رد شد';
+  document.getElementById('micBtn' + i).disabled = true;
+}
+function renderSentence(questions) {
+  let html = `<div>`;
+  questions.forEach((q, i) => {
+    const shuffled = [...q.words].sort(() => Math.random() - 0.5);
+    html += `<div style="margin-bottom:22px;padding:18px;background:rgba(15,23,42,0.5);border-radius:14px;" data-q="${i}">
+      <div class="question-text">${q.translation}</div>
+      <div class="question-hint">کلمات را به ترتیب درست بچین:</div>
+      <div id="wordBank${i}" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+        ${shuffled.map(w => `<button class="option-btn" style="padding:10px 16px;font-size:16px;" onclick="pickWord(${i}, this, '${w.replace(/'/g, "\\'")}')">${w}</button>`).join('')}
+      </div>
+      <div id="builtSentence${i}" style="min-height:40px;padding:12px;background:rgba(251,191,36,0.08);border:2px dashed rgba(251,191,36,0.3);border-radius:10px;color:#fbbf24;font-weight:700;font-size:20px;direction:ltr;text-align:left;"></div>
+      <div class="feedback" id="sentFb${i}"></div>
+      <div style="margin-top:10px;"><button class="btn btn-secondary" onclick="checkSentence(${i}, '${q.answer.replace(/'/g, "\\'")}')">بررسی</button></div></div>`;
+  });
+  html += `<div class="btn-row"><button class="btn btn-primary" onclick="nextStage()">ادامه ➜</button></div></div>`;
+  return html;
+}
+let builtWords = {};
+function pickWord(qIndex, btn, word) {
+  if (!builtWords[qIndex]) builtWords[qIndex] = [];
+  builtWords[qIndex].push(word); btn.disabled = true; btn.style.opacity = '0.3';
+  document.getElementById('builtSentence' + qIndex).textContent = builtWords[qIndex].join('');
+}
+function checkSentence(qIndex, answer) {
+  const fb = document.getElementById('sentFb' + qIndex);
+  const built = (builtWords[qIndex] || []).join('');
+  if (built === answer) { fb.className = 'feedback success show'; fb.textContent = '✅ عالی!'; score += 10; }
+  else { fb.className = 'feedback error show'; fb.textContent = `❌ جمله درست: ${answer}`; }
+  updateProgress();
+}
+function renderListeningSentence(questions) {
+  let html = `<div>`;
+  questions.forEach((q, i) => {
+    html += `<div style="margin-bottom:22px;" data-q="${i}">
+      <button class="btn btn-secondary" style="width:100%;justify-content:center;" onclick="playWord('${q.sentence}', '${q.lang || 'zh-CN'}')">🔊 پخش جمله ${i + 1}</button>
+      <div class="options-grid" style="margin-top:12px;">
+        ${[...q.options].sort(() => Math.random() - 0.5).map(opt => `<button class="option-btn" onclick="checkMC(this, '${opt.replace(/'/g, "\\'")}', '${q.answer.replace(/'/g, "\\'")}', 'LS${i}')">${opt}</button>`).join('')}
+      </div></div>`;
+  });
+  html += `<div class="btn-row"><button class="btn btn-primary" onclick="nextStage()">ادامه ➜</button></div></div>`;
+  return html;
+}
+function renderMixed(questions) {
+  let html = `<div>`;
+  questions.forEach((q, i) => {
+    html += `<div style="margin-bottom:22px;padding:16px;background:rgba(15,23,42,0.5);border-radius:14px;" data-q="${i}">`;
+    if (q.type === 'mc') {
+      html += `<div class="question-text">${q.prompt}</div><div class="options-grid">
+        ${[...q.options].sort(() => Math.random() - 0.5).map(opt => `<button class="option-btn" onclick="checkMC(this, '${opt.replace(/'/g, "\\'")}', '${q.answer.replace(/'/g, "\\'")}', 'M${i}')">${opt}</button>`).join('')}
+      </div>`;
+    } else {
+      html += `<div class="question-text">${q.prompt}</div>
+        <div class="question-hint">راهنما: ${q.hint}</div>
+        <input type="text" class="text-input" id="mxInput${i}" placeholder="Type here..." dir="ltr" onkeydown="if(event.key==='Enter')checkMixedWrite(${i}, '${q.answer}', '${q.alt || ''}')">
+        <button class="btn btn-secondary" style="margin-top:10px;" onclick="checkMixedWrite(${i}, '${q.answer}', '${q.alt || ''}')">بررسی</button>
+        <div class="feedback" id="mxFb${i}"></div>`;
+    }
+    html += `</div>`;
+  });
+  html += `<div class="btn-row"><button class="btn btn-primary" onclick="nextStage()">پایان و مشاهده نتیجه 🏁</button></div></div>`;
+  return html;
+}
+function checkMixedWrite(i, answer, alt) {
+  const input = document.getElementById('mxInput' + i);
+  const fb = document.getElementById('mxFb' + i);
+  const val = input.value.trim().toLowerCase();
+  if (!val) return;
+  const correct = (val === answer.toLowerCase()) || (alt && val === alt.toLowerCase());
+  if (correct) { input.classList.add('correct'); fb.className = 'feedback success show'; fb.textContent = '✅ درست!'; score += 10; }
+  else { input.classList.add('wrong'); fb.className = 'feedback error show'; fb.textContent = `❌ پاسخ درست: ${answer}`; }
+  input.disabled = true; updateProgress();
+}
+function playWord(text, lang) {
+  if (!('speechSynthesis' in window)) { alert('TTS پشتیبانی نمی‌شود'); return; }
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = lang || 'zh-CN'; u.rate = 0.8;
+  speechSynthesis.cancel(); speechSynthesis.speak(u);
+}
+function nextStage() {
+  currentStage++; mcAnswered = {}; builtWords = {};
+  if (currentStage >= TOTAL_STAGES) renderResult(); else renderStage();
+}
+function renderResult() {
+  const maxScore = 300; const pct = Math.round((score / maxScore) * 100);
+  let emoji, title, msg;
+  if (pct >= 80) { emoji = '🏆'; title = '优秀!'; msg = 'تو یک قهرمان زبان چینی هستی!'; }
+  else if (pct >= 60) { emoji = '🎉'; title = '很好!'; msg = 'با کمی تمرین بهتر می‌شوی.'; }
+  else if (pct >= 40) { emoji = '💪'; title = '不错!'; msg = 'دوباره تلاش کن!'; }
+  else { emoji = '📚'; title = '需要练习'; msg = 'از اول شروع کن!'; }
+  document.getElementById('sceneContainer').innerHTML = `<div class="scene-card"><div class="result-screen">
+    <div class="result-emoji">${emoji}</div><div class="result-title">${title}</div>
+    <div class="result-score">${score} / ${maxScore}</div>
+    <div class="result-sub">${msg}</div>
+    <div class="btn-row" style="justify-content:center;">
+      <button class="btn btn-primary" onclick="restart()">🔄 دوباره</button>
+      <a href="../hub.html" class="btn btn-secondary">🏠 بازگشت به منو</a>
+    </div></div></div>`;
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('stageLabel').textContent = 'پایان دوره';
+  document.getElementById('scoreLabel').textContent = `امتیاز نهایی: ${score}`;
+}
+function restart() { currentStage = 0; score = 0; mcAnswered = {}; builtWords = {}; renderStage(); }
+window.addEventListener('load', init);
+</script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>درسنامه چینی HSK 5 — 高级 | Darsogame</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0} body{font-family:'Vazirmatn',sans-serif;min-height:100vh;background:linear-gradient(135deg,#0f172a 0%,#1e293b 50%,#334155 100%);color:#e2e8f0;padding:25px 18px}
+.container{max-width:900px;margin:auto} .top-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:22px}
+.back-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:rgba(239,68,68,.15);border:2px solid rgba(239,68,68,.3);border-radius:12px;color:#ef4444;text-decoration:none;font-weight:900;font-size:13px;transition:.25s}
+.back-btn:hover{background:rgba(239,68,68,.3);transform:translateY(-2px)} .level-pill{padding:8px 20px;background:linear-gradient(135deg,#ef4444,#fbbf24);border-radius:20px;color:#0f172a;font-weight:900;font-size:14px}
+.lesson-header{text-align:center;padding:30px 20px;margin-bottom:25px;background:linear-gradient(135deg,rgba(239,68,68,.12),rgba(251,191,36,.12));border-radius:25px;border:2px solid rgba(239,68,68,.25)}
+.badge{display:inline-block;padding:6px 16px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);border-radius:20px;font-size:12px;color:#ef4444;font-weight:900;margin-bottom:12px}
+h1{font-size:28px;font-weight:900;color:#fff;margin-bottom:8px} .lesson-header p{color:#94a3b8;font-size:14px;line-height:1.7}
+.meta{display:flex;justify-content:center;gap:20px;margin-top:15px;flex-wrap:wrap;font-size:12px;color:#94a3b8;font-weight:700}
+.section-card{background:linear-gradient(135deg,#1e293b,#334155);border:2px solid rgba(239,68,68,.2);border-radius:22px;padding:25px;margin-bottom:22px}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid rgba(148,163,184,.15)} .section-header .icon{font-size:30px} .section-header h2{font-size:19px;color:#fff;font-weight:900} .section-header p{font-size:12px;color:#94a3b8;margin-top:3px}
+.word-row{display:grid;grid-template-columns:1fr auto 1fr auto;gap:15px;align-items:center;padding:16px;margin-bottom:12px;background:rgba(15,23,42,.5);border-radius:14px;border:1px solid rgba(148,163,184,.1);transition:.25s}
+.word-row:hover{border-color:#ef4444;transform:translateX(-4px)} .fa{font-size:16px;font-weight:900;color:#fff;text-align:center} .arrow{font-size:20px;color:#fbbf24}
+.zh{font-size:28px;font-weight:900;color:#fbbf24;text-align:center;direction:ltr;font-family:'Noto Sans SC',sans-serif} .pinyin{font-size:13px;color:#38bdf8;text-align:center;font-family:'Courier New',monospace;margin-top:4px;direction:ltr}
+.speak{background:rgba(239,68,68,.15);border:none;color:#ef4444;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;transition:.2s} .speak:hover{background:rgba(239,68,68,.3);transform:scale(1.1)}
+.grammar-box{background:rgba(251,191,36,.06);border:2px solid rgba(251,191,36,.22);border-radius:16px;padding:20px;margin-bottom:15px} .grammar-box h3{font-size:15px;color:#fbbf24;margin-bottom:10px} .grammar-box p{font-size:14px;color:#cbd5e1;line-height:1.9;margin-bottom:8px}
+.example{background:rgba(15,23,42,.6);padding:12px 16px;border-radius:10px;margin-top:10px;border-right:3px solid #ef4444;line-height:2} .zh-line,.zh-sentence{font-family:'Noto Sans SC',sans-serif;direction:ltr;text-align:left;display:block;color:#fff} .zh-line{font-size:17px} .pinyin-line,.pinyin-sentence{font-family:'Courier New',monospace;direction:ltr;text-align:left;display:block;color:#38bdf8} .fa-line,.fa-trans{font-size:13px;color:#94a3b8}
+.example-item{background:rgba(15,23,42,.6);border-radius:14px;padding:16px 18px;margin-bottom:12px;border-right:4px solid #fbbf24} .zh-sentence{font-size:20px;font-weight:700;line-height:1.7;margin-bottom:4px} .pinyin-sentence{font-size:12px;margin-bottom:6px}
+.speak-row button{background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.3);color:#fbbf24;padding:6px 12px;border-radius:8px;font-family:inherit;font-weight:700;cursor:pointer;margin-top:10px}
+.nav-actions{display:flex;gap:12px;margin-top:25px;flex-wrap:wrap} .nav-btn{flex:1;min-width:150px;padding:14px 24px;border-radius:14px;font-family:inherit;font-size:14px;font-weight:900;cursor:pointer;border:none;text-decoration:none;text-align:center}
+.secondary{background:rgba(148,163,184,.15);color:#cbd5e1;border:2px solid rgba(148,163,184,.3)} .primary{background:linear-gradient(135deg,#ef4444,#fbbf24);color:#0f172a}
+@media(max-width:600px){.word-row{grid-template-columns:1fr;gap:8px}.word-row .arrow{transform:rotate(90deg)}.zh{font-size:24px}h1{font-size:22px}.section-card{padding:18px}}
+</style></head>
+<body><div class="container">
+<div class="top-bar"><a href="../lesson.html" class="back-btn">↩ بازگشت به درسنامه</a><div class="level-pill">HSK 5 • 高级</div></div>
+<div class="lesson-header"><span class="badge">🇨🇳 چینی • سطح HSK 5</span><h1>درسنامه پیشرفته — 高级</h1><p>واژگان پیشرفته، موضوعات علمی و اجتماعی و ساختارهای پیچیده‌تر.</p><div class="meta"><span>📖 ۶ بخش</span><span>✏️ ۱۰ کلمه</span><span>⏱️ ~۱۵ دقیقه</span></div></div>
+<div class="section-card"><div class="section-header"><span class="icon">👋</span><div><h2>۱. واژگان — 词汇</h2><p>واژه‌های مهم این سطح</p></div></div><div class="word-row">
+<div class="fa">واقعی / عملی</div><div class="arrow">←</div>
+<div><div class="zh">实际</div><div class="pinyin">shíjì</div></div>
+<button class="speak" onclick="speak('实际','zh-CN')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">پدیده</div><div class="arrow">←</div>
+<div><div class="zh">现象</div><div class="pinyin">xiànxiàng</div></div>
+<button class="speak" onclick="speak('现象','zh-CN')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">ترویج کردن</div><div class="arrow">←</div>
+<div><div class="zh">促进</div><div class="pinyin">cùjìn</div></div>
+<button class="speak" onclick="speak('促进','zh-CN')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">چالش</div><div class="arrow">←</div>
+<div><div class="zh">挑战</div><div class="pinyin">tiǎozhàn</div></div>
+<button class="speak" onclick="speak('挑战','zh-CN')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">هدف</div><div class="arrow">←</div>
+<div><div class="zh">目标</div><div class="pinyin">mùbiāo</div></div>
+<button class="speak" onclick="speak('目标','zh-CN')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">هوش مصنوعی</div><div class="arrow">←</div>
+<div><div class="zh">人工智能</div><div class="pinyin">réngōng zhìnéng</div></div>
+<button class="speak" onclick="speak('人工智能','zh-CN')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">تبادل فرهنگی</div><div class="arrow">←</div>
+<div><div class="zh">文化交流</div><div class="pinyin">wénhuà jiāoliú</div></div>
+<button class="speak" onclick="speak('文化交流','zh-CN')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">دیدگاه</div><div class="arrow">←</div>
+<div><div class="zh">视野</div><div class="pinyin">shìyě</div></div>
+<button class="speak" onclick="speak('视野','zh-CN')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">توسعه</div><div class="arrow">←</div>
+<div><div class="zh">发展</div><div class="pinyin">fāzhǎn</div></div>
+<button class="speak" onclick="speak('发展','zh-CN')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">جامعه</div><div class="arrow">←</div>
+<div><div class="zh">社会</div><div class="pinyin">shèhuì</div></div>
+<button class="speak" onclick="speak('社会','zh-CN')">🔊</button>
+</div></div>
+<div class="section-card"><div class="section-header"><span class="icon">📚</span><div><h2>۲. گرامر — 语法</h2><p>ساختارهای مهم و کاربردی</p></div></div><div class="grammar-box">
+<h3>🔹 随着……</h3><p>برای بیان تغییر هم‌زمان با یک روند.</p>
+<div class="example"><span class="zh-line">随着科技的发展，生活越来越方便。</span><span class="pinyin-line">Suízhe kējì de fāzhǎn, shēnghuó yuèláiyuè fāngbiàn.</span><span class="fa-line">با توسعه فناوری، زندگی روزبه‌روز راحت‌تر می‌شود.</span></div>
+</div>
+<div class="grammar-box">
+<h3>🔹 即使……也……</h3><p>برای بیان شرطی که نتیجه را تغییر نمی‌دهد.</p>
+<div class="example"><span class="zh-line">即使遇到困难，我也不会放弃。</span><span class="pinyin-line">Jíshǐ yùdào kùnnan, wǒ yě bú huì fàngqì.</span><span class="fa-line">حتی اگر با مشکل روبه‌رو شوم، تسلیم نمی‌شوم.</span></div>
+</div>
+<div class="grammar-box">
+<h3>🔹 不仅……还……</h3><p>برای اضافه کردن نکته‌ای دیگر با تأکید.</p>
+<div class="example"><span class="zh-line">学习外语不仅能交流，还能拓宽视野。</span><span class="pinyin-line">Xuéxí wàiyǔ bùjǐn néng jiāoliú, hái néng tuòkuān shìyě.</span><span class="fa-line">یادگیری زبان خارجی نه‌تنها ارتباط را ممکن می‌کند، بلکه دیدگاه را هم گسترش می‌دهد.</span></div>
+</div></div>
+<div class="section-card"><div class="section-header"><span class="icon">💬</span><div><h2>۳. مثال‌های جمله‌ای — 例句</h2><p>جملات کامل برای تمرین</p></div></div><div class="example-item">
+<div class="zh-sentence">人工智能正在改变我们的生活。</div><div class="pinyin-sentence">Réngōng zhìnéng zhèngzài gǎibiàn wǒmen de shēnghuó.</div>
+<div class="fa-trans">هوش مصنوعی در حال تغییر زندگی ماست.</div>
+<div class="speak-row"><button onclick="speak('人工智能正在改变我们的生活。','zh-CN')">🔊 تلفظ جمله</button></div>
+</div>
+<div class="example-item">
+<div class="zh-sentence">我们要面对新的挑战。</div><div class="pinyin-sentence">Wǒmen yào miànduì xīn de tiǎozhàn.</div>
+<div class="fa-trans">ما باید با چالش‌های جدید روبه‌رو شویم.</div>
+<div class="speak-row"><button onclick="speak('我们要面对新的挑战。','zh-CN')">🔊 تلفظ جمله</button></div>
+</div>
+<div class="example-item">
+<div class="zh-sentence">文化交流可以促进相互理解。</div><div class="pinyin-sentence">Wénhuà jiāoliú kěyǐ cùjìn xiānghù lǐjiě.</div>
+<div class="fa-trans">تبادل فرهنگی می‌تواند درک متقابل را ترویج کند.</div>
+<div class="speak-row"><button onclick="speak('文化交流可以促进相互理解。','zh-CN')">🔊 تلفظ جمله</button></div>
+</div>
+<div class="example-item">
+<div class="zh-sentence">学习外语可以拓宽视野。</div><div class="pinyin-sentence">Xuéxí wàiyǔ kěyǐ tuòkuān shìyě.</div>
+<div class="fa-trans">یادگیری زبان خارجی می‌تواند دیدگاه را گسترش دهد.</div>
+<div class="speak-row"><button onclick="speak('学习外语可以拓宽视野。','zh-CN')">🔊 تلفظ جمله</button></div>
+</div>
+<div class="example-item">
+<div class="zh-sentence">我们的目标是提高质量。</div><div class="pinyin-sentence">Wǒmen de mùbiāo shì tígāo zhìliàng.</div>
+<div class="fa-trans">هدف ما افزایش کیفیت است.</div>
+<div class="speak-row"><button onclick="speak('我们的目标是提高质量。','zh-CN')">🔊 تلفظ جمله</button></div>
+</div>
+<div class="example-item">
+<div class="zh-sentence">这个现象值得我们认真研究。</div><div class="pinyin-sentence">Zhège xiànxiàng zhíde wǒmen rènzhēn yánjiū.</div>
+<div class="fa-trans">این پدیده ارزش مطالعه جدی ما را دارد.</div>
+<div class="speak-row"><button onclick="speak('这个现象值得我们认真研究。','zh-CN')">🔊 تلفظ جمله</button></div>
+</div></div>
+<div class="section-card"><div class="section-header"><span class="icon">🎧</span><div><h2>۴. تلفظ و پینیین — 拼音</h2><p>با دکمه 🔊 تلفظ چینی را بشنو</p></div></div><div class="grammar-box"><h3>🔊 نکته تلفظ</h3><p>برای هر واژه و جمله روی دکمه تلفظ بزن. مرورگر از صدای چینی (zh-CN) استفاده می‌کند.</p></div></div>
+<div class="section-card"><div class="section-header"><span class="icon">🧠</span><div><h2>۵. نکته یادگیری</h2><p>مرور فعال و جمله‌سازی</p></div></div><div class="grammar-box"><h3>🎯 تمرین</h3><p>هر ۱۰ واژه را بلند بخوان، پینیین را مرور کن و با حداقل ۳ واژه جمله جدید بساز.</p></div></div>
+<div class="section-card"><div class="section-header"><span class="icon">✅</span><div><h2>۶. خلاصه درس — 总结</h2><p>آنچه در این درس یاد گرفتی</p></div></div><div class="grammar-box"><h3>📋 خلاصه</h3><p>✅ ۱۰ واژه کلیدی HSK 5</p><p>✅ ۳ ساختار گرامری</p><p>✅ ۶ جمله کامل</p><p>✅ پینیین و تلفظ چینی</p></div></div>
+<div class="nav-actions"><a href="../lesson.html" class="nav-btn secondary">↩ بازگشت</a><a href="hsk6-lesson.html" class="nav-btn primary">درسنامه HSK 6 ←</a><a href="../index2.html" class="nav-btn primary">🎮 بازی اصلی</a></div>
+</div>
+<script>
+function speak(text,lang){if(!('speechSynthesis' in window)){alert('مرورگر شما از تلفظ پشتیبانی نمی‌کند.');return;} speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang=lang||'zh-CN';u.rate=.8;speechSynthesis.speak(u);}
+</script></body></html>
