@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>درسنامه TOPIK I-3 — پایه | Darsogame</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Vazirmatn',sans-serif;min-height:100vh;background:linear-gradient(135deg,#0f172a 0%,#1e293b 50%,#334155 100%);color:#e2e8f0;padding:25px 18px}
+.container{max-width:900px;margin:0 auto}
+.top-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:22px}
+.back-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:rgba(34,197,94,.15);border:2px solid rgba(34,197,94,.3);border-radius:12px;color:#22c55e;text-decoration:none;font-weight:900;font-size:13px;transition:.25s}
+.back-btn:hover{background:rgba(34,197,94,.3);transform:translateY(-2px)}
+.level-pill{padding:8px 20px;background:linear-gradient(135deg,#22c55e,#38bdf8);border-radius:20px;color:#0f172a;font-weight:900;font-size:14px;font-family:'Courier New',monospace}
+.lesson-header{text-align:center;padding:30px 20px;margin-bottom:25px;background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(56,189,248,.12));border-radius:25px;border:2px solid rgba(34,197,94,.25)}
+.lesson-header .badge{display:inline-block;padding:6px 16px;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);border-radius:20px;font-size:12px;color:#22c55e;font-weight:900;margin-bottom:12px}
+.lesson-header h1{font-size:28px;font-weight:900;color:#fff;margin-bottom:8px}
+.lesson-header p{color:#94a3b8;font-size:14px;line-height:1.7}
+.lesson-header .meta{display:flex;justify-content:center;gap:20px;margin-top:15px;flex-wrap:wrap;font-size:12px;color:#94a3b8;font-weight:700}
+.section-card{background:linear-gradient(135deg,#1e293b,#334155);border:2px solid rgba(34,197,94,.2);border-radius:22px;padding:25px;margin-bottom:22px}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid rgba(148,163,184,.15)}
+.section-header .icon{font-size:30px}.section-header h2{font-size:19px;font-weight:900;color:#fff}.section-header p{font-size:12px;color:#94a3b8;margin-top:3px}
+.word-row{display:grid;grid-template-columns:1fr auto 1fr auto;gap:15px;align-items:center;padding:16px;margin-bottom:12px;background:rgba(15,23,42,.5);border-radius:14px;border:1px solid rgba(148,163,184,.1);transition:.25s}
+.word-row:hover{border-color:#22c55e;transform:translateX(-4px)}
+.word-row .fa{font-size:16px;font-weight:900;color:#fff;text-align:center}.word-row .arrow{font-size:20px;color:#38bdf8}
+.word-row .ko{font-size:28px;font-weight:900;color:#fbbf24;text-align:center;direction:ltr;font-family:'Noto Sans KR',sans-serif}
+.word-row .romanization{font-size:13px;color:#38bdf8;text-align:center;font-family:'Courier New',monospace;margin-top:4px}
+.speak{background:rgba(34,197,94,.15);border:none;color:#22c55e;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;margin:0 auto;display:flex;align-items:center;justify-content:center;transition:.2s}
+.speak:hover{background:rgba(34,197,94,.3);transform:scale(1.1)}
+.grammar-box{background:rgba(56,189,248,.08);border:2px solid rgba(56,189,248,.25);border-radius:16px;padding:20px;margin-bottom:15px}
+.grammar-box h3{font-size:15px;font-weight:900;color:#38bdf8;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.grammar-box p{font-size:14px;color:#cbd5e1;line-height:1.9;margin-bottom:8px}
+.grammar-box code{background:rgba(0,0,0,.4);padding:3px 10px;border-radius:8px;color:#38bdf8;font-family:'Courier New',monospace;direction:ltr;display:inline-block;margin:0 4px}
+.grammar-box strong{color:#fbbf24}
+.example{background:rgba(15,23,42,.6);padding:12px 16px;border-radius:10px;margin-top:10px;font-size:13px;color:#94a3b8;border-right:3px solid #fbbf24;line-height:2}
+.ko-line{font-family:'Noto Sans KR',sans-serif;font-size:16px;color:#fff;direction:ltr;text-align:left;display:block;margin-bottom:4px}
+.romanization-line{font-family:'Courier New',monospace;font-size:12px;color:#38bdf8;direction:ltr;text-align:left;display:block;margin-bottom:4px}
+.fa-line{font-size:13px;color:#94a3b8;display:block}
+.example-item{background:rgba(15,23,42,.6);border-radius:14px;padding:16px 18px;margin-bottom:12px;border-right:4px solid #fbbf24}
+.ko-sentence{font-size:20px;color:#fff;font-weight:700;line-height:1.7;margin-bottom:4px;direction:ltr;text-align:left;font-family:'Noto Sans KR',sans-serif}
+.romanization-sentence{font-size:12px;color:#38bdf8;margin-bottom:6px;direction:ltr;text-align:left;font-family:'Courier New',monospace}
+.fa-trans{font-size:13px;color:#94a3b8;font-style:italic}
+.speak-row{display:flex;gap:8px;margin-top:10px}.speak-row button{background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.3);color:#fbbf24;padding:6px 12px;border-radius:8px;font-size:11px;font-family:inherit;font-weight:700;cursor:pointer;transition:.2s}
+.speak-row button:hover{background:rgba(251,191,36,.3)}
+.nav-actions{display:flex;gap:12px;margin-top:25px;flex-wrap:wrap}.nav-btn{flex:1;min-width:150px;padding:14px 24px;border-radius:14px;font-family:inherit;font-size:14px;font-weight:900;cursor:pointer;border:none;transition:.25s;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}
+.nav-btn.secondary{background:rgba(148,163,184,.15);color:#cbd5e1;border:2px solid rgba(148,163,184,.3)}.nav-btn.secondary:hover{background:rgba(148,163,184,.25);transform:translateY(-2px)}
+.nav-btn.primary{background:linear-gradient(135deg,#22c55e,#38bdf8);color:#0f172a;box-shadow:0 8px 20px rgba(34,197,94,.4)}.nav-btn.primary:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(34,197,94,.6)}
+@media(max-width:600px){.word-row{grid-template-columns:1fr;gap:8px;padding:14px}.word-row .arrow{transform:rotate(90deg)}.word-row .ko{font-size:24px}.lesson-header h1{font-size:22px}.section-card{padding:18px}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="top-bar">
+<a href="../lesson.html" class="back-btn">↩ بازگشت به درسنامه</a>
+<div class="level-pill">TOPIK I-3 • 초급</div>
+</div>
+<div class="lesson-header">
+<span class="badge">🇰🇷 کره‌ای • سطح TOPIK I-3</span>
+<h1>درسنامه پایه</h1>
+<p>در این درس با خرید، قیمت‌ها، شمارش و درخواست‌های ساده در زبان کره‌ای آشنا می‌شوی.</p>
+<div class="meta"><span>📖 ۶ بخش</span><span>✏️ 88 کلمه</span><span>⏱️ ~۱۵ دقیقه</span></div>
+</div>
+
+<div class="section-card"><div class="section-header"><span class="icon">🛒</span><div><h2>۱. خرید و فروش — 쇼핑</h2><p>عبارت‌های پرکاربرد هنگام خرید</p></div></div>
+<div class="word-row">
+<div class="fa">این چقدر است؟</div><div class="arrow">←</div>
+<div><div class="ko">이거 얼마예요?</div><div class="romanization">igeo eolmayeyo?</div></div>
+<button class="speak" onclick="speak('이거 얼마예요?', 'ko-KR')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">این را می‌خواهم.</div><div class="arrow">←</div>
+<div><div class="ko">이거 주세요.</div><div class="romanization">igeo juseyo.</div></div>
+<button class="speak" onclick="speak('이거 주세요.', 'ko-KR')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">گران است.</div><div class="arrow">←</div>
+<div><div class="ko">비싸요.</div><div class="romanization">bissayo.</div></div>
+<button class="speak" onclick="speak('비싸요.', 'ko-KR')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">ارزان است.</div><div class="arrow">←</div>
+<div><div class="ko">싸요.</div><div class="romanization">ssayo.</div></div>
+<button class="speak" onclick="speak('싸요.', 'ko-KR')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">کارت دارید؟</div><div class="arrow">←</div>
+<div><div class="ko">카드 있어요?</div><div class="romanization">kadeu isseoyo.</div></div>
+<button class="speak" onclick="speak('카드 있어요?', 'ko-KR')">🔊</button>
+</div>
+</div>
+<div class="section-card"><div class="section-header"><span class="icon">🔢</span><div><h2>۲. اعداد و شمارش — 숫자와 수량</h2><p>اعداد و کلمات شمارشی پرکاربرد</p></div></div>
+<div class="word-row">
+<div class="fa">یک</div><div class="arrow">←</div>
+<div><div class="ko">하나</div><div class="romanization">hana</div></div>
+<button class="speak" onclick="speak('하나', 'ko-KR')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">دو</div><div class="arrow">←</div>
+<div><div class="ko">둘</div><div class="romanization">dul</div></div>
+<button class="speak" onclick="speak('둘', 'ko-KR')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">سه</div><div class="arrow">←</div>
+<div><div class="ko">셋</div><div class="romanization">set</div></div>
+<button class="speak" onclick="speak('셋', 'ko-KR')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">یک عدد</div><div class="arrow">←</div>
+<div><div class="ko">한 개</div><div class="romanization">han gae</div></div>
+<button class="speak" onclick="speak('한 개', 'ko-KR')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">دو نفر</div><div class="arrow">←</div>
+<div><div class="ko">두 명</div><div class="romanization">du myeong</div></div>
+<button class="speak" onclick="speak('두 명', 'ko-KR')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">یک فنجان</div><div class="arrow">←</div>
+<div><div class="ko">한 잔</div><div class="romanization">han jan</div></div>
+<button class="speak" onclick="speak('한 잔', 'ko-KR')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">یک بطری</div><div class="arrow">←</div>
+<div><div class="ko">한 병</div><div class="romanization">han byeong</div></div>
+<button class="speak" onclick="speak('한 병', 'ko-KR')">🔊</button>
+</div>
+</div>
+<div class="section-card"><div class="section-header"><span class="icon">🏠</span><div><h2>۳. مکان‌ها و جهت‌ها — 장소와 방향</h2><p>مکان‌های روزمره و جهت‌های ساده</p></div></div>
+<div class="word-row">
+<div class="fa">خانه</div><div class="arrow">←</div>
+<div><div class="ko">집</div><div class="romanization">jip</div></div>
+<button class="speak" onclick="speak('집', 'ko-KR')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">مدرسه</div><div class="arrow">←</div>
+<div><div class="ko">학교</div><div class="romanization">hakgyo</div></div>
+<button class="speak" onclick="speak('학교', 'ko-KR')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">فروشگاه</div><div class="arrow">←</div>
+<div><div class="ko">가게</div><div class="romanization">gage</div></div>
+<button class="speak" onclick="speak('가게', 'ko-KR')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">اینجا</div><div class="arrow">←</div>
+<div><div class="ko">여기</div><div class="romanization">yeogi</div></div>
+<button class="speak" onclick="speak('여기', 'ko-KR')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">آنجا</div><div class="arrow">←</div>
+<div><div class="ko">거기</div><div class="romanization">geogi</div></div>
+<button class="speak" onclick="speak('거기', 'ko-KR')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">کجا</div><div class="arrow">←</div>
+<div><div class="ko">어디</div><div class="romanization">eodi</div></div>
+<button class="speak" onclick="speak('어디', 'ko-KR')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">سمت راست</div><div class="arrow">←</div>
+<div><div class="ko">오른쪽</div><div class="romanization">oreunjjok</div></div>
+<button class="speak" onclick="speak('오른쪽', 'ko-KR')">🔊</button>
+</div>
+<div class="word-row">
+<div class="fa">سمت چپ</div><div class="arrow">←</div>
+<div><div class="ko">왼쪽</div><div class="romanization">oenjjok</div></div>
+<button class="speak" onclick="speak('왼쪽', 'ko-KR')">🔊</button>
+</div>
+</div>
+<div class="section-card"><div class="section-header"><span class="icon">📚</span><div><h2>۴. گرامر پایه — 기초 문법</h2><p>نکات گرامری مهم این سطح</p></div></div>
+<div class="grammar-box"><h3>🔹 ذره 에 برای مقصد و زمان</h3><p><code>장소 + 에 + 가요/와요</code> یعنی «به یک مکان رفتن/آمدن». همچنین برای زمان استفاده می‌شود.</p>
+<div class="example"><span class="ko-line">학교에 가요.</span><span class="romanization-line">Hakgyoe gayo.</span><span class="fa-line">به مدرسه می‌روم.</span></div>
+<div class="example"><span class="ko-line">7시에 만나요.</span><span class="romanization-line">Ilgopsie mannayo.</span><span class="fa-line">ساعت ۷ همدیگر را می‌بینیم.</span></div>
+</div>
+<div class="grammar-box"><h3>🔹 درخواست با 주세요</h3><p>برای درخواست مؤدبانه می‌توان از <code>주세요</code> بعد از اسم یا عبارت استفاده کرد.</p>
+<div class="example"><span class="ko-line">물 주세요.</span><span class="romanization-line">Mul juseyo.</span><span class="fa-line">لطفاً آب بدهید.</span></div>
+<div class="example"><span class="ko-line">이거 주세요.</span><span class="romanization-line">Igeo juseyo.</span><span class="fa-line">لطفاً این را بدهید.</span></div>
+</div>
+<div class="grammar-box"><h3>🔹 وجود داشتن: 있어요 / 없어요</h3><p><code>있어요</code> برای «وجود دارد/دارم» و <code>없어요</code> برای «وجود ندارد/ندارم» به کار می‌رود.</p>
+<div class="example"><span class="ko-line">시간이 있어요.</span><span class="romanization-line">Sigani isseoyo.</span><span class="fa-line">وقت دارم.</span></div>
+<div class="example"><span class="ko-line">돈이 없어요.</span><span class="romanization-line">Doni eopseoyo.</span><span class="fa-line">پول ندارم.</span></div>
+</div>
+</div>
+<div class="section-card"><div class="section-header"><span class="icon">💬</span><div><h2>۵. مثال‌های جمله‌ای — 예문</h2><p>جملات کامل برای تمرین</p></div></div>
+<div class="example-item">
+<div class="ko-sentence">이거 얼마예요?</div>
+<div class="romanization-sentence">Igeo eolmayeyo?</div>
+<div class="fa-trans">این چقدر است؟</div>
+<div class="speak-row"><button onclick="speak('이거 얼마예요?', 'ko-KR')">🔊 تلفظ جمله</button></div>
+</div>
+<div class="example-item">
+<div class="ko-sentence">사과 세 개 주세요.</div>
+<div class="romanization-sentence">Sagwa se gae juseyo.</div>
+<div class="fa-trans">لطفاً سه سیب بدهید.</div>
+<div class="speak-row"><button onclick="speak('사과 세 개 주세요.', 'ko-KR')">🔊 تلفظ جمله</button></div>
+</div>
+<div class="example-item">
+<div class="ko-sentence">학교가 어디에 있어요?</div>
+<div class="romanization-sentence">Hakgyoga eodie isseoyo?</div>
+<div class="fa-trans">مدرسه کجاست؟</div>
+<div class="speak-row"><button onclick="speak('학교가 어디에 있어요?', 'ko-KR')">🔊 تلفظ جمله</button></div>
+</div>
+<div class="example-item">
+<div class="ko-sentence">오른쪽에 있어요.</div>
+<div class="romanization-sentence">Oreunjjjoge isseoyo.</div>
+<div class="fa-trans">در سمت راست است.</div>
+<div class="speak-row"><button onclick="speak('오른쪽에 있어요.', 'ko-KR')">🔊 تلفظ جمله</button></div>
+</div>
+<div class="example-item">
+<div class="ko-sentence">저는 한국어 책이 있어요.</div>
+<div class="romanization-sentence">Jeoneun hangugeo chaegi isseoyo.</div>
+<div class="fa-trans">من کتاب کره‌ای دارم.</div>
+<div class="speak-row"><button onclick="speak('저는 한국어 책이 있어요.', 'ko-KR')">🔊 تلفظ جمله</button></div>
+</div>
+<div class="example-item">
+<div class="ko-sentence">오늘은 시간이 없어요.</div>
+<div class="romanization-sentence">Oneureun sigani eopseoyo.</div>
+<div class="fa-trans">امروز وقت ندارم.</div>
+<div class="speak-row"><button onclick="speak('오늘은 시간이 없어요.', 'ko-KR')">🔊 تلفظ جمله</button></div>
+</div>
+</div>
+<div class="section-card">
+<div class="section-header"><span class="icon">✅</span><div><h2>۶. خلاصه درس — 정리</h2><p>چه چیزهایی یاد گرفتی</p></div></div>
+<div class="grammar-box"><h3>📋 در این درس یاد گرفتی:</h3>
+<p>✅ واژه‌ها و عبارت‌های کاربردی TOPIK I-3</p>
+<p>✅ جمله‌سازی درباره موضوعات روزمره</p>
+<p>✅ نکات گرامری اصلی این سطح</p>
+<p>✅ جمله‌های کامل برای تمرین شنیداری و گفتاری</p>
+<p>✅ تلفظ کره‌ای با دکمه 🔊</p>
+</div>
+<div class="grammar-box"><h3>🎯 قدم بعدی:</h3>
+<p>1️⃣ به درسنامه <strong>TOPIK I-4</strong> برو و درس بعدی را شروع کن.</p>
+<p>2️⃣ یا به <strong>بازی اصلی</strong> برگرد و تمرین کن.</p></div></div>
+<div class="nav-actions">
+<a href="../lesson.html" class="nav-btn secondary">↩ بازگشت به درسنامه</a>
+<a href="topik4-lesson.html" class="nav-btn primary">درسنامه TOPIK I-4 ←</a>
+<a href="../index2.html" class="nav-btn primary">🎮 برو به بازی اصلی</a>
+</div>
+</div>
+<script>
+function speak(text, lang) {
+ if (!('speechSynthesis' in window)) {
+   alert('مرورگر شما از تلفظ پشتیبانی نمی‌کند.');
+   return;
+ }
+ window.speechSynthesis.cancel();
+ const u = new SpeechSynthesisUtterance(text);
+ u.lang = lang || 'ko-KR';
+ u.rate = 0.8;
+ window.speechSynthesis.speak(u);
+}
+</script>
+</body>
+</html>

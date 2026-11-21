@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>کره‌ای TOPIK II-4 - متوسط بالا | Darsogame</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Vazirmatn', sans-serif; min-height: 100vh;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+      color: #e2e8f0; padding: 25px 18px; }
+    .container { max-width: 900px; margin: 0 auto; }
+    .top-bar { display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 12px; margin-bottom: 22px; }
+    .back-btn { display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 18px; background: rgba(249,115,22,0.15);
+      border: 2px solid rgba(249,115,22,0.3); border-radius: 12px;
+      color: #f97316; text-decoration: none; font-weight: 900; font-size: 13px; transition: all 0.25s; }
+    .back-btn:hover { background: rgba(249,115,22,0.3); transform: translateY(-2px); }
+    .level-pill { padding: 8px 20px; background: linear-gradient(135deg, #f97316, #ef4444);
+      border-radius: 20px; color: #fff; font-weight: 900; font-size: 14px;
+      font-family: 'Courier New', monospace; }
+    .progress-wrap { background: rgba(15,23,42,0.7); border: 2px solid rgba(249,115,22,0.25);
+      border-radius: 18px; padding: 16px 20px; margin-bottom: 25px; }
+    .progress-info { display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; font-size: 13px; font-weight: 900; }
+    .progress-info .stage-label { color: #f97316; }
+    .progress-info .score-label { color: #fbbf24; }
+    .progress-bar { height: 12px; background: rgba(148,163,184,0.2);
+      border-radius: 10px; overflow: hidden; }
+    .progress-fill { height: 100%; width: 0%;
+      background: linear-gradient(90deg, #f97316, #ef4444, #fbbf24);
+      border-radius: 10px; transition: width 0.5s cubic-bezier(0.4,0,0.2,1); }
+    .scene-card { background: linear-gradient(135deg, #1e293b, #334155);
+      border: 2px solid rgba(249,115,22,0.2); border-radius: 22px;
+      padding: 28px 24px; margin-bottom: 22px; min-height: 300px; }
+    .scene-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+      padding-bottom: 16px; border-bottom: 1px solid rgba(148,163,184,0.15); }
+    .scene-icon { font-size: 34px; }
+    .scene-titles h3 { font-size: 18px; font-weight: 900; color: #fff; margin-bottom: 3px; }
+    .scene-titles p { font-size: 12px; color: #94a3b8; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 24px; border-radius: 14px; font-family: inherit;
+      font-size: 14px; font-weight: 900; cursor: pointer; border: none;
+      transition: all 0.25s; outline: none; }
+    .btn-primary { background: linear-gradient(135deg, #f97316, #ef4444); color: #fff; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(249,115,22,0.4); }
+    .btn-secondary { background: rgba(148,163,184,0.15); color: #cbd5e1;
+      border: 2px solid rgba(148,163,184,0.3); }
+    .btn-secondary:hover { background: rgba(148,163,184,0.25); }
+    .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+    .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+    .option-btn { padding: 16px 18px; background: rgba(15,23,42,0.6);
+      border: 2px solid rgba(148,163,184,0.25); border-radius: 14px;
+      color: #e2e8f0; font-family: inherit; font-size: 15px; font-weight: 700;
+      cursor: pointer; transition: all 0.2s; text-align: center; outline: none; }
+    .option-btn:hover:not(:disabled) { border-color: #f97316; background: rgba(249,115,22,0.1);
+      transform: translateY(-2px); }
+    .option-btn.correct { border-color: #22c55e; background: rgba(34,197,94,0.2); color: #86efac; }
+    .option-btn.wrong { border-color: #ef4444; background: rgba(239,68,68,0.2); color: #fca5a5; }
+    .option-btn:disabled { cursor: not-allowed; opacity: 0.8; }
+    .text-input { width: 100%; padding: 14px 18px; background: rgba(15,23,42,0.6);
+      border: 2px solid rgba(148,163,184,0.25); border-radius: 14px;
+      color: #fff; font-family: inherit; font-size: 18px; outline: none; transition: border-color 0.2s; }
+    .text-input:focus { border-color: #f97316; }
+    .text-input.correct { border-color: #22c55e; background: rgba(34,197,94,0.1); }
+    .text-input.wrong { border-color: #ef4444; background: rgba(239,68,68,0.1); }
+    .question-text { font-size: 17px; font-weight: 700; color: #fff; line-height: 1.7; margin-bottom: 6px; }
+    .question-hint { font-size: 12px; color: #94a3b8; margin-bottom: 18px; }
+    .korean-word { font-size: 52px; font-weight: 900; color: #f97316;
+      text-align: center; padding: 20px; margin: 10px 0;
+      background: rgba(249,115,22,0.08); border-radius: 14px;
+      border: 1px dashed rgba(249,115,22,0.3); direction: ltr; }
+    .romanization { font-size: 16px; color: #fbbf24; text-align: center; font-family: 'Courier New', monospace; margin-bottom: 8px; }
+    .feedback { margin-top: 16px; padding: 14px 18px; border-radius: 14px;
+      font-size: 14px; font-weight: 700; line-height: 1.6; display: none; }
+    .feedback.show { display: block; }
+    .feedback.success { background: rgba(34,197,94,0.15); border: 2px solid rgba(34,197,94,0.4); color: #86efac; }
+    .feedback.error { background: rgba(239,68,68,0.15); border: 2px solid rgba(239,68,68,0.4); color: #fca5a5; }
+    .mic-area { text-align: center; padding: 20px; }
+    .mic-btn { width: 90px; height: 90px; border-radius: 50%; border: none;
+      background: linear-gradient(135deg, #ef4444, #f97316); color: #fff; font-size: 36px;
+      cursor: pointer; transition: all 0.25s; box-shadow: 0 10px 25px rgba(239,68,68,0.4); }
+    .mic-btn:hover { transform: scale(1.08); }
+    .mic-btn.recording { animation: pulse 1s infinite; background: linear-gradient(135deg, #22c55e, #16a34a); }
+    @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.6);} 50%{box-shadow:0 0 0 20px rgba(34,197,94,0);} }
+    .mic-status { font-size: 13px; color: #94a3b8; margin-top: 12px; font-weight: 700; }
+    .result-screen { text-align: center; padding: 30px 20px; }
+    .result-emoji { font-size: 80px; margin-bottom: 20px; }
+    .result-title { font-size: 28px; font-weight: 900; color: #fff; margin-bottom: 12px; }
+    .result-score { font-size: 52px; font-weight: 900; font-family: 'Courier New', monospace;
+      background: linear-gradient(135deg, #fbbf24, #f97316);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 8px; }
+    .result-sub { font-size: 15px; color: #94a3b8; margin-bottom: 25px; }
+    @media (max-width: 600px) {
+      .options-grid { grid-template-columns: 1fr; }
+      .scene-card { padding: 22px 18px; }
+      .korean-word { font-size: 38px; }
+      .result-score { font-size: 40px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="top-bar">
+    <a href="../hub.html" class="back-btn">🏠 بازگشت</a>
+    <div class="level-pill">TOPIK II-4 • 중급</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-info">
+      <span class="stage-label" id="stageLabel">مرحله ۱ از ۸</span>
+      <span class="score-label" id="scoreLabel">امتیاز: ۰</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+  <div id="sceneContainer"></div>
+</div>
+
+<script>
+const TOTAL_STAGES = 8;
+let currentStage = 0;
+let score = 0;
+
+const stages = [
+  {
+    type: 'multiple-choice', icon: '🎮',
+    title: 'مرحله ۱: واژگان TOPIK II-4',
+    subtitle: 'معنی درست را انتخاب کن',
+    questions: [
+      { prompt: '발전 (baljeon)', options: ['توسعه', 'کاهش', 'تغییر', 'ثبات'], answer: 'توسعه' },
+      { prompt: '경제 (gyeongje)', options: ['اقتصاد', 'سیاست', 'فرهنگ', 'جامعه'], answer: 'اقتصاد' },
+      { prompt: '제공하다 (jegonghada)', options: ['فراهم کردن', 'گرفتن', 'دزدیدن', 'خریدن'], answer: 'فراهم کردن' },
+      { prompt: '관리 (gwanri)', options: ['مدیریت', 'کار', 'بازی', 'خوردن'], answer: 'مدیریت' },
+      { prompt: '품질 (pumjil)', options: ['کیفیت', 'کمیت', 'اندازه', 'وزن'], answer: 'کیفیت' }
+    ]
+  },
+  {
+    type: 'listening', icon: '🎧',
+    title: 'مرحله ۲: شنیداری TOPIK II-4',
+    subtitle: 'گوش کن و معنی را انتخاب کن',
+    questions: [
+      { word: '발전', lang: 'ko-KR', options: ['توسعه', 'کاهش', 'تغییر', 'ثبات'], answer: 'توسعه' },
+      { word: '경제', lang: 'ko-KR', options: ['اقتصاد', 'سیاست', 'فرهنگ', 'جامعه'], answer: 'اقتصاد' },
+      { word: '제공하다', lang: 'ko-KR', options: ['فراهم کردن', 'گرفتن', 'دزدیدن', 'خریدن'], answer: 'فراهم کردن' },
+      { word: '관리', lang: 'ko-KR', options: ['مدیریت', 'کار', 'بازی', 'خوردن'], answer: 'مدیریت' },
+      { word: '품질', lang: 'ko-KR', options: ['کیفیت', 'کمیت', 'اندازه', 'وزن'], answer: 'کیفیت' }
+    ]
+  },
+  {
+    type: 'reading', icon: '📚',
+    title: 'مرحله ۳: خواندن TOPIK II-4',
+    subtitle: 'متن را بخوان و پاسخ بده',
+    passages: [
+      {
+        text: '경제의 빠른 발전과 함께 사람들의 생활 수준도 크게 향상되었습니다. 그러나 그에 따른 환경 문제도 갈수록 심각해지고 있습니다. 경제를 발전시키면서 동시에 환경을 보호하는 방법은 이제 각국 정부가 직면한 중요한 과제가 되었습니다.',
+        romanization: 'Gyeongjeui ppareun baljeongwa hamkke saramdeurui saenghwal sujundo keuge hyangsangdoeeotseumnida. Geureona geue ttareun hwangyeong munjedo galsurok simgakhaejigo itseumnida. Gyeongjereul baljeonsikimyeonseo dongsie hwangyeongeul bohohaneun bangbeobeun ije gakguk jeongbuga jikmyeonhan jungyohan gwajega doeeotseumnida.',
+        question: '글에서 어떤 문제를 언급했습니까? (What problem does the article mention?)',
+        options: ['환경 문제 (مشکل محیط زیست)', '교육 문제 (مشکل آموزش)', '인구 문제 (مشکل جمعیت)', '교통 문제 (مشکل حمل و نقل)'],
+        answer: '환경 문제 (مشکل محیط زیست)'
+      },
+      {
+        text: '교육은 국가 발전의 중요한 기초입니다. 정부는 교육에 대한 투자를 늘리고 교육의 질을 높여서 모든 아이들이 좋은 교육을 받을 수 있도록 해야 합니다. 동시에 학생들의 창의력과 실천 능력을 키우는 것도 중요합니다.',
+        romanization: 'Gyoyugeun gukga baljeonui jungyohan gichobimnida. Jeongbuneun gyoyuge daehan tujareul neulligo gyoyugui jireul nopyeoseo modeun aideuri joeun gyoyugeul badeul su itdorok haeya hamnida. Dongsie haksaengdeurui changuiryeokgwa silcheon neungnyeogeul kiuneun geotdo jungyohamnida.',
+        question: '정부는 어떻게 해야 합니까? (What should the government do?)',
+        options: ['교육에 대한 투자를 늘려야 합니다 (افزایش سرمایه‌گذاری در آموزش)', '교육 투자를 줄여야 합니다 (کاهش سرمایه‌گذاری در آموزش)', '학교를 닫아야 합니다 (بستن مدارس)', '학생 수를 줄여야 합니다 (کاهش دانش‌آموزان)'],
+        answer: '교육에 대한 투자를 늘려야 합니다 (افزایش سرمایه‌گذاری در آموزش)'
+      }
+    ]
+  },
+  {
+    type: 'writing', icon: '✍️',
+    title: 'مرحله ۴: نوشتن TOPIK II-4',
+    subtitle: 'معنی فارسی را به کره‌ای بنویس (یا رومانیزاسیون)',
+    questions: [
+      { prompt: 'توسعه', answer: '발전', alt: 'baljeon', hint: 'baljeon' },
+      { prompt: 'اقتصاد', answer: '경제', alt: 'gyeongje', hint: 'gyeongje' },
+      { prompt: 'فراهم کردن', answer: '제공하다', alt: 'jegonghada', hint: 'jegonghada' },
+      { prompt: 'مدیریت', answer: '관리', alt: 'gwanri', hint: 'gwanri' },
+      { prompt: 'کیفیت', answer: '품질', alt: 'pumjil', hint: 'pumjil' }
+    ]
+  },
+  {
+    type: 'speaking', icon: '🎤',
+    title: 'مرحله ۵: مکالمه TOPIK II-4',
+    subtitle: 'جمله را تلفظ کن',
+    questions: [
+      { word: '경제 발전은 중요합니다.', romanization: 'gyeongje baljeoneun jungyohamnida', translation: 'توسعه اقتصادی مهم است' },
+      { word: '우리는 교육의 질을 높여야 합니다.', romanization: 'urineun gyoyugui jireul nopyeoya hamnida', translation: 'ما باید کیفیت آموزش را افزایش دهیم' },
+      { word: '정부는 많은 도움을 제공했습니다.', romanization: 'jeongbuneun manheun doumeul jegonghaetseumnida', translation: 'دولت کمک زیادی فراهم کرد' },
+      { word: '그는 회사에서 관리 업무를 담당합니다.', romanization: 'geuneun hoesaeseo gwanri eommureul damdanghamnida', translation: 'او در شرکت مسئول کارهای مدیریتی است' },
+      { word: '우리는 환경을 보호해야 합니다.', romanization: 'urineun hwangyeongeul bohohaeya hamnida', translation: 'ما باید از محیط زیست محافظت کنیم' }
+    ]
+  },
+  {
+    type: 'sentence', icon: '🧩',
+    title: 'مرحله ۶: جمله‌سازی TOPIK II-4',
+    subtitle: 'کلمات را به ترتیب درست بچین',
+    questions: [
+      { words: ['경제', '발전은', '중요합니다'], answer: '경제 발전은 중요합니다', translation: 'توسعه اقتصادی مهم است' },
+      { words: ['우리는', '교육의', '질을', '높여야', '합니다'], answer: '우리는 교육의 질을 높여야 합니다', translation: 'ما باید کیفیت آموزش را افزایش دهیم' },
+      { words: ['정부는', '많은', '도움을', '제공했습니다'], answer: '정부는 많은 도움을 제공했습니다', translation: 'دولت کمک زیادی فراهم کرد' },
+      { words: ['그는', '회사에서', '관리', '업무를', '담당합니다'], answer: '그는 회사에서 관리 업무를 담당합니다', translation: 'او در شرکت مسئول کارهای مدیریتی است' },
+      { words: ['우리는', '환경을', '보호해야', '합니다'], answer: '우리는 환경을 보호해야 합니다', translation: 'ما باید از محیط زیست محافظت کنیم' }
+    ]
+  },
+  {
+    type: 'listening-sentence', icon: '🔊',
+    title: 'مرحله ۷: شنیداری جمله TOPIK II-4',
+    subtitle: 'جمله را گوش کن و ترجمه را انتخاب کن',
+    questions: [
+      { sentence: '경제 발전은 중요합니다.', lang: 'ko-KR', options: ['توسعه اقتصادی مهم است', 'توسعه اقتصادی مهم نیست', 'اقتصاد ضعیف است', 'اقتصاد در حال کاهش است'], answer: 'توسعه اقتصادی مهم است' },
+      { sentence: '우리는 교육의 질을 높여야 합니다.', lang: 'ko-KR', options: ['ما نیاز به افزایش کیفیت آموزش داریم', 'ما نیاز به کاهش کیفیت آموزش داریم', 'آموزش کیفیت ندارد', 'آموزش مهم نیست'], answer: 'ما نیاز به افزایش کیفیت آموزش داریم' },
+      { sentence: '정부는 많은 도움을 제공했습니다.', lang: 'ko-KR', options: ['دولت کمک زیادی فراهم کرد', 'دولت هیچ کمکی نکرد', 'دولت کمک کمی کرد', 'دولت کمک نمی‌کند'], answer: 'دولت کمک زیادی فراهم کرد' },
+      { sentence: '우리는 환경을 보호해야 합니다.', lang: 'ko-KR', options: ['ما باید از محیط زیست محافظت کنیم', 'ما نباید از محیط زیست محافظت کنیم', 'محیط زیست مهم نیست', 'محیط زیست خطرناک است'], answer: 'ما باید از محیط زیست محافظت کنیم' }
+    ]
+  },
+  {
+    type: 'mixed', icon: '🏆',
+    title: 'مرحله ۸: آزمون جامع TOPIK II-4',
+    subtitle: 'ترکیبی از همه مهارت‌ها',
+    questions: [
+      { type: 'mc', prompt: '«발전» یعنی چه؟', options: ['توسعه', 'کاهش', 'تغییر', 'ثبات'], answer: 'توسعه' },
+      { type: 'mc', prompt: '«경제» یعنی چه؟', options: ['اقتصاد', 'سیاست', 'فرهنگ', 'جامعه'], answer: 'اقتصاد' },
+      { type: 'write', prompt: 'کلمه کره‌ای «فراهم کردن» را بنویس:', answer: '제공하다', alt: 'jegonghada', hint: 'jegonghada' },
+      { type: 'mc', prompt: '«우리는 환경을 보호해야 합니다» یعنی چه؟', options: ['ما باید از محیط زیست محافظت کنیم', 'ما نباید از محیط زیست محافظت کنیم', 'محیط زیست مهم نیست', 'محیط زیست خطرناک است'], answer: 'ما باید از محیط زیست محافظت کنیم' },
+      { type: 'write', prompt: 'کلمه کره‌ای «کیفیت» را بنویس:', answer: '품질', alt: 'pumjil', hint: 'pumjil' },
+      { type: 'mc', prompt: '«정부는 많은 도움을 제공했습니다» یعنی چه؟', options: ['دولت کمک زیادی فراهم کرد', 'دولت هیچ کمکی نکرد', 'دولت کمک کمی کرد', 'دولت کمک نمی‌کند'], answer: 'دولت کمک زیادی فراهم کرد' }
+    ]
+  }
+];
+
+function init() { currentStage = 0; score = 0; renderStage(); }
+function updateProgress() {
+  document.getElementById('stageLabel').textContent = `مرحله ${currentStage + 1} از ${TOTAL_STAGES}`;
+  document.getElementById('scoreLabel').textContent = `امتیاز: ${score}`;
+  document.getElementById('progressFill').style.width = ((currentStage) / TOTAL_STAGES * 100) + '%';
+}
+function renderStage() {
+  updateProgress();
+  const container = document.getElementById('sceneContainer');
+  const stage = stages[currentStage];
+  if (!stage) { renderResult(); return; }
+  const header = `<div class="scene-header"><span class="scene-icon">${stage.icon}</span>
+    <div class="scene-titles"><h3>${stage.title}</h3><p>${stage.subtitle}</p></div></div>`;
+  let body = '';
+  switch (stage.type) {
+    case 'multiple-choice': body = renderMultipleChoice(stage.questions); break;
+    case 'listening': body = renderListening(stage.questions); break;
+    case 'reading': body = renderReading(stage.passages); break;
+    case 'writing': body = renderWriting(stage.questions); break;
+    case 'speaking': body = renderSpeaking(stage.questions); break;
+    case 'sentence': body = renderSentence(stage.questions); break;
+    case 'listening-sentence': body = renderListeningSentence(stage.questions); break;
+    case 'mixed': body = renderMixed(stage.questions); break;
+  }
+  container.innerHTML = `<div class="scene-card">${header}${body}</div>`;
+}
+function renderMultipleChoice(questions) {
+  let html = `<div>`;
+  questions.forEach((q, i) => {
+    html += `<div style="margin-bottom:22px;" data-q="${i}">
+      <div class="question-text">${q.prompt}</div>
+      <div class="options-grid">
+        ${[...q.options].sort(() => Math.random() - 0.5).map(opt => `<button class="option-btn" onclick="checkMC(this, '${opt.replace(/'/g, "\\'")}', '${q.answer.replace(/'/g, "\\'")}', ${i})">${opt}</button>`).join('')}
+      </div></div>`;
+  });
+  html += `<div class="btn-row"><button class="btn btn-primary" onclick="nextStage()">ادامه ➜</button></div></div>`;
+  return html;
+}
+let mcAnswered = {};
+function checkMC(btn, selected, answer, qIndex) {
+  if (mcAnswered[qIndex]) return;
+  mcAnswered[qIndex] = true;
+  const parent = btn.closest('.options-grid');
+  parent.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+  if (selected === answer) { btn.classList.add('correct'); score += 10; }
+  else { btn.classList.add('wrong'); parent.querySelectorAll('.option-btn').forEach(b => { if (b.textContent.trim() === answer) b.classList.add('correct'); }); }
+  updateProgress();
+}
+function renderListening(questions) {
+  let html = `<div>`;
+  questions.forEach((q, i) => {
+    html += `<div style="margin-bottom:22px;" data-q="${i}">
+      <button class="btn btn-secondary" style="width:100%;justify-content:center;" onclick="playWord('${q.word}', '${q.lang || 'ko-KR'}')">🔊 پخش کلمه ${i + 1}</button>
+      <div class="options-grid" style="margin-top:12px;">
+        ${[...q.options].sort(() => Math.random() - 0.5).map(opt => `<button class="option-btn" onclick="checkMC(this, '${opt}', '${q.answer}', 'L${i}')">${opt}</button>`).join('')}
+      </div></div>`;
+  });
+  html += `<div class="btn-row"><button class="btn btn-primary" onclick="nextStage()">ادامه ➜</button></div></div>`;
+  return html;
+}
+function renderReading(passages) {
+  let html = `<div>`;
+  passages.forEach((p, i) => {
+    html += `<div style="margin-bottom:26px;padding:18px;background:rgba(15,23,42,0.5);border-radius:14px;">
+      <p style="font-size:18px;line-height:1.8;color:#fff;margin-bottom:8px;direction:ltr;text-align:left;">${p.text}</p>
+      <p style="font-size:13px;line-height:1.8;color:#f97316;margin-bottom:14px;direction:ltr;text-align:left;font-family:'Courier New',monospace;">${p.romanization}</p>
+      <div class="question-text">${p.question}</div>
+      <div class="options-grid">
+        ${[...p.options].sort(() => Math.random() - 0.5).map(opt => `<button class="option-btn" onclick="checkMC(this, '${opt.replace(/'/g, "\\'")}', '${p.answer.replace(/'/g, "\\'")}', 'R${i}')">${opt}</button>`).join('')}
+      </div></div>`;
+  });
+  html += `<div class="btn-row"><button class="btn btn-primary" onclick="nextStage()">ادامه ➜</button></div></div>`;
+  return html;
+}
+function renderWriting(questions) {
+  let html = `<div>`;
+  questions.forEach((q, i) => {
+    html += `<div style="margin-bottom:20px;" data-q="${i}">
+      <div class="question-text">«${q.prompt}» را به کره‌ای بنویس (یا رومانیزاسیون):</div>
+      <div class="question-hint">راهنما: ${q.hint}</div>
+      <input type="text" class="text-input" id="writeInput${i}" placeholder="Type here..." dir="ltr" onkeydown="if(event.key==='Enter')checkWrite(${i}, '${q.answer}', '${q.alt || ''}')">
+      <button class="btn btn-secondary" style="margin-top:10px;" onclick="checkWrite(${i}, '${q.answer}', '${q.alt || ''}')">بررسی</button>
+      <div class="feedback" id="writeFb${i}"></div></div>`;
+  });
+  html += `<div class="btn-row"><button class="btn btn-primary" onclick="nextStage()">ادامه ➜</button></div></div>`;
+  return html;
+}
+function checkWrite(i, answer, alt) {
+  const input = document.getElementById('writeInput' + i);
+  const fb = document.getElementById('writeFb' + i);
+  const val = input.value.trim().toLowerCase();
+  if (!val) return;
+  const correct = (val === answer.toLowerCase()) || (alt && val === alt.toLowerCase());
+  if (correct) { input.classList.add('correct'); fb.className = 'feedback success show'; fb.textContent = '✅ عالی!'; score += 10; }
+  else { input.classList.add('wrong'); fb.className = 'feedback error show'; fb.textContent = `❌ پاسخ درست: ${answer}`; }
+  input.disabled = true; updateProgress();
+}
+function renderSpeaking(questions) {
+  let html = `<div>`;
+  questions.forEach((q, i) => {
+    html += `<div style="margin-bottom:22px;padding:18px;background:rgba(15,23,42,0.5);border-radius:14px;">
+      <div class="korean-word">${q.word}</div>
+      <div class="romanization">${q.romanization}</div>
+      <p style="text-align:center;color:#94a3b8;font-size:13px;margin-bottom:14px;">ترجمه: ${q.translation}</p>
+      <div class="mic-area">
+        <button class="mic-btn" id="micBtn${i}" onclick="toggleMic(${i})">🎤</button>
+        <div class="mic-status" id="micStatus${i}">برای ضبط کلیک کن</div>
+      </div>
+      <div style="text-align:center;margin-top:12px;">
+        <button class="btn btn-secondary" onclick="skipSpeak(${i})">رد کردن</button>
+      </div></div>`;
+  });
+  html += `<div class="btn-row"><button class="btn btn-primary" onclick="nextStage()">ادامه ➜</button></div></div>`;
+  return html;
+}
+let mediaRecorder = null; let recordingIdx = null;
+function toggleMic(i) {
+  const btn = document.getElementById('micBtn' + i);
+  const status = document.getElementById('micStatus' + i);
+  if (recordingIdx === i && mediaRecorder && mediaRecorder.state === 'recording') {
+    mediaRecorder.stop(); btn.classList.remove('recording');
+    status.textContent = '✅ ضبط شد'; score += 5; updateProgress(); recordingIdx = null; return;
+  }
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { status.textContent = '⚠️ پشتیبانی نمی‌شود'; return; }
+  navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+    mediaRecorder = new MediaRecorder(stream); mediaRecorder.start();
+    recordingIdx = i; btn.classList.add('recording');
+    status.textContent = '🔴 در حال ضبط...';
+  }).catch(() => { status.textContent = '⚠️ دسترسی داده نشد'; });
+}
+function skipSpeak(i) {
+  document.getElementById('micStatus' + i).textContent = '⏭ رد شد';
+  document.getElementById('micBtn' + i).disabled = true;
+}
+function renderSentence(questions) {
+  let html = `<div>`;
+  questions.forEach((q, i) => {
+    const shuffled = [...q.words].sort(() => Math.random() - 0.5);
+    html += `<div style="margin-bottom:22px;padding:18px;background:rgba(15,23,42,0.5);border-radius:14px;" data-q="${i}">
+      <div class="question-text">${q.translation}</div>
+      <div class="question-hint">کلمات را به ترتیب درست بچین:</div>
+      <div id="wordBank${i}" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+        ${shuffled.map(w => `<button class="option-btn" style="padding:10px 16px;font-size:16px;" onclick="pickWord(${i}, this, '${w.replace(/'/g, "\\'")}')">${w}</button>`).join('')}
+      </div>
+      <div id="builtSentence${i}" style="min-height:40px;padding:12px;background:rgba(251,191,36,0.08);border:2px dashed rgba(251,191,36,0.3);border-radius:10px;color:#fbbf24;font-weight:700;font-size:20px;direction:ltr;text-align:left;"></div>
+      <div class="feedback" id="sentFb${i}"></div>
+      <div style="margin-top:10px;"><button class="btn btn-secondary" onclick="checkSentence(${i}, '${q.answer.replace(/'/g, "\\'")}')">بررسی</button></div></div>`;
+  });
+  html += `<div class="btn-row"><button class="btn btn-primary" onclick="nextStage()">ادامه ➜</button></div></div>`;
+  return html;
+}
+let builtWords = {};
+function pickWord(qIndex, btn, word) {
+  if (!builtWords[qIndex]) builtWords[qIndex] = [];
+  builtWords[qIndex].push(word); btn.disabled = true; btn.style.opacity = '0.3';
+  document.getElementById('builtSentence' + qIndex).textContent = builtWords[qIndex].join(' ');
+}
+function checkSentence(qIndex, answer) {
+  const fb = document.getElementById('sentFb' + qIndex);
+  const built = (builtWords[qIndex] || []).join(' ');
+  if (built === answer) { fb.className = 'feedback success show'; fb.textContent = '✅ عالی!'; score += 10; }
+  else { fb.className = 'feedback error show'; fb.textContent = `❌ جمله درست: ${answer}`; }
+  updateProgress();
+}
+function renderListeningSentence(questions) {
+  let html = `<div>`;
+  questions.forEach((q, i) => {
+    html += `<div style="margin-bottom:22px;" data-q="${i}">
+      <button class="btn btn-secondary" style="width:100%;justify-content:center;" onclick="playWord('${q.sentence}', '${q.lang || 'ko-KR'}')">🔊 پخش جمله ${i + 1}</button>
+      <div class="options-grid" style="margin-top:12px;">
+        ${[...q.options].sort(() => Math.random() - 0.5).map(opt => `<button class="option-btn" onclick="checkMC(this, '${opt.replace(/'/g, "\\'")}', '${q.answer.replace(/'/g, "\\'")}', 'LS${i}')">${opt}</button>`).join('')}
+      </div></div>`;
+  });
+  html += `<div class="btn-row"><button class="btn btn-primary" onclick="nextStage()">ادامه ➜</button></div></div>`;
+  return html;
+}
+function renderMixed(questions) {
+  let html = `<div>`;
+  questions.forEach((q, i) => {
+    html += `<div style="margin-bottom:22px;padding:16px;background:rgba(15,23,42,0.5);border-radius:14px;" data-q="${i}">`;
+    if (q.type === 'mc') {
+      html += `<div class="question-text">${q.prompt}</div><div class="options-grid">
+        ${[...q.options].sort(() => Math.random() - 0.5).map(opt => `<button class="option-btn" onclick="checkMC(this, '${opt.replace(/'/g, "\\'")}', '${q.answer.replace(/'/g, "\\'")}', 'M${i}')">${opt}</button>`).join('')}
+      </div>`;
+    } else {
+      html += `<div class="question-text">${q.prompt}</div>
+        <div class="question-hint">راهنما: ${q.hint}</div>
+        <input type="text" class="text-input" id="mxInput${i}" placeholder="Type here..." dir="ltr" onkeydown="if(event.key==='Enter')checkMixedWrite(${i}, '${q.answer}', '${q.alt || ''}')">
+        <button class="btn btn-secondary" style="margin-top:10px;" onclick="checkMixedWrite(${i}, '${q.answer}', '${q.alt || ''}')">بررسی</button>
+        <div class="feedback" id="mxFb${i}"></div>`;
+    }
+    html += `</div>`;
+  });
+  html += `<div class="btn-row"><button class="btn btn-primary" onclick="nextStage()">پایان و مشاهده نتیجه 🏁</button></div></div>`;
+  return html;
+}
+function checkMixedWrite(i, answer, alt) {
+  const input = document.getElementById('mxInput' + i);
+  const fb = document.getElementById('mxFb' + i);
+  const val = input.value.trim().toLowerCase();
+  if (!val) return;
+  const correct = (val === answer.toLowerCase()) || (alt && val === alt.toLowerCase());
+  if (correct) { input.classList.add('correct'); fb.className = 'feedback success show'; fb.textContent = '✅ درست!'; score += 10; }
+  else { input.classList.add('wrong'); fb.className = 'feedback error show'; fb.textContent = `❌ پاسخ درست: ${answer}`; }
+  input.disabled = true; updateProgress();
+}
+function playWord(text, lang) {
+  if (!('speechSynthesis' in window)) { alert('TTS پشتیبانی نمی‌شود'); return; }
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = lang || 'ko-KR'; u.rate = 0.8;
+  speechSynthesis.cancel(); speechSynthesis.speak(u);
+}
+function nextStage() {
+  currentStage++; mcAnswered = {}; builtWords = {};
+  if (currentStage >= TOTAL_STAGES) renderResult(); else renderStage();
+}
+function renderResult() {
+  const maxScore = 300; const pct = Math.round((score / maxScore) * 100);
+  let emoji, title, msg;
+  if (pct >= 80) { emoji = '🏆'; title = '훌륭해요!'; msg = 'تو یک قهرمان زبان کره‌ای هستی!'; }
+  else if (pct >= 60) { emoji = '🎉'; title = '잘했어요!'; msg = 'با کمی تمرین بهتر می‌شوی.'; }
+  else if (pct >= 40) { emoji = '💪'; title = '좋아요!'; msg = 'دوباره تلاش کن!'; }
+  else { emoji = '📚'; title = '연습이 필요해요'; msg = 'از اول شروع کن!'; }
+  document.getElementById('sceneContainer').innerHTML = `<div class="scene-card"><div class="result-screen">
+    <div class="result-emoji">${emoji}</div><div class="result-title">${title}</div>
+    <div class="result-score">${score} / ${maxScore}</div>
+    <div class="result-sub">${msg}</div>
+    <div class="btn-row" style="justify-content:center;">
+      <button class="btn btn-primary" onclick="restart()">🔄 دوباره</button>
+      <a href="../hub.html" class="btn btn-secondary">🏠 بازگشت به منو</a>
+    </div></div></div>`;
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('stageLabel').textContent = 'پایان دوره';
+  document.getElementById('scoreLabel').textContent = `امتیاز نهایی: ${score}`;
+}
+function restart() { currentStage = 0; score = 0; mcAnswered = {}; builtWords = {}; renderStage(); }
+window.addEventListener('load', init);
+</script>
+</body>
+</html>

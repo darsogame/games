@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>کره‌ای TOPIK I-2 - پایه | Darsogame</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Vazirmatn', sans-serif; min-height: 100vh;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    color: #e2e8f0; padding: 25px 18px; }
+  .container { max-width: 900px; margin: 0 auto; }
+  .top-bar { display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px; margin-bottom: 22px; }
+  .back-btn { display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 18px; background: rgba(34,197,94,0.15);
+    border: 2px solid rgba(34,197,94,0.3); border-radius: 12px;
+    color: #22c55e; text-decoration: none; font-weight: 900; font-size: 13px; transition: all 0.25s; }
+  .back-btn:hover { background: rgba(34,197,94,0.3); transform: translateY(-2px); }
+  .level-pill { padding: 8px 20px; background: linear-gradient(135deg, #16a34a, #22c55e);
+    border-radius: 20px; color: #fff; font-weight: 900; font-size: 14px;
+    font-family: 'Courier New', monospace; }
+  .progress-wrap { background: rgba(15,23,42,0.7); border: 2px solid rgba(34,197,94,0.25);
+    border-radius: 18px; padding: 16px 20px; margin-bottom: 25px; }
+  .progress-info { display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 10px; font-size: 13px; font-weight: 900; }
+  .progress-info .stage-label { color: #22c55e; }
+  .progress-info .score-label { color: #fbbf24; }
+  .progress-bar { height: 12px; background: rgba(148,163,184,0.2);
+    border-radius: 10px; overflow: hidden; }
+  .progress-fill { height: 100%; width: 0%;
+    background: linear-gradient(90deg, #16a34a, #22c55e, #fbbf24);
+    border-radius: 10px; transition: width 0.5s cubic-bezier(0.4,0,0.2,1); }
+  .scene-card { background: linear-gradient(135deg, #1e293b, #334155);
+    border: 2px solid rgba(34,197,94,0.2); border-radius: 22px;
+    padding: 28px 24px; margin-bottom: 22px; min-height: 300px; }
+  .scene-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+    padding-bottom: 16px; border-bottom: 1px solid rgba(148,163,184,0.15); }
+  .scene-icon { font-size: 34px; }
+  .scene-titles h3 { font-size: 18px; font-weight: 900; color: #fff; margin-bottom: 3px; }
+  .scene-titles p { font-size: 12px; color: #94a3b8; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 12px 24px; border-radius: 14px; font-family: inherit;
+    font-size: 14px; font-weight: 900; cursor: pointer; border: none;
+    transition: all 0.25s; outline: none; }
+  .btn-primary { background: linear-gradient(135deg, #22c55e, #38bdf8); color: #0f172a; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(34,197,94,0.4); }
+  .btn-secondary { background: rgba(148,163,184,0.15); color: #cbd5e1;
+    border: 2px solid rgba(148,163,184,0.3); }
+  .btn-secondary:hover { background: rgba(148,163,184,0.25); }
+  .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+  .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+  .option-btn { padding: 16px 18px; background: rgba(15,23,42,0.6);
+    border: 2px solid rgba(148,163,184,0.25); border-radius: 14px;
+    color: #e2e8f0; font-family: inherit; font-size: 15px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s; text-align: center; outline: none; }
+  .option-btn:hover:not(:disabled) { border-color: #22c55e; background: rgba(34,197,94,0.1);
+    transform: translateY(-2px); }
+  .option-btn.correct { border-color: #22c55e; background: rgba(34,197,94,0.2); color: #86efac; }
+  .option-btn.wrong { border-color: #ef4444; background: rgba(239,68,68,0.2); color: #fca5a5; }
+  .option-btn:disabled { cursor: not-allowed; opacity: 0.8; }
+  .text-input { width: 100%; padding: 14px 18px; background: rgba(15,23,42,0.6);
+    border: 2px solid rgba(148,163,184,0.25); border-radius: 14px;
+    color: #fff; font-family: inherit; font-size: 18px; outline: none; transition: border-color 0.2s; }
+  .text-input:focus { border-color: #22c55e; }
+  .text-input.correct { border-color: #22c55e; background: rgba(34,197,94,0.1); }
+  .text-input.wrong { border-color: #ef4444; background: rgba(239,68,68,0.1); }
+  .question-text { font-size: 17px; font-weight: 700; color: #fff; line-height: 1.7; margin-bottom: 6px; }
+  .question-hint { font-size: 12px; color: #94a3b8; margin-bottom: 18px; }
+  .korean-word { font-size: 52px; font-weight: 900; color: #22c55e;
+    text-align: center; padding: 20px; margin: 10px 0;
+    background: rgba(34,197,94,0.08); border-radius: 14px;
+    border: 1px dashed rgba(34,197,94,0.3); direction: ltr; }
+  .romanization { font-size: 16px; color: #38bdf8; text-align: center; font-family: 'Courier New', monospace; margin-bottom: 8px; }
+  .feedback { margin-top: 16px; padding: 14px 18px; border-radius: 14px;
+    font-size: 14px; font-weight: 700; line-height: 1.6; display: none; }
+  .feedback.show { display: block; }
+  .feedback.success { background: rgba(34,197,94,0.15); border: 2px solid rgba(34,197,94,0.4); color: #86efac; }
+  .feedback.error { background: rgba(239,68,68,0.15); border: 2px solid rgba(239,68,68,0.4); color: #fca5a5; }
+  .mic-area { text-align: center; padding: 20px; }
+  .mic-btn { width: 90px; height: 90px; border-radius: 50%; border: none;
+    background: linear-gradient(135deg, #ef4444, #f97316); color: #fff; font-size: 36px;
+    cursor: pointer; transition: all 0.25s; box-shadow: 0 10px 25px rgba(239,68,68,0.4); }
+  .mic-btn:hover { transform: scale(1.08); }
+  .mic-btn.recording { animation: pulse 1s infinite; background: linear-gradient(135deg, #22c55e, #16a34a); }
+  @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.6);} 50%{box-shadow:0 0 0 20px rgba(34,197,94,0);} }
+  .mic-status { font-size: 13px; color: #94a3b8; margin-top: 12px; font-weight: 700; }
+  .result-screen { text-align: center; padding: 30px 20px; }
+  .result-emoji { font-size: 80px; margin-bottom: 20px; }
+  .result-title { font-size: 28px; font-weight: 900; color: #fff; margin-bottom: 12px; }
+  .result-score { font-size: 52px; font-weight: 900; font-family: 'Courier New', monospace;
+    background: linear-gradient(135deg, #fbbf24, #f97316);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 8px; }
+  .result-sub { font-size: 15px; color: #94a3b8; margin-bottom: 25px; }
+  @media (max-width: 600px) {
+    .options-grid { grid-template-columns: 1fr; }
+    .scene-card { padding: 22px 18px; }
+    .korean-word { font-size: 38px; }
+    .result-score { font-size: 40px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="top-bar">
+    <a href="../hub.html" class="back-btn">🏠 بازگشت</a>
+    <div class="level-pill">TOPIK I-2 • 초급</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-info">
+      <span class="stage-label" id="stageLabel">مرحله ۱ از ۸</span>
+      <span class="score-label" id="scoreLabel">امتیاز: ۰</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+  <div id="sceneContainer"></div>
+</div>
+
+<script>
+const TOTAL_STAGES = 8;
+let currentStage = 0;
+let score = 0;
+
+const stages = [
+  {
+    type: 'multiple-choice', icon: '🎮',
+    title: 'مرحله ۱: واژگان TOPIK I-2',
+    subtitle: 'معنی درست را انتخاب کن',
+    questions: [
+      { prompt: '시간 (sigan)', options: ['زمان', 'مکان', 'انسان', 'حیوان'], answer: 'زمان' },
+      { prompt: '좋아하다 (joahada)', options: ['دوست داشتن', 'نفرت داشتن', 'خوردن', 'نوشیدن'], answer: 'دوست داشتن' },
+      { prompt: '도와주다 (dowajuda)', options: ['کمک کردن', 'دزدیدن', 'خریدن', 'فروختن'], answer: 'کمک کردن' },
+      { prompt: '알다 (alda)', options: ['دانستن', 'فراموش کردن', 'دیدن', 'شنیدن'], answer: 'دانستن' },
+      { prompt: '희망 (huimang)', options: ['امید', 'ترس', 'غم', 'شادی'], answer: 'امید' }
+    ]
+  },
+  {
+    type: 'listening', icon: '🎧',
+    title: 'مرحله ۲: شنیداری TOPIK I-2',
+    subtitle: 'گوش کن و معنی را انتخاب کن',
+    questions: [
+      { word: '시간', lang: 'ko-KR', options: ['زمان', 'مکان', 'انسان', 'حیوان'], answer: 'زمان' },
+      { word: '도와주다', lang: 'ko-KR', options: ['کمک کردن', 'خریدن', 'فروختن', 'سفر کردن'], answer: 'کمک کردن' },
+      { word: '좋아하다', lang: 'ko-KR', options: ['دوست داشتن', 'نفرت داشتن', 'خوردن', 'نوشیدن'], answer: 'دوست داشتن' },
+      { word: '알다', lang: 'ko-KR', options: ['دانستن', 'فراموش کردن', 'دیدن', 'شنیدن'], answer: 'دانستن' },
+      { word: '희망', lang: 'ko-KR', options: ['امید', 'ترس', 'غم', 'شادی'], answer: 'امید' }
+    ]
+  },
+  {
+    type: 'reading', icon: '📚',
+    title: 'مرحله ۳: خواندن TOPIK I-2',
+    subtitle: 'متن را بخوان و پاسخ بده',
+    passages: [
+      {
+        text: '어제 저는 친구와 공원에 갔습니다. 날씨가 좋아서 우리는 매우 기뻤습니다. 우리는 과일과 빵을 가져가서 공원에서 점심을 먹었습니다.',
+        romanization: 'Eoje jeoneun chinguwa gongwone gatseumnida. Nalssiga joaseo urineun maeu gippeotseumnida. Urineun gwangwa ppangeul gajyeogaseo gongwoneseo jeomsimeul meogeotseumnida.',
+        question: '그들은 어디에 갔습니까? (Where did they go?)',
+        options: ['공원 (پارک)', '학교 (مدرسه)', '가게 (فروشگاه)', '병원 (بیمارستان)'],
+        answer: '공원 (پارک)'
+      },
+      {
+        text: '저의 어머니는 의사입니다. 어머니는 매일 병원에서 일합니다. 어머니는 자신의 일을 매우 좋아합니다. 왜냐하면 환자를 돕고 싶기 때문입니다.',
+        romanization: 'Jeoui eomeonineun uisaimnida. Eomeonineun maeil byeongwoneseo ilhamnida. Eomeonineun jasinui ireul maeu joahamnida. Waenyahamyeon hwanjareul dopgo sipgi ttaemunimnida.',
+        question: '어머니는 누구를 돕고 싶어합니까? (Who does mom want to help?)',
+        options: ['환자 (بیماران)', '학생 (دانش‌آموزان)', '선생님 (معلمان)', '친구 (دوستان)'],
+        answer: '환자 (بیماران)'
+      }
+    ]
+  },
+  {
+    type: 'writing', icon: '✍️',
+    title: 'مرحله ۴: نوشتن TOPIK I-2',
+    subtitle: 'معنی فارسی را به کره‌ای بنویس (یا رومانیزاسیون)',
+    questions: [
+      { prompt: 'زمان', answer: '시간', alt: 'sigan', hint: 'sigan' },
+      { prompt: 'کمک کردن', answer: '도와주다', alt: 'dowajuda', hint: 'dowajuda' },
+      { prompt: 'دوست داشتن', answer: '좋아하다', alt: 'joahada', hint: 'joahada' },
+      { prompt: 'دانستن', answer: '알다', alt: 'alda', hint: 'alda' },
+      { prompt: 'امید', answer: '희망', alt: 'huimang', hint: 'huimang' }
+    ]
+  },
+  {
+    type: 'speaking', icon: '🎤',
+    title: 'مرحله ۵: مکالمه TOPIK I-2',
+    subtitle: 'کلمه یا جمله را تلفظ کن',
+    questions: [
+      { word: '무엇을 좋아해요?', romanization: 'mueoseul joahaeyo', translation: 'چه چیزی دوست داری؟' },
+      { word: '제가 도와드릴게요.', romanization: 'jega dowadeurilgeyo', translation: 'من به شما کمک می‌کنم' },
+      { word: '오늘 며칠이에요?', romanization: 'oneul myeochirieyo', translation: 'امروز چندم ماه است؟' },
+      { word: '만나서 반갑습니다.', romanization: 'mannaseo bangapseumnida', translation: 'از آشنایی با شما خوشحالم' },
+      { word: '오실 수 있기를 바랍니다.', romanization: 'osil su itgireul baramnida', translation: 'امیدوارم بتوانید بیایید' }
+    ]
+  },
+  {
+    type: 'sentence', icon: '🧩',
+    title: 'مرحله ۶: جمله‌سازی TOPIK I-2',
+    subtitle: 'کلمات را به ترتیب درست بچین',
+    questions: [
+      { words: ['저는', '과일', '먹는', '것을', '좋아합니다'], answer: '저는 과일 먹는 것을 좋아합니다', translation: 'من میوه خوردن را دوست دارم' },
+      { words: ['어제', '저는', '가게에', '갔습니다'], answer: '어제 저는 가게에 갔습니다', translation: 'دیروز من به فروشگاه رفتم' },
+      { words: ['그는', '매일', '여섯', '시에', '일어납니다'], answer: '그는 매일 여섯 시에 일어납니다', translation: 'او هر روز ساعت شش بیدار می‌شود' },
+      { words: ['이', '분은', '제', '친구입니다'], answer: '이 분은 제 친구입니다', translation: 'این دوست من است' },
+      { words: ['저는', '당신이', '행복하기를', '바랍니다'], answer: '저는 당신이 행복하기를 바랍니다', translation: 'من امیدوارم شما خوشحال باشید' }
+    ]
+  },
+  {
+    type: 'listening-sentence', icon: '🔊',
+    title: 'مرحله ۷: شنیداری جمله TOPIK I-2',
+    subtitle: 'جمله را گوش کن و ترجمه را انتخاب کن',
+    questions: [
+      { sentence: '저는 과일 먹는 것을 좋아합니다.', lang: 'ko-KR', options: ['من میوه خوردن را دوست دارم', 'من سیب دوست دارم', 'من میوه نمی‌خورم', 'من آب می‌خورم'], answer: 'من میوه خوردن را دوست دارم' },
+      { sentence: '어제 저는 가게에 가서 물건을 샀습니다.', lang: 'ko-KR', options: ['دیروز به فروشگاه رفتم و خرید کردم', 'دیروز به مدرسه رفتم', 'فردا به فروشگاه می‌روم', 'من فروشگاه را دوست دارم'], answer: 'دیروز به فروشگاه رفتم و خرید کردم' },
+      { sentence: '그는 매일 여섯 시에 일어납니다.', lang: 'ko-KR', options: ['او هر روز ساعت شش بیدار می‌شود', 'او هر روز ساعت شش می‌خوابد', 'او دیروز ساعت شش بیدار شد', 'او هرگز ساعت شش بیدار نمی‌شود'], answer: 'او هر روز ساعت شش بیدار می‌شود' },
+      { sentence: '만나서 반갑습니다.', lang: 'ko-KR', options: ['از آشنایی با شما خوشحالم', 'از دیدن شما ناراحتم', 'شما را نمی‌شناسم', 'دوباره می‌بینمت'], answer: 'از آشنایی با شما خوشحالم' }
+    ]
+  },
+  {
+    type: 'mixed', icon: '🏆',
+    title: 'مرحله ۸: آزمون جامع TOPIK I-2',
+    subtitle: 'ترکیبی از همه مهارت‌ها',
+    questions: [
+      { type: 'mc', prompt: '«시간» یعنی چه؟', options: ['زمان', 'مکان', 'انسان', 'حیوان'], answer: 'زمان' },
+      { type: 'mc', prompt: '«좋아하다» یعنی چه؟', options: ['دوست داشتن', 'نفرت داشتن', 'خوردن', 'نوشیدن'], answer: 'دوست داشتن' },
+      { type: 'write', prompt: 'کلمه کره‌ای «کمک کردن» را بنویس:', answer: '도와주다', alt: 'dowajuda', hint: 'dowajuda' },
+      { type: 'mc', prompt: '«저는 당신이 행복하기를 바랍니다» یعنی چه؟', options: ['امیدوارم خوشحال باشید', 'شما خوشحال نیستید', 'من خوشحالم', 'شما ناراحتید'], answer: 'امیدوارم خوشحال باشید' },
+      { type: 'write', prompt: 'کلمه کره‌ای «دوست داشتن» را بنویس:', answer: '좋아하다', alt: 'joahada', hint: 'joahada' },
+      { type: 'mc', prompt: '«이 분은 제 친구입니다» یعنی چه؟', options: ['این دوست من است', 'این برادر من است', 'این معلم من است', 'این خانه من است'], answer: 'این دوست من است' }
+    ]
+  }
+];
+
+function init() {
+  currentStage = 0;
+  score = 0;
+  mcAnswered = {};
+  renderStage();
+}
+
+function updateProgress() {
+  const stageLabel = document.getElementById('stageLabel');
+  const scoreLabel = document.getElementById('scoreLabel');
+  const progressFill = document.getElementById('progressFill');
+  if (stageLabel) stageLabel.textContent = currentStage < TOTAL_STAGES ? `مرحله ${currentStage + 1} از ${TOTAL_STAGES}` : 'پایان آزمون';
+  if (scoreLabel) scoreLabel.textContent = `امتیاز: ${score}`;
+  if (progressFill) progressFill.style.width = Math.min(100, (currentStage / TOTAL_STAGES) * 100) + '%';
+}
+
+function renderStage() {
+  updateProgress();
+  const container = document.getElementById('sceneContainer');
+  if (!container) return;
+  const stage = stages[currentStage];
+  if (!stage) { renderResult(); return; }
+
+  const header = `<div class="scene-header"><span class="scene-icon">${stage.icon}</span>
+    <div class="scene-titles"><h3>${stage.title}</h3><p>${stage.subtitle}</p></div></div>`;
+  let body = '';
+  switch (stage.type) {
+    case 'multiple-choice': body = renderMultipleChoice(stage.questions); break;
+    case 'listening': body = renderListening(stage.questions); break;
+    case 'reading': body = renderReading(stage.passages); break;
+    case 'writing': body = renderWriting(stage.questions); break;
+    case 'speaking': body = renderSpeaking(stage.questions); break;
+    case 'sentence': body = renderSentence(stage.questions); break;
+    case 'listening-sentence': body = renderListeningSentence(stage.questions); break;
+    case 'mixed': body = renderMixed(stage.questions); break;
+    default: body = '<p>این مرحله قابل نمایش نیست.</p>';
+  }
+  container.innerHTML = `<div class="scene-card">${header}${body}</div>`;
+}
+
+function escapeAttr(value) {
+  return String(value).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+}
+
+function renderMultipleChoice(questions) {
+  let html = '<div>';
+  questions.forEach((q, i) => {
+    html += `<div style="margin-bottom:22px" data-q="${i}">
+      <div class="question-text">${q.prompt}</div>
+      <div class="options-grid">
+        ${shuffle(q.options).map(opt => `<button class="option-btn" onclick="checkMC(this, '${escapeAttr(opt)}', '${escapeAttr(q.answer)}', 'M${i}')">${opt}</button>`).join('')}
+      </div></div>`;
+  });
+  return html + `<div class="btn-row"><button class="btn btn-primary" onclick="nextStage()">ادامه ➜</button></div></div>`;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+let mcAnswered = {};
+function checkMC(btn, selected, answer, qIndex) {
+  if (mcAnswered[qIndex]) return;
+  mcAnswered[qIndex] = true;
+  const parent = btn.closest('.options-grid');
+  if (!parent) return;
+  parent.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+  if (selected === answer) {
+    btn.classList.add('correct');
+    score += 10;
+  } else {
+    btn.classList.add('wrong');
+    parent.querySelectorAll('.option-btn').forEach(b => {
+      if (b.textContent.trim() === answer) b.classList.add('correct');
+    });
+  }
+  updateProgress();
+}
+
+function playWord(text, lang='ko-KR') {
+  if (!('speechSynthesis' in window)) {
+    alert('مرورگر شما از پخش صوت پشتیبانی نمی‌کند.');
+    return;
+  }
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = lang;
+  u.rate = 0.85;
+  speechSynthesis.speak(u);
+}
+
+function renderListening(questions) {
+  let html = '<div>';
+  questions.forEach((q, i) => {
+    html += `<div style="margin-bottom:22px" data-q="L${i}">
+      <button class="btn btn-secondary" style="width:100%;justify-content:center" onclick="playWord('${escapeAttr(q.word)}','${escapeAttr(q.lang || 'ko-KR')}')">🔊 پخش کلمه ${i + 1}</button>
+      <div class="options-grid" style="margin-top:12px">
+        ${shuffle(q.options).map(opt => `<button class="option-btn" onclick="checkMC(this, '${escapeAttr(opt)}', '${escapeAttr(q.answer)}', 'L${i}')">${opt}</button>`).join('')}
+      </div></div>`;
+  });
+  return html + `<div class="btn-row"><button class="btn btn-primary" onclick="nextStage()">ادامه ➜</button></div></div>`;
+}
+
+function renderReading(passages) {
+  let html = '<div>';
+  passages.forEach((p, i) => {
+    html += `<div style="margin-bottom:26px;padding:18px;background:rgba(15,23,42,.5);border-radius:14px">
+      <p style="font-size:18px;line-height:1.8;color:#fff;margin-bottom:8px;direction:ltr;text-align:left">${p.text}</p>
+      <p style="font-size:13px;line-height:1.8;color:#38bdf8;margin-bottom:14px;direction:ltr;text-align:left;font-family:'Courier New',monospace">${p.romanization}</p>
+      <div class="question-text">${p.question}</div>
+      <div class="options-grid">
+        ${shuffle(p.options).map(opt => `<button class="option-btn" onclick="checkMC(this, '${escapeAttr(opt)}', '${escapeAttr(p.answer)}', 'R${i}')">${opt}</button>`).join('')}
+      </div></div>`;
+  });
+  return html + `<div class="btn-row"><button class="btn btn-primary" onclick="nextStage()">ادامه ➜</button></div></div>`;
+}
+
+function renderWriting(questions) {
+  let html = '<div>';
+  questions.forEach((q, i) => {
+    html += `<div style="margin-bottom:20px" data-q="W${i}">
+      <div class="question-text">«${q.prompt}» را به کره‌ای بنویس (یا رومانیزاسیون):</div>
+      <div class="question-hint">راهنما: ${q.hint}</div>
+      <input type="text" class="text-input" id="writeInput${i}" placeholder="Type here..." dir="ltr">
+      <button class="btn btn-secondary" style="margin-top:10px" onclick="checkWrite(${i})">بررسی</button>
+      <div class="feedback" id="writeFb${i}"></div></div>`;
+  });
+  return html + `<div class="btn-row"><button class="btn btn-primary" onclick="nextStage()">ادامه ➜</button></div></div>`;
+}
+
+function checkWrite(i) {
+  const q = stages[currentStage].questions[i];
+  const input = document.getElementById('writeInput' + i);
+  const fb = document.getElementById('writeFb' + i);
+  if (!input || input.disabled || !input.value.trim()) return;
+  const val = input.value.trim().toLowerCase();
+  const correct = val === q.answer.toLowerCase() || (q.alt && val === q.alt.toLowerCase());
+  if (correct) {
+    input.classList.add('correct');
+    fb.className = 'feedback success show';
+    fb.textContent = '✅ عالی! درست است.';
+    score += 10;
+  } else {
+    input.classList.add('wrong');
+    fb.className = 'feedback error show';
+    fb.textContent = `❌ پاسخ درست: ${q.answer}${q.alt ? ' یا ' + q.alt : ''}`;
+  }
+  input.disabled = true;
+  updateProgress();
+}
+
+function renderSpeaking(questions) {
+  let html = '<div>';
+  questions.forEach((q, i) => {
+    html += `<div style="margin-bottom:22px;padding:18px;background:rgba(15,23,42,.5);border-radius:14px">
+      <div class="korean-word">${q.word}</div>
+      <div class="romanization">${q.romanization}</div>
+      <p style="text-align:center;color:#94a3b8;font-size:13px;margin-bottom:14px">ترجمه: ${q.translation}</p>
+      <button class="btn btn-secondary" style="width:100%;justify-content:center" onclick="playWord('${escapeAttr(q.word)}','ko-KR')">🔊 تلفظ</button>
+    </div>`;
+  });
+  return html + `<div class="btn-row"><button class="btn btn-primary" onclick="nextStage()">ادامه ➜</button></div></div>`;
+}
+
+function renderSentence(questions) {
+  let html = '<div>';
+  questions.forEach((q, i) => {
+    const id = 'sent' + i;
+    html += `<div style="margin-bottom:24px" id="${id}">
+      <div class="question-text">کلمات را به ترتیب درست بچین:</div>
+      <div class="options-grid" id="${id}opts">
+        ${shuffle(q.words).map(w => `<button class="option-btn" onclick="addWord('${id}','${escapeAttr(w)}',this)">${w}</button>`).join('')}
+      </div>
+      <div id="${id}answer" style="min-height:45px;margin-top:12px;padding:12px;border:1px dashed rgba(34,197,94,.3);border-radius:12px"></div>
+      <button class="btn btn-secondary" style="margin-top:10px" onclick="checkSentence('${id}', '${escapeAttr(q.answer)}', '${escapeAttr(q.translation)}')">بررسی</button>
+      <div class="feedback" id="${id}fb"></div>
+    </div>`;
+  });
+  return html + `<div class="btn-row"><button class="btn btn-primary" onclick="nextStage()">ادامه ➜</button></div></div>`;
+}
+
+function addWord(id, word, btn) {
+  if (btn.disabled) return;
+  const box = document.getElementById(id + 'answer');
+  const span = document.createElement('span');
+  span.textContent = (box.textContent ? box.textContent + ' ' : '') + word;
+  box.textContent = span.textContent;
+  btn.disabled = true;
+}
+
+function checkSentence(id, answer, translation) {
+  const box = document.getElementById(id + 'answer');
+  const fb = document.getElementById(id + 'fb');
+  const val = box.textContent.trim();
+  if (!val || fb.classList.contains('show')) return;
+  if (val === answer) {
+    fb.className = 'feedback success show'; fb.textContent = '✅ درست است!'; score += 10;
+  } else {
+    fb.className = 'feedback error show'; fb.textContent = `❌ پاسخ درست: ${answer} — ${translation}`;
+  }
+  updateProgress();
+}
+
+function renderListeningSentence(questions) {
+  let html = '<div>';
+  questions.forEach((q, i) => {
+    html += `<div style="margin-bottom:22px">
+      <button class="btn btn-secondary" style="width:100%;justify-content:center" onclick="playWord('${escapeAttr(q.sentence)}','${escapeAttr(q.lang || 'ko-KR')}')">🔊 پخش جمله ${i + 1}</button>
+      <div class="options-grid" style="margin-top:12px">
+        ${shuffle(q.options).map(opt => `<button class="option-btn" onclick="checkMC(this, '${escapeAttr(opt)}', '${escapeAttr(q.answer)}', 'LS${i}')">${opt}</button>`).join('')}
+      </div></div>`;
+  });
+  return html + `<div class="btn-row"><button class="btn btn-primary" onclick="nextStage()">ادامه ➜</button></div></div>`;
+}
+
+function renderMixed(questions) {
+  let html = '<div>';
+  questions.forEach((q, i) => {
+    if (q.type === 'mc') {
+      html += `<div style="margin-bottom:22px"><div class="question-text">${q.prompt}</div><div class="options-grid">
+        ${shuffle(q.options).map(opt => `<button class="option-btn" onclick="checkMC(this, '${escapeAttr(opt)}', '${escapeAttr(q.answer)}', 'X${i}')">${opt}</button>`).join('')}
+      </div></div>`;
+    } else if (q.type === 'write') {
+      html += `<div style="margin-bottom:22px"><div class="question-text">${q.prompt}</div><input id="mixInput${i}" class="text-input" dir="ltr" placeholder="Type here..."><button class="btn btn-secondary" style="margin-top:10px" onclick="checkMixedWrite(${i})">بررسی</button><div class="feedback" id="mixFb${i}"></div></div>`;
+    }
+  });
+  return html + `<div class="btn-row"><button class="btn btn-primary" onclick="nextStage()">ادامه ➜</button></div></div>`;
+}
+
+function checkMixedWrite(i) {
+  const q = stages[currentStage].questions[i];
+  const input = document.getElementById('mixInput' + i);
+  const fb = document.getElementById('mixFb' + i);
+  if (!input || input.disabled || !input.value.trim()) return;
+  const val = input.value.trim().toLowerCase();
+  if (val === q.answer.toLowerCase() || (q.alt && val === q.alt.toLowerCase())) {
+    input.classList.add('correct'); fb.className = 'feedback success show'; fb.textContent = '✅ درست است!'; score += 10;
+  } else {
+    input.classList.add('wrong'); fb.className = 'feedback error show'; fb.textContent = `❌ پاسخ درست: ${q.answer}`;
+  }
+  input.disabled = true; updateProgress();
+}
+
+function nextStage() {
+  currentStage++;
+  mcAnswered = {};
+  if (currentStage >= TOTAL_STAGES) renderResult();
+  else renderStage();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function renderResult() {
+  updateProgress();
+  const percent = Math.round((score / 100) * 100);
+  const emoji = percent >= 80 ? '🎉' : percent >= 60 ? '👏' : '💪';
+  document.getElementById('sceneContainer').innerHTML = `<div class="scene-card result-screen">
+    <div class="result-emoji">${emoji}</div><div class="result-title">آزمون تمام شد!</div>
+    <div class="result-score">${score}</div><div class="result-sub">امتیاز کسب‌شده</div>
+    <button class="btn btn-primary" onclick="init()">🔄 شروع دوباره</button>
+  </div>`;
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
