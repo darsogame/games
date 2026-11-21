@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="پادکست‌های Darsogame — گوش دادن به پادکست‌های آموزشی زبان.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>پادکست | Darsogame</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Vazirmatn', sans-serif; min-height: 100vh;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    color: #e2e8f0; padding: 25px 18px; }
+  .container { max-width: 1000px; margin: 0 auto; }
+  .top-bar { display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px; margin-bottom: 22px; }
+  .back-btn { display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 18px; background: rgba(249,115,22,0.15);
+    border: 2px solid rgba(249,115,22,0.3); border-radius: 12px;
+    color: #f97316; text-decoration: none; font-weight: 900; font-size: 13px; transition: all 0.25s; }
+  .back-btn:hover { background: rgba(249,115,22,0.3); transform: translateY(-2px); }
+  .page-pill { padding: 8px 20px; background: linear-gradient(135deg, #f97316, #fbbf24);
+    border-radius: 20px; color: #0f172a; font-weight: 900; font-size: 14px; }
+  .page-header { text-align: center; margin-bottom: 35px; padding: 30px 20px;
+    background: linear-gradient(135deg, rgba(249,115,22,0.12), rgba(251,191,36,0.12));
+    border-radius: 25px; border: 2px solid rgba(249,115,22,0.25); }
+  .page-header h1 { font-size: 32px; font-weight: 900;
+    background: linear-gradient(135deg, #f97316, #fbbf24, #38bdf8);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 10px; }
+  .page-header p { color: #94a3b8; font-size: 14px; line-height: 1.7; }
+  .filter-tabs { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 25px; }
+  .filter-tab { padding: 10px 18px; border-radius: 12px; font-family: inherit;
+    font-size: 13px; font-weight: 900; cursor: pointer; border: 2px solid rgba(148,163,184,0.25);
+    background: rgba(15,23,42,0.6); color: #cbd5e1; transition: all 0.25s; }
+  .filter-tab:hover { border-color: #f97316; color: #f97316; }
+  .filter-tab.active { background: linear-gradient(135deg, #f97316, #fbbf24); color: #0f172a; border-color: transparent; }
+  .episodes-list { display: flex; flex-direction: column; gap: 16px; }
+  .episode-card { background: linear-gradient(135deg, #1e293b, #334155);
+    border: 3px solid transparent; border-radius: 22px; padding: 20px;
+    transition: all 0.3s; cursor: pointer; display: flex; gap: 18px; align-items: center; }
+  .episode-card:hover { transform: translateY(-4px); box-shadow: 0 20px 45px rgba(0,0,0,0.5);
+    border-color: #f97316; }
+  .episode-icon { width: 70px; height: 70px; border-radius: 18px;
+    display: flex; align-items: center; justify-content: center; font-size: 34px;
+    background: linear-gradient(135deg, rgba(249,115,22,0.2), rgba(251,191,36,0.2));
+    flex-shrink: 0; }
+  .episode-info { flex: 1; min-width: 0; }
+  .episode-meta { display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+  .episode-tag { padding: 3px 10px; border-radius: 8px; font-size: 10px; font-weight: 900;
+    background: rgba(249,115,22,0.15); color: #f97316; }
+  .episode-level { padding: 3px 10px; border-radius: 8px; font-size: 10px; font-weight: 900;
+    background: rgba(251,191,36,0.15); color: #fbbf24; }
+  .episode-title { font-size: 16px; font-weight: 900; color: #fff; margin-bottom: 6px; }
+  .episode-desc { font-size: 13px; color: #94a3b8; line-height: 1.6; margin-bottom: 10px; }
+  .episode-footer { display: flex; justify-content: space-between; align-items: center;
+    font-size: 11px; color: #64748b; font-weight: 700; flex-wrap: wrap; gap: 8px; }
+  .play-btn { width: 50px; height: 50px; border-radius: 50%; border: none;
+    background: linear-gradient(135deg, #f97316, #fbbf24); color: #0f172a;
+    font-size: 20px; cursor: pointer; transition: all 0.25s; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; }
+  .play-btn:hover { transform: scale(1.1); box-shadow: 0 10px 25px rgba(249,115,22,0.4); }
+  .play-btn.playing { background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff;
+    animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.6);} 50%{box-shadow:0 0 0 15px rgba(34,197,94,0);} }
+  .empty-state { text-align: center; padding: 60px 20px; color: #94a3b8; }
+  .empty-state .emoji { font-size: 60px; margin-bottom: 15px; }
+  @media (max-width: 600px) {
+    .page-header h1 { font-size: 24px; }
+    .episode-card { flex-wrap: wrap; }
+    .episode-icon { width: 60px; height: 60px; font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="top-bar">
+    <a href="hub.html" class="back-btn">🏠 بازگشت</a>
+    <div class="page-pill">🎙️ پادکست</div>
+  </div>
+
+  <div class="page-header">
+    <h1>🎙️ پادکست Darsogame</h1>
+    <p>گوش دادن به پادکست‌های آموزشی برای تقویت مهارت شنیداری</p>
+  </div>
+
+  <div class="filter-tabs" id="filterTabs">
+    <button class="filter-tab active" data-filter="all">همه</button>
+    <button class="filter-tab" data-filter="en">🇬🇧 انگلیسی</button>
+    <button class="filter-tab" data-filter="zh">🇨🇳 چینی</button>
+    <button class="filter-tab" data-filter="ko">🇰🇷 کره‌ای</button>
+  </div>
+
+  <div class="episodes-list" id="episodesList"></div>
+</div>
+
+<script>
+const episodes = [
+  {
+    id: 1, lang: 'en', level: 'A1', title: 'Hello and Goodbye',
+    desc: 'Learn basic English greetings and farewells with examples.',
+    icon: '👋', duration: '3:20', date: '2024-01-15',
+    text: 'Hello! My name is Tom. Nice to meet you. How are you? I am fine, thank you. Goodbye!'
+  },
+  {
+    id: 2, lang: 'en', level: 'A2', title: 'At the Restaurant',
+    desc: 'Useful phrases for ordering food and drinks in English.',
+    icon: '🍽️', duration: '4:45', date: '2024-01-12',
+    text: 'Good evening. A table for two, please. Can I see the menu? I would like a coffee and a sandwich. Thank you.'
+  },
+  {
+    id: 3, lang: 'en', level: 'B1', title: 'Talking About Your Day',
+    desc: 'How to describe your daily routine in English.',
+    icon: '📅', duration: '5:30', date: '2024-01-10',
+    text: 'Every morning I wake up at seven o\'clock. I have breakfast and go to work. In the evening, I usually read a book or watch TV.'
+  },
+  {
+    id: 4, lang: 'zh', level: 'HSK1', title: '你好，谢谢',
+    desc: 'Basic Chinese greetings and polite expressions.',
+    icon: '🀄', duration: '2:50', date: '2024-01-08',
+    text: '你好！我叫小明。很高兴认识你。谢谢！再见！'
+  },
+  {
+    id: 5, lang: 'zh', level: 'HSK2', title: '在餐厅 (At the Restaurant)',
+    desc: 'Ordering food in Chinese with useful phrases.',
+    icon: '🥢', duration: '4:15', date: '2024-01-05',
+    text: '你好，我要一个宫保鸡丁和一碗米饭。请给我一杯茶。谢谢！'
+  },
+  {
+    id: 6, lang: 'ko', level: 'TOPIK I', title: '안녕하세요',
+    desc: 'Korean greetings and basic conversation.',
+    icon: '🇰🇷', duration: '3:10', date: '2024-01-03',
+    text: '안녕하세요! 제 이름은 민수입니다. 만나서 반갑습니다. 감사합니다. 안녕히 가세요!'
+  },
+  {
+    id: 7, lang: 'ko', level: 'TOPIK II', title: '식당에서 (At the Restaurant)',
+    desc: 'Ordering food in Korean with polite expressions.',
+    icon: '🍜', duration: '5:00', date: '2024-01-01',
+    text: '어서 오세요. 몇 분이세요? 두 명이요. 메뉴 좀 주세요. 김치찌개 하나와 밥 두 공기 주세요.'
+  }
+];
+
+let currentFilter = 'all';
+let playingId = null;
+
+function renderEpisodes() {
+  const list = document.getElementById('episodesList');
+  const filtered = currentFilter === 'all'
+    ? episodes
+    : episodes.filter(e => e.lang === currentFilter);
+
+  if (filtered.length === 0) {
+    list.innerHTML = `<div class="empty-state">
+      <div class="emoji">📭</div>
+      <p>پادکستی در این دسته یافت نشد.</p>
+    </div>`;
+    return;
+  }
+
+  list.innerHTML = filtered.map(e => `
+    <div class="episode-card">
+      <div class="episode-icon">${e.icon}</div>
+      <div class="episode-info">
+        <div class="episode-meta">
+          <span class="episode-tag">${e.lang === 'en' ? '🇬🇧 انگلیسی' : e.lang === 'zh' ? '🇨🇳 چینی' : '🇰🇷 کره‌ای'}</span>
+          <span class="episode-level">${e.level}</span>
+        </div>
+        <div class="episode-title">${e.title}</div>
+        <div class="episode-desc">${e.desc}</div>
+        <div class="episode-footer">
+          <span>📅 ${e.date}</span>
+          <span>⏱ ${e.duration}</span>
+        </div>
+      </div>
+      <button class="play-btn ${playingId === e.id ? 'playing' : ''}"
+        onclick="togglePlay(${e.id}, '${e.text.replace(/'/g, "\\'")}', '${e.lang}')">
+        ${playingId === e.id ? '⏸' : '▶'}
+      </button>
+    </div>
+  `).join('');
+}
+
+function togglePlay(id, text, lang) {
+  if (!('speechSynthesis' in window)) {
+    alert('مرورگر شما از پخش صدا پشتیبانی نمی‌کند.');
+    return;
+  }
+
+  if (playingId === id) {
+    speechSynthesis.cancel();
+    playingId = null;
+    renderEpisodes();
+    return;
+  }
+
+  speechSynthesis.cancel();
+  playingId = id;
+
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = lang === 'en' ? 'en-US' : lang === 'zh' ? 'zh-CN' : 'ko-KR';
+  u.rate = 0.85;
+  u.onend = () => {
+    playingId = null;
+    renderEpisodes();
+  };
+  speechSynthesis.speak(u);
+  renderEpisodes();
+}
+
+document.getElementById('filterTabs').addEventListener('click', (e) => {
+  if (!e.target.classList.contains('filter-tab')) return;
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  e.target.classList.add('active');
+  currentFilter = e.target.dataset.filter;
+  renderEpisodes();
+});
+
+window.addEventListener('load', renderEpisodes);
+</script>
+
+</body>
+</html>

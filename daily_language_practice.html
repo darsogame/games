@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>تمرین روزانه زبان</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f3f6fb;color:#182230;font-family:Tahoma,Arial}
+main{max-width:1000px;margin:auto;padding:18px}.box{background:#fff;border-radius:16px;padding:18px;margin:14px 0;box-shadow:0 4px 18px #0001}
+header{background:linear-gradient(135deg,#263b82,#5572d0);color:#fff;border-radius:18px;padding:22px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+select,button{font:inherit}select{width:100%;padding:11px;border:1px solid #ccd3e0;border-radius:9px;margin-top:6px}
+button{border:0;border-radius:9px;padding:10px 14px;background:#3158bd;color:white;cursor:pointer;margin:4px}
+.word{border:1px solid #e0e5ee;border-radius:12px;padding:13px}.foreign{font-size:23px;font-weight:bold;direction:ltr;text-align:left}
+.example{direction:ltr;text-align:left;font-size:17px}.note{background:#fff8da;border-right:5px solid #e0b52d;padding:12px;border-radius:8px}
+.barbg{height:12px;background:#e5e8ef;border-radius:20px}.bar{height:100%;background:#5572d0;border-radius:20px;width:0}
+.muted{color:#687386;font-size:13px}.ok{color:#16834d;font-weight:bold}.bad{color:#c73535;font-weight:bold}.quizOption{display:block;width:100%;text-align:right;background:#f7f8fc;color:#182230;border:1px solid #d7ddea}.quizOption:hover{background:#eef2ff}
+</style>
+</head>
+<body><main>
+<header><h1>🌍 تمرین روزانه زبان</h1><p>کلمات + گرامر + جمله روزانه + آزمون و ذخیره پیشرفت در LocalStorage</p></header>
+
+<section class="box"><div class="grid">
+<div><label>زبان</label><select id="lang"></select></div>
+<div><label>سطح</label><select id="level"></select></div>
+</div><br>
+<button onclick="start()">📚 شروع تمرین</button>
+<button onclick="resetData()">♻️ پاک کردن پیشرفت این سطح</button>
+<p id="info"></p></section>
+
+<section id="progress" class="box" style="display:none">
+<b>پیشرفت سطح: <span id="pct">0%</span></b>
+<div class="barbg"><div id="bar" class="bar"></div></div>
+<p class="muted">پس از تکمیل روزهای لازم، سطح بعدی باز می‌شود.</p>
+</section>
+<div id="app"></div>
+
+<script>
+const DATA={
+ar:{name:"عربی",levels:[
+["مقدماتی",[["مَرْحَبًا","سلام"],["كِتاب","کتاب"],["مَاء","آب"],["بَيْت","خانه"],["صَدِيق","دوست"]],"جمله اسمیه معمولاً با اسم شروع می‌شود.",[["أنا طالب.","من دانش‌آموز هستم."],["هذا كتاب.","این کتاب است."]]],
+["پایه",[["يَذْهَب","می‌رود"],["يَقْرَأ","می‌خواند"],["جَدِيد","جدید"],["كَبِير","بزرگ"],["الْيَوْم","امروز"]],"فعل مضارع برای حال و آینده کاربرد دارد.",[["أنا أقرأ كتابًا.","من کتاب می‌خوانم."],["هو يذهب إلى المدرسة.","او به مدرسه می‌رود."]]]
+]},
+en:{name:"English",levels:[
+["A1",[["hello","سلام"],["book","کتاب"],["water","آب"],["house","خانه"],["friend","دوست"]],"Present Simple برای عادت‌ها و واقعیت‌ها استفاده می‌شود.",[["I am a student.","من دانش‌آموز هستم."],["This is my book.","این کتاب من است."]]],
+["A2",[["usually","معمولاً"],["already","قبلاً"],["because","زیرا"],["improve","بهبود دادن"],["enough","کافی"]],"Present Perfect برای تجربه یا کاری با ارتباط با زمان حال استفاده می‌شود.",[["I have already eaten.","من قبلاً غذا خورده‌ام."],["I want to improve my English.","می‌خواهم انگلیسی‌ام را بهتر کنم."]]]
+]},
+zh:{name:"چینی",levels:[
+["HSK 1",[["你好","سلام"],["书","کتاب"],["水","آب"],["家","خانه"],["朋友","دوست"]],"ساختار پایه: فاعل + فعل + مفعول.",[["我是学生。","من دانش‌آموز هستم."],["这是我的书。","این کتاب من است."]]],
+["HSK 2",[["已经","قبلاً"],["正在","در حال"],["觉得","فکر کردن"],["因为","زیرا"],["所以","بنابراین"]],"因为…所以… برای علت و نتیجه استفاده می‌شود.",[["我正在学习中文。","من در حال یادگیری چینی هستم."],["因为下雨，所以我不去。","چون باران می‌بارد، نمی‌روم."]]]
+]},
+ru:{name:"روسی",levels:[
+["A1",[["привет","سلام"],["книга","کتاب"],["вода","آب"],["дом","خانه"],["друг","دوست"]],"ترتیب کلمات روسی نسبتاً انعطاف‌پذیر است.",[["Я студент.","من دانش‌آموز هستم."],["Это моя книга.","این کتاب من است."]]],
+["A2",[["обычно","معمولاً"],["сейчас","اکنون"],["потому что","زیرا"],["нужно","لازم است"],["учиться","درس خواندن"]],"برای ضرورت می‌توان از нужно + مصدر استفاده کرد.",[["Мне нужно учиться.","من باید درس بخوانم."],["Я сейчас работаю.","من الان کار می‌کنم."]]]
+]},
+ko:{name:"کره‌ای",levels:[
+["1급",[["안녕하세요","سلام"],["책","کتاب"],["물","آب"],["집","خانه"],["친구","دوست"]],"ترتیب پایه: فاعل + مفعول + فعل.",[["저는 학생이에요.","من دانش‌آموز هستم."],["이것은 책이에요.","این کتاب است."]]],
+["2급",[["보통","معمولاً"],["지금","اکنون"],["좋아하다","دوست داشتن"],["공부하다","درس خواندن"],["그래서","بنابراین"]],"برای حال استمراری از -고 있다 استفاده می‌شود.",[["저는 지금 공부하고 있어요.","من الان در حال درس خواندن هستم."],["저는 한국어를 좋아해요.","من کره‌ای را دوست دارم."]]]
+]},
+es:{name:"اسپانیایی",levels:[
+["A1",[["hola","سلام"],["libro","کتاب"],["agua","آب"],["casa","خانه"],["amigo","دوست"]],"فعل‌ها بر اساس شخص صرف می‌شوند.",[["Soy estudiante.","من دانش‌آموز هستم."],["Esta es mi casa.","این خانه من است."]]],
+["A2",[["siempre","همیشه"],["ahora","اکنون"],["porque","زیرا"],["aprender","یاد گرفتن"],["mejorar","بهبود دادن"]],"برای خواسته از querer + مصدر استفاده می‌شود.",[["Quiero aprender español.","می‌خواهم اسپانیایی یاد بگیرم."],["Ahora estoy estudiando.","الان در حال مطالعه هستم."]]]
+]},
+de:{name:"آلمانی",levels:[
+["A1",[["Hallo","سلام"],["Buch","کتاب"],["Wasser","آب"],["Haus","خانه"],["Freund","دوست"]],"در جمله خبری ساده، فعل صرف‌شده معمولاً جایگاه دوم است.",[["Ich bin Schüler.","من دانش‌آموز هستم."],["Das ist mein Buch.","این کتاب من است."]]],
+["A2",[["immer","همیشه"],["jetzt","اکنون"],["weil","زیرا"],["lernen","یاد گرفتن"],["besser","بهتر"]],"بعد از weil فعل صرف‌شده معمولاً به پایان جمله می‌رود.",[["Ich möchte Deutsch lernen.","می‌خواهم آلمانی یاد بگیرم."],["Ich bleibe zu Hause, weil ich müde bin.","در خانه می‌مانم چون خسته‌ام."]]]
+]},
+fr:{name:"فرانسوی",levels:[
+["A1",[["bonjour","سلام"],["livre","کتاب"],["eau","آب"],["maison","خانه"],["ami","دوست"]],"ترتیب پایه معمولاً فاعل + فعل + مفعول است.",[["Je suis étudiant.","من دانش‌آموز هستم."],["C'est mon livre.","این کتاب من است."]]],
+["A2",[["toujours","همیشه"],["maintenant","اکنون"],["parce que","زیرا"],["apprendre","یاد گرفتن"],["améliorer","بهبود دادن"]],"برای خواسته: vouloir + مصدر.",[["Je veux apprendre le français.","می‌خواهم فرانسوی یاد بگیرم."],["Je travaille maintenant.","الان کار می‌کنم."]]]
+]}
+};
+
+const KEY="daily_language_v2",lang=document.getElementById("lang"),level=document.getElementById("level");
+let db=JSON.parse(localStorage.getItem(KEY)||"{}"), current;
+
+for(const k in DATA){let o=document.createElement("option");o.value=k;o.textContent=DATA[k].name;lang.appendChild(o)}
+lang.onchange=levels;levels();
+
+function levels(){level.innerHTML="";DATA[lang.value].levels.forEach((x,i)=>{let o=document.createElement("option");o.value=i;o.textContent=x[0];level.appendChild(o)});status()}
+function id(){return lang.value+"_"+level.value}
+function rec(){return db[id()]||(db[id()]={days:0,score:0,done:[]})}
+function save(){localStorage.setItem(KEY,JSON.stringify(db))}
+function today(){return new Date().toISOString().slice(0,10)}
+function status(){let r=rec();document.getElementById("info").textContent=`روزهای تکمیل‌شده: ${r.days} | امتیاز: ${r.score} | ذخیره خودکار: فعال`}
+function start(){
+ current=DATA[lang.value].levels[+level.value];
+ let r=rec(), words=current[1], q=words[r.days%words.length];
+
+ // چهار گزینه: پاسخ صحیح + سه پاسخ غلط، با ترتیب تصادفی
+ let wrong=words.filter(w=>w!==q).map(w=>w[1]);
+ wrong.sort(()=>Math.random()-.5);
+ let options=[q[1],...wrong.slice(0,3)];
+ options.sort(()=>Math.random()-.5);
+
+ document.getElementById("progress").style.display="block";
+ let p=Math.min(100,r.days*25);
+ document.getElementById("pct").textContent=p+"%";
+ document.getElementById("bar").style.width=p+"%";
+
+ let h=`<section class="box"><h2>📅 روز ${r.days+1} — ${current[0]}</h2>
+ <h3>1️⃣ کلمات</h3><div class="grid">`;
+ words.forEach(w=>h+=`<div class="word"><div class="foreign">${w[0]}</div><p>${w[1]}</p><button onclick="speak(${JSON.stringify(w[0])})">🔊 تلفظ</button></div>`);
+ h+=`</div><h3>2️⃣ نکته گرامری</h3><div class="note">${current[2]}</div>
+ <h3>3️⃣ جمله‌های روزانه</h3>`;
+ current[3].forEach(x=>h+=`<div class="word"><div class="foreign">${x[0]}</div><p>${x[1]}</p><button onclick="speak(${JSON.stringify(x[0])})">🔊 شنیدن</button></div>`);
+
+ h+=`<h3>4️⃣ آزمون امروز</h3>
+ <p>معنی <b>${q[0]}</b> چیست؟</p>
+ <div id="quiz">`;
+ options.forEach((op,i)=>h+=`<button class="quizOption" onclick="answer(this,${JSON.stringify(op===q[1])})">${String.fromCharCode(65+i)}) ${op}</button>`);
+ h+=`</div><p id="result"></p>
+ <h3>5️⃣ ذخیره تمرین</h3><button onclick="complete()">✅ تکمیل روز</button><p id="doneMsg"></p></section>`;
+ document.getElementById("app").innerHTML=h;
+}
+function answer(b,ok){if(b.disabled)return;b.disabled=true;let r=rec();if(ok){r.score+=10;document.getElementById("result").innerHTML='<span class="ok">✅ درست! +10</span>'}else document.getElementById("result").innerHTML='<span class="bad">❌ دوباره مرور کن.</span>';save();status()}
+function complete(){
+ let r=rec();if(r.done.includes(today())){document.getElementById("doneMsg").textContent="تمرین امروز قبلاً ذخیره شده است.";return}
+ r.days++;r.done.push(today());save();status();document.getElementById("doneMsg").textContent="🎉 تمرین امروز ذخیره شد؛ فردا تمرین بعدی فعال می‌شود.";let p=Math.min(100,r.days*25);document.getElementById("pct").textContent=p+"%";document.getElementById("bar").style.width=p+"%";
+ if(r.days>=4 && +level.value+1<DATA[lang.value].levels.length) document.getElementById("doneMsg").textContent+=" 🚀 سطح بعدی آماده است؛ از منوی سطح انتخابش کن.";
+}
+function speak(t){if(!speechSynthesis)return;let u=new SpeechSynthesisUtterance(t);u.lang={en:"en-US",zh:"zh-CN",ar:"ar-SA",ru:"ru-RU",ko:"ko-KR",es:"es-ES",de:"de-DE",fr:"fr-FR"}[lang.value];u.rate=.85;speechSynthesis.cancel();speechSynthesis.speak(u)}
+function resetData(){if(confirm("پیشرفت این سطح پاک شود؟")){delete db[id()];save();status();start()}}
+status();
+</script></main></body></html>
