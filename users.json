@@ -29,6 +29,11 @@
         "key": "TEST-GUEST-999",
         "name": "کاربر آزمایشی",
         "permissions": ["game","podcast","daily"]
-      }
+      },
+        {
+        "key": "Mohamad7567",
+        "name": "محمد جواد",
+        "permissions": ["game", "lesson", "listening", "reading", "writing", "speaking", "admin","book","podcast","magazine","daily"]
+      }]
     ]
   }
